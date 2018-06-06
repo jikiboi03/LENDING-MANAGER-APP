@@ -149,7 +149,7 @@ $route['notifications-page/notifications-severe-page'] = 'Notifications/Notifica
 
 $route['logs-page'] = 'Logs/Logs_controller';
 
-$route['showlist-cis'] = 'Logs/Logs_controller/ajax_list';
+$route['showlist-logs'] = 'Logs/Logs_controller/ajax_list';
 
 
 
@@ -158,6 +158,8 @@ $route['showlist-cis'] = 'Logs/Logs_controller/ajax_list';
 
 
 $route['statistics-page'] = 'Statistics/Statistics_controller/index';
+
+$route['showlist-statistics'] = 'Statistics/Statistics_controller/ajax_list';
 
 
 

@@ -16,7 +16,7 @@ $(document).ready(function()
          
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "companies/companies_controller/ajax_list",
+                    "url": "showlist-companies",
                     "type": "POST",
                 },
          
@@ -41,7 +41,7 @@ $(document).ready(function()
          
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "atm/atm_controller/ajax_list",
+                    "url": "showlist-atm",
                     "type": "POST",
                 },
          
@@ -66,7 +66,7 @@ $(document).ready(function()
          
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "clients/clients_controller/ajax_list",
+                    "url": "showlist-clients",
                     "type": "POST",
                 },
          
@@ -119,7 +119,7 @@ $(document).ready(function()
          
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "../profiles/profiles_controller/ajax_list/" + client_id,
+                    "url": "../Profiles/Profiles_controller/ajax_list/" + client_id,
                     "type": "POST",
                 },
          
@@ -209,7 +209,7 @@ $(document).ready(function()
          
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "../../../transactions/transactions_controller/ajax_list/" + loan_id,
+                    "url": "../../../Transactions/Transactions_controller/ajax_list/" + loan_id,
                     "type": "POST",
                 },
          
@@ -277,7 +277,7 @@ $(document).ready(function()
          
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "capital/capital_controller/ajax_list",
+                    "url": "showlist-capital",
                     "type": "POST",
                 },
          
@@ -339,7 +339,7 @@ $(document).ready(function()
          
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "statistics/statistics_controller/ajax_list",
+                    "url": "showlist-statistics",
                     "type": "POST",
                 },
          
@@ -389,7 +389,7 @@ $(document).ready(function()
          
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "logs/logs_controller/ajax_list",
+                    "url": "showlist-logs",
                     "type": "POST",
                 },
          
@@ -435,7 +435,7 @@ $(document).ready(function()
          
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "schedules/schedules_controller/ajax_list",
+                    "url": "showlist-schedules",
                     "type": "POST",
                 },
          
@@ -473,7 +473,7 @@ $(document).ready(function()
          
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "users/users_controller/ajax_list",
+                    "url": "showlist-users",
                     "type": "POST",
                 },
          
