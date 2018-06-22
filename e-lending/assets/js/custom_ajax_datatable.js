@@ -570,7 +570,7 @@ function edit_privileges(id) // for customer table
  
     //Ajax Load data from ajax
     $.ajax({
-        url : "users/users_controller/ajax_edit/" + id,
+        url : "Users/Users_controller/ajax_edit/" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -601,7 +601,7 @@ function view_edit_user(id) // for customer table
  
     //Ajax Load data from ajax
     $.ajax({
-        url : "users/users_controller/ajax_edit/" + id,
+        url : "Users/Users_controller/ajax_edit/" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -769,7 +769,7 @@ function edit_company(id)
  
     //Ajax Load data from ajax
     $.ajax({
-        url : "companies/companies_controller/ajax_edit/" + id,
+        url : "Companies/Companies_controller/ajax_edit/" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -800,7 +800,7 @@ function edit_atm(id)
  
     //Ajax Load data from ajax
     $.ajax({
-        url : "atm/atm_controller/ajax_edit/" + id,
+        url : "Atm/Atm_controller/ajax_edit/" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -831,7 +831,7 @@ function edit_client(id)
  
     //Ajax Load data from ajax
     $.ajax({
-        url : "clients/clients_controller/ajax_edit/" + id,
+        url : "Clients/Clients_controller/ajax_edit/" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -875,7 +875,7 @@ function edit_loan(id)
  
     //Ajax Load data from ajax
     $.ajax({
-        url : "../profiles/profiles_controller/ajax_edit/" + id,
+        url : "../Profiles/Profiles_controller/ajax_edit/" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -911,7 +911,7 @@ function edit_loan_date_remarks(id)
  
     //Ajax Load data from ajax
     $.ajax({
-        url : "../profiles/profiles_controller/ajax_edit/" + id,
+        url : "../Profiles/Profiles_controller/ajax_edit/" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -941,7 +941,7 @@ function edit_trans_date_remarks(id)
  
     //Ajax Load data from ajax
     $.ajax({
-        url : "../../../transactions/transactions_controller/ajax_edit/" + id,
+        url : "../../../Transactions/Transactions_controller/ajax_edit/" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -971,7 +971,7 @@ function edit_capital_date_remarks(id)
  
     //Ajax Load data from ajax
     $.ajax({
-        url : "capital/capital_controller/ajax_edit/" + id,
+        url : "Capital/Capital_controller/ajax_edit/" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -1001,7 +1001,7 @@ function edit_schedule(id)
  
     //Ajax Load data from ajax
     $.ajax({
-        url : "schedules/schedules_controller/ajax_edit/" + id,
+        url : "Schedules/Schedules_controller/ajax_edit/" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -1116,94 +1116,94 @@ function save()
 
     if(save_method == 'add-client') 
     {
-        url = "clients/clients_controller/ajax_add";
+        url = "Clients/Clients_controller/ajax_add";
     }
     else if(save_method == 'update-client') 
     {
-        url = "clients/clients_controller/ajax_update";
+        url = "Clients/Clients_controller/ajax_update";
     }
     else if(save_method == 'add-company') 
     {
-        url = "companies/companies_controller/ajax_add";
+        url = "Companies/Companies_controller/ajax_add";
     }
     else if(save_method == 'update-company') 
     {
-        url = "companies/companies_controller/ajax_update";
+        url = "Companies/Companies_controller/ajax_update";
     }
     else if(save_method == 'add-atm') 
     {
-        url = "atm/atm_controller/ajax_add";
+        url = "Atm/Atm_controller/ajax_add";
     }
     else if(save_method == 'update-atm') 
     {
-        url = "atm/atm_controller/ajax_update";
+        url = "Atm/Atm_controller/ajax_update";
     }
     else if(save_method == 'add-loan') 
     {
-        url = "../profiles/profiles_controller/ajax_add";
+        url = "../Profiles/Profiles_controller/ajax_add";
     }
     else if(save_method == 'update-loan') 
     {
-        url = "../profiles/profiles_controller/ajax_update";
+        url = "../Profiles/Profiles_controller/ajax_update";
     }
     else if(save_method == 'update-loan-date-remarks') 
     {
         $form = '#form_edit_date_remarks';
-        url = "../profiles/profiles_controller/ajax_update_date_remarks";
+        url = "../Profiles/Profiles_controller/ajax_update_date_remarks";
     }
     else if(save_method == 'add-payment') 
     {
         $form = '#form_add_payment';
-        url = "../../../transactions/transactions_controller/ajax_paid";
+        url = "../../../Transactions/Transactions_controller/ajax_paid";
     }
     else if(save_method == 'add-interest') 
     {
         $form = '#form_add_interest';
-        url = "../../../transactions/transactions_controller/ajax_add_interest";
+        url = "../../../Transactions/Transactions_controller/ajax_add_interest";
     }
     else if(save_method == 'adjust-loan') 
     {
         $form = '#form_adjust_loan';
-        url = "../../../transactions/transactions_controller/ajax_adjustment";
+        url = "../../../Transactions/Transactions_controller/ajax_adjustment";
     }
     else if(save_method == 'update-trans-date-remarks') 
     {
         $form = '#form_edit_date_remarks';
-        url = "../../../transactions/transactions_controller/ajax_update";
+        url = "../../../Transactions/Transactions_controller/ajax_update";
     }
     else if(save_method == 'adjust-capital') 
     {
         $form = '#form';
-        url = "capital/capital_controller/ajax_add";
+        url = "Capital/Capital_controller/ajax_add";
     }
     else if(save_method == 'update-capital-date-remarks') 
     {
         $form = '#form_edit_date_remarks';
-        url = "capital/capital_controller/ajax_update";
+        url = "Capital/Capital_controller/ajax_update";
     }
     
     else if(save_method == 'add-schedule') 
     {
-        url = "schedules/schedules_controller/ajax_add";
+        url = "Schedules/Schedules_controller/ajax_add";
     }
     else if(save_method == 'update-schedule') 
     {
-        url = "schedules/schedules_controller/ajax_update";
+        url = "Schedules/Schedules_controller/ajax_update";
     }
 
     else if(save_method == 'add-user') 
     {
-        url = "users/users_controller/ajax_add";
+        url = "Users/Users_controller/ajax_add";
     }
     else if(save_method == 'update-user') 
     {
-        url = "users/users_controller/ajax_update";
+        url = "Users/Users_controller/ajax_update";
     }
     else if(save_method == 'update-privileges') 
     {
         // change form for add stock to form_add_stock
         $form = '#form_privileges';
-        url = "users/users_controller/ajax_privileges_update";
+        url = "Users/Users_controller/ajax_privileges_update";
     }
  
     // ajax adding data to database
@@ -1458,7 +1458,7 @@ function set_system_log(log_type, details)
     var cleanString = details.replace(/[|&;$%@"<>()+,]/g, "");
 
     $.ajax({
-        url : "logs/logs_controller/ajax_add/" + log_type + '/' + cleanString,
+        url : "Logs/Logs_controller/ajax_add/" + log_type + '/' + cleanString,
         type: "POST",
         dataType: "JSON",
         success: function(data)
@@ -1479,7 +1479,7 @@ function set_system_log_one(log_type, details)
     var cleanString = details.replace(/[|&;$%@"<>()+,]/g, "");
 
     $.ajax({
-        url : "../logs/logs_controller/ajax_add/" + log_type + '/' + cleanString,
+        url : "../Logs/Logs_controller/ajax_add/" + log_type + '/' + cleanString,
         type: "POST",
         dataType: "JSON",
         success: function(data)
@@ -1500,7 +1500,7 @@ function set_system_log_two(log_type, details)
     var cleanString = details.replace(/[|&;$%@"<>()+,]/g, "");
 
     $.ajax({
-        url : "../../logs/logs_controller/ajax_add/" + log_type + '/' + cleanString,
+        url : "../../Logs/Logs_controller/ajax_add/" + log_type + '/' + cleanString,
         type: "POST",
         dataType: "JSON",
         success: function(data)
@@ -1521,7 +1521,7 @@ function set_system_log_three(log_type, details)
     var cleanString = details.replace(/[|&;$%@"<>()+,]/g, "");
 
     $.ajax({
-        url : "../../../logs/logs_controller/ajax_add/" + log_type + '/' + cleanString,
+        url : "../../../Logs/Logs_controller/ajax_add/" + log_type + '/' + cleanString,
         type: "POST",
         dataType: "JSON",
         success: function(data)
@@ -1549,7 +1549,7 @@ function delete_client(id, name)
     {
         // ajax delete data to database
         $.ajax({
-            url : "clients/clients_controller/ajax_delete/"+id,
+            url : "Clients/Clients_controller/ajax_delete/"+id,
             type: "POST",
             dataType: "JSON",
             success: function(data)
@@ -1578,7 +1578,7 @@ function delete_company(id, name)
     {
         // ajax delete data to database
         $.ajax({
-            url : "companies/companies_controller/ajax_delete/"+id,
+            url : "Companies/Companies_controller/ajax_delete/"+id,
             type: "POST",
             dataType: "JSON",
             success: function(data)
@@ -1608,7 +1608,7 @@ function delete_atm(id, name)
     {
         // ajax delete data to database
         $.ajax({
-            url : "atm/atm_controller/ajax_delete/"+id,
+            url : "Atm/Atm_controller/ajax_delete/"+id,
             type: "POST",
             dataType: "JSON",
             success: function(data)
@@ -1638,7 +1638,7 @@ function delete_loan(id)
     {
         // ajax delete data to database
         $.ajax({
-            url : "../profiles/profiles_controller/ajax_delete/"+id,
+            url : "../Profiles/Profiles_controller/ajax_delete/"+id,
             type: "POST",
             dataType: "JSON",
             success: function(data)
@@ -1669,7 +1669,7 @@ function delete_schedule(id)
     {
         // ajax delete data to database
         $.ajax({
-            url : "schedules/schedules_controller/ajax_delete/"+id,
+            url : "Schedules/Schedules_controller/ajax_delete/"+id,
             type: "POST",
             dataType: "JSON",
             success: function(data)
@@ -1699,7 +1699,7 @@ function delete_user(id)
     {
         // ajax delete data to database
         $.ajax({
-            url : "users/users_controller/ajax_delete/"+id,
+            url : "Users/Users_controller/ajax_delete/"+id,
             type: "POST",
             dataType: "JSON",
             success: function(data)

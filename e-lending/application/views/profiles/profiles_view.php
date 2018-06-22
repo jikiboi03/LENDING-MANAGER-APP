@@ -56,7 +56,7 @@
                             <img id="image1" src=<?php echo "'" . "../uploads/pic1/" . $client->pic1 . "'"; ?>  style="width:200px; max-height: 275px; margin-left:20px;">
                         <?php } ?>
                         
-                        <?php echo form_open_multipart('profiles/profiles_controller/do_upload');?> 
+                        <?php echo form_open_multipart('Profiles/Profiles_controller/do_upload');?> 
                           <form action = "" method = "">
                             <input type="hidden" value=<?php echo "'" . $client->client_id . "'"; ?> name="client_id"/> 
                              <br />  
@@ -178,7 +178,7 @@
                                 <img id="image2" src=<?php echo "'" . "../uploads/pic2/" . $client->pic2 . "'"; ?>  style="width:280px; max-height: 400px; margin-left:20px;">
                             <?php } ?>
                             
-                            <?php echo form_open_multipart('profiles/profiles_controller/do_upload_2');?> 
+                            <?php echo form_open_multipart('Profiles/Profiles_controller/do_upload_2');?> 
                               <form action = "" method = "">
                                 <input type="hidden" value=<?php echo "'" . $client->client_id . "'"; ?> name="client_id"/> 
                                  <br />  
@@ -198,7 +198,7 @@
                                 <img id="image3" src=<?php echo "'" . "../uploads/pic3/" . $client->pic3 . "'"; ?>  style="width:280px; max-height: 400px; margin-left:20px;">
                             <?php } ?>
                             
-                            <?php echo form_open_multipart('profiles/profiles_controller/do_upload_3');?> 
+                            <?php echo form_open_multipart('Profiles/Profiles_controller/do_upload_3');?> 
                               <form action = "" method = "">
                                 <input type="hidden" value=<?php echo "'" . $client->client_id . "'"; ?> name="client_id"/> 
                                  <br />  
