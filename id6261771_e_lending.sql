@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 25, 2018 at 03:19 PM
+-- Generation Time: Jul 06, 2018 at 06:34 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.0.26
 
@@ -46,7 +46,8 @@ INSERT INTO `atm_banks` (`atm_id`, `name`, `branch`, `remarks`, `encoded`, `remo
 (102, 'Security Bank', 'Lanang, Claveria. Ecoland', '', '2018-04-08 22:32:26', 0),
 (103, 'Land bank of the Philippines', 'Lanang, Bajada, Matina', 'Government Owned', '2018-04-08 22:51:29', 0),
 (104, 'Union Bank of the Philippines', 'Victoria, ADDU Jacinto, Bankerohan', '', '2018-05-23 22:19:31', 0),
-(105, 'Philippine National Bank', 'ADDU Jacinto, San Pedro, Agdao, Victoria, Lanang, NCCC Uyanguren', '', '2018-05-23 22:23:39', 0);
+(105, 'Philippine National Bank', 'ADDU Jacinto, San Pedro, Agdao, Victoria, Lanang, NCCC Uyanguren', '', '2018-05-23 22:23:39', 0),
+(106, 'CTBC Bank', 'Bancnet ATM Machines', 'Provided by a manpower agency', '2018-07-01 08:40:52', 0);
 
 -- --------------------------------------------------------
 
@@ -111,7 +112,7 @@ INSERT INTO `clients` (`client_id`, `comp_id`, `atm_id`, `atm_type`, `lname`, `f
 (10002, 105, 103, 'Savings', 'N/A', 'ZANDRO', 'n/a', '0000', 'Male', 'Data Encoder', 8500.00, 'n/a', 'Unknown Last name, ATM pin, DENR contract finished', '', '', '', '2018-04-08 23:22:14', 0),
 (10003, 104, 102, 'Savings', 'ALDERITE', 'ROSE ANN', '+639506619197', '0000', 'Female', 'Associate', 17000.00, 'Mandug / Calinan, Davao City', '', '10003.jpg', '', '', '2018-04-09 02:57:21', 0),
 (10004, 104, 102, 'Savings', 'ZABATE', 'KAREN JANE', '+639198677806', '2330', 'Female', 'Associate', 17000.00, 'Central Park Bangkal, Davao City', '', '10004.jpg', '', '', '2018-04-09 16:44:58', 0),
-(10005, 102, 104, 'Savings', 'ABDULLAH', 'FARHANA BINT', 'n/a', '040501', 'Female', 'Associate', 15000.00, 'Jacinto Blvd, Davao City', 'No ATM card surrendered, unknown card type and pin, ', '10005.jpg', '10005.jpg', '', '2018-04-09 16:56:42', 0),
+(10005, 103, 104, 'Savings', 'ABDULLAH', 'FARHANA BINT', 'n/a', '040501', 'Female', 'Associate', 15000.00, 'Jacinto Blvd, Davao City', 'No ATM card surrendered, unknown card type and pin, ', '10005.jpg', '10005.jpg', '', '2018-04-09 16:56:42', 0),
 (10006, 104, 102, 'Savings', 'ANGELES', 'RUBY', '+639321356019', '0000', 'Female', 'Associate', 17000.00, 'Brgy. 37 Bucana Trading Blvd, Davao City', 'Currently not connected to VXI', '', '', '', '2018-04-09 18:05:50', 0),
 (10007, 104, 102, 'Savings', 'ABUNDA', 'ERIKA ANNE', '+639567134705', '0331', 'Female', 'Associate', 17000.00, 'Buhangin, Davao City', '', '10007.jpg', '', '', '2018-04-09 18:21:50', 0),
 (10008, 104, 102, 'Savings', 'GESTA', 'JOEY MICHAEL', 'n/a', '2468', 'Male', 'Associate', 17000.00, 'n/a', 'No ATM surrendered, unknown basic details.', '', '10008.jpg', '', '2018-04-09 18:29:56', 0),
@@ -125,7 +126,9 @@ INSERT INTO `clients` (`client_id`, `comp_id`, `atm_id`, `atm_type`, `lname`, `f
 (10016, 103, 104, 'Savings', 'PRESENTE', 'JAYRRAH PRAISE A.', '09076147056', '048498', 'Female', 'Associate', 16000.00, 'Deca Mulig Toril or Emily homes, Cabantian, Davao City', 'Referred by Esneyra Bayani. Workmate in IBEX with same account', '10016.jpg', '10016.jpg', '', '2018-05-29 12:03:38', 0),
 (10017, 103, 104, 'Savings', 'PADILLA', 'SHAHANA ROSE', '09462554998', '042893', 'Female', 'Associate', 16000.00, 'Park Naraa, Visayan Village, Tagum City', 'FB name: Pepatz Da Padi. Friend and workmate of Farhanna Bint Abdulla.', '10017.jpg', '10017.jpg', '', '2018-06-09 21:44:24', 0),
 (10018, 103, 104, 'Savings', 'GABORNO', 'JESSA MAE', '09480834811', '006810', 'Female', 'Associate', 16000.00, 'Sto Nino Makilala North Cotabato\r\n', 'Boarder of Yanny, Friend and referred by Bint', '10018.jpg', '10018.jpg', '', '2018-06-14 22:31:45', 0),
-(10019, 103, 104, 'Savings', 'CLARKSON', 'JESSICA', '09219346064 / 09105804525', '170295', 'Female', 'Associate', 16000.00, 'Blk 13-B Do?a Mercedes Street San Miguel Village Panacan Davao City.', 'Friend of Bint \"Pie\" and Jessa Gaborno', '10019.jpg', '10019.jpg', '', '2018-06-14 22:34:20', 0);
+(10019, 103, 104, 'Savings', 'CLARKSON', 'JESSICA', '09219346064 / 09105804525', '170295', 'Female', 'Associate', 16000.00, 'Blk 13-B Do?a Mercedes Street San Miguel Village Panacan Davao City.', 'Friend of Bint \"Pie\" and Jessa Gaborno', '10019.jpg', '10019.jpg', '', '2018-06-14 22:34:20', 0),
+(10020, 101, 101, 'Savings', 'CAYANONG', 'GENEFLOR', '09176072194', '0000', 'Female', 'No Job', 0.00, 'Arguelles Subd., Panabo City', 'No ATM surrendered, vouched by Brox', '', '', '', '2018-06-26 09:51:14', 0),
+(10021, 101, 101, 'Savings', 'CABANG', 'ROSEY ANDREA', '09059274544', '7706', 'Female', 'Sales Lady', 9000.00, 'Blk 1 Lot 21 Rambutan St. Phase 2. NHA Bangkal Davao City', 'Daughter of Reysel Cabang', '', '', '', '2018-07-01 08:32:23', 0);
 
 -- --------------------------------------------------------
 
@@ -151,7 +154,8 @@ INSERT INTO `companies` (`comp_id`, `name`, `address`, `remarks`, `encoded`, `re
 (102, 'Sutherland Global Services Inc.', 'Quirino, Davao City', 'BPO Company', '2018-04-08 22:41:30', 0),
 (103, 'IBEX Global', 'SM Lanang Premiere, Davao City', 'BPO Company', '2018-04-08 22:43:29', 0),
 (104, 'VXI Global Solutions, LLC - SM Ecoland', 'SM Ecoland, Davao City', 'BPO Company', '2018-04-08 22:44:29', 0),
-(105, 'DENR LMS XI', 'Bangkal, Davao City', 'Government Agency', '2018-04-08 22:50:10', 0);
+(105, 'DENR LMS XI', 'Bangkal, Davao City', 'Government Agency', '2018-04-08 22:50:10', 0),
+(106, 'Fubu - SM City Davao', 'SM Ecoland, Davao City', 'Apparel Store', '2018-07-01 08:37:21', 0);
 
 -- --------------------------------------------------------
 
@@ -218,19 +222,22 @@ INSERT INTO `loans` (`loan_id`, `client_id`, `amount`, `interest`, `total`, `sta
 (10037, 10015, 2500.00, 175.00, 2675.00, 3, '2018-05-23', '2018-06-05', 2675.00, 0.00, 'Payment source is thru pension via PNB ATM card', '2018-05-23 23:21:16'),
 (10038, 10008, 2000.00, 140.00, 2140.00, 3, '2018-05-25', '2018-06-14', 2140.00, 0.00, 'New trans after a long time', '2018-05-25 22:06:16'),
 (10039, 10016, 8000.00, 560.00, 8560.00, 3, '2018-05-29', '2018-06-25', 8560.00, 0.00, 'According to her, for her mother\'s hospital finances', '2018-05-29 21:10:12'),
-(10040, 10013, 15000.00, 1050.00, 16050.00, 2, '2018-05-31', 'n/a', 3000.00, 13050.00, 'New loan right away after last loan paid', '2018-05-31 23:03:12'),
-(10041, 10004, 15000.00, 1050.00, 16050.00, 2, '2018-06-06', 'n/a', 4150.00, 11900.00, 'New loan right after full payment of the previous', '2018-06-06 22:08:06'),
+(10040, 10013, 15000.00, 1050.00, 16050.00, 2, '2018-05-31', 'n/a', 8300.00, 8300.00, 'New loan right away after last loan paid', '2018-05-31 23:03:12'),
+(10041, 10004, 15000.00, 1050.00, 16050.00, 2, '2018-06-06', 'n/a', 8450.00, 8130.00, 'New loan right after full payment of the previous', '2018-06-06 22:08:06'),
 (10042, 10017, 5000.00, 350.00, 5350.00, 3, '2018-06-09', '2018-06-25', 5350.00, 0.00, 'money was sent by Bint', '2018-06-09 21:53:24'),
 (10043, 10005, 5000.00, 350.00, 5350.00, 2, '2018-06-11', 'n/a', 2700.00, 2650.00, '', '2018-06-12 19:28:04'),
 (10044, 10018, 5000.00, 350.00, 5350.00, 3, '2018-06-14', '2018-06-25', 5350.00, 0.00, '', '2018-06-14 23:14:57'),
 (10045, 10019, 4000.00, 280.00, 4280.00, 2, '2018-06-14', 'n/a', 2140.00, 2140.00, '', '2018-06-14 23:15:36'),
 (10046, 10009, 3000.00, 210.00, 3210.00, 3, '2018-06-14', '2018-06-25', 3210.00, 0.00, '', '2018-06-14 23:17:03'),
-(10047, 10008, 3000.00, 210.00, 3210.00, 1, '2018-06-20', 'n/a', 0.00, 3210.00, '', '2018-06-20 09:35:41'),
-(10048, 10007, 2000.00, 140.00, 2140.00, 1, '2018-06-22', 'n/a', 0.00, 2140.00, 'Initial 2k of 6k loan to be completed on June 25', '2018-06-22 02:10:37'),
+(10047, 10008, 3000.00, 210.00, 3210.00, 2, '2018-06-20', 'n/a', 1500.00, 1710.00, '', '2018-06-20 09:35:41'),
+(10048, 10007, 2000.00, 140.00, 2140.00, 2, '2018-06-22', 'n/a', 1000.00, 1140.00, 'Initial 2k of 6k loan to be completed on June 25', '2018-06-22 02:10:37'),
 (10049, 10018, 5000.00, 350.00, 5350.00, 1, '2018-06-25', 'n/a', 0.00, 5350.00, '', '2018-06-25 04:32:40'),
 (10050, 10017, 5000.00, 350.00, 5350.00, 1, '2018-06-25', 'n/a', 0.00, 5350.00, '', '2018-06-25 04:39:47'),
 (10051, 10016, 5000.00, 350.00, 5350.00, 1, '2018-06-25', 'n/a', 0.00, 5350.00, '', '2018-06-25 14:41:36'),
-(10052, 10007, 4000.00, 280.00, 4280.00, 1, '2018-06-25', 'n/a', 0.00, 4280.00, '', '2018-06-25 14:47:48');
+(10052, 10007, 4000.00, 280.00, 4280.00, 1, '2018-06-25', 'n/a', 0.00, 4280.00, '', '2018-06-25 14:47:48'),
+(10053, 10020, 5000.00, 350.00, 5350.00, 1, '2018-06-26', 'n/a', 0.00, 5350.00, 'Custom due date July 15, 2018', '2018-06-26 09:55:22'),
+(10054, 10021, 5000.00, 350.00, 5350.00, 2, '2018-06-29', 'n/a', 1500.00, 3850.00, '', '2018-07-01 08:49:23'),
+(10055, 10009, 5000.00, 350.00, 5350.00, 2, '2018-07-04', 'n/a', 3210.00, 8560.00, 'She will skip July 10 payment', '2018-07-04 04:07:35');
 
 -- --------------------------------------------------------
 
@@ -647,7 +654,54 @@ INSERT INTO `logs` (`log_id`, `user_fullname`, `log_type`, `details`, `date_time
 (1000394, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10046%20of%20Client:%20BAYANI%20ESNEYRA', '2018-06-25 14:35:42'),
 (1000395, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10039%20of%20Client:%20PRESENTE%20JAYRRAH%20PRAISE%20A.', '2018-06-25 14:40:31'),
 (1000396, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10016:%20PRESENTE%20JAYRRAH%20PRAISE%20A.', '2018-06-25 14:41:37'),
-(1000397, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10007:%20ABUNDA%20ERIKA%20ANNE', '2018-06-25 14:47:48');
+(1000397, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10007:%20ABUNDA%20ERIKA%20ANNE', '2018-06-25 14:47:48'),
+(1000398, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-06-26 01:19:59'),
+(1000399, 'TORRES, JIK', 'Add', 'New%20schedule%20added:%20VXI%20-%20SM%20Ecoland%20Payday', '2018-06-26 01:23:11'),
+(1000400, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-06-26 05:54:12'),
+(1000401, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-06-26 09:48:19'),
+(1000402, 'TORRES, JIK', 'Add', 'New%20client%20record%20added:%20CAYANONG%20GENEFLOR', '2018-06-26 09:51:14'),
+(1000403, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10020:%20CAYANONG%20GENEFLOR', '2018-06-26 09:55:22'),
+(1000404, 'TORRES, JIK', 'Update', 'Client%20updated%20C10020:%20CAYANONG%20GENEFLOR', '2018-06-26 09:56:26'),
+(1000405, 'TORRES, JIK', 'Logout', 'System user logout as Administrator', '2018-06-26 10:00:34'),
+(1000406, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-06-26 14:58:27'),
+(1000407, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-06-27 14:19:56'),
+(1000408, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-06-28 01:08:42'),
+(1000409, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-06-28 14:25:12'),
+(1000410, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10041%20of%20Client:%20ZABATE%20KAREN%20JANE', '2018-06-28 14:30:07'),
+(1000411, 'TORRES, JIK', 'Add', 'New%20interest%20added%20to%20Loan%20ID:%20L10041%20of%20Client:%20ZABATE%20KAREN%20JANE', '2018-06-28 14:33:27'),
+(1000412, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10040%20of%20Client:%20BIWANG%20JUHAIRY', '2018-06-28 14:36:28'),
+(1000413, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10048%20of%20Client:%20ABUNDA%20ERIKA%20ANNE', '2018-06-28 14:42:44'),
+(1000414, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10047%20of%20Client:%20GESTA%20JOEY%20MICHAEL', '2018-06-28 14:45:52'),
+(1000415, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-06-29 01:08:14'),
+(1000416, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-06-29 07:39:49'),
+(1000417, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-07-01 08:01:30'),
+(1000418, 'TORRES, JIK', 'Add', 'New%20client%20record%20added:%20CABANG%20ROSEY%20ANDREA', '2018-07-01 08:32:24'),
+(1000419, 'TORRES, JIK', 'Add', 'New%20company%20added:%20Fubu%20-%20SM%20City%20Davao', '2018-07-01 08:37:22'),
+(1000420, 'TORRES, JIK', 'Update', 'Company%20updated%20J106:%20Fubu%20-%20SM%20City%20Davao%20to%20Fubu%20-%20SM%20City%20Davao', '2018-07-01 08:37:42'),
+(1000421, 'TORRES, JIK', 'Update', 'Client%20updated%20C10005:%20ABDULLAH%20FARHANA%20BINT', '2018-07-01 08:38:30'),
+(1000422, 'TORRES, JIK', 'Add', 'New%20ATM%20bank%20added:%20CTBC%20Bank', '2018-07-01 08:40:52'),
+(1000423, 'TORRES, JIK', 'Update', 'ATM%20Bank%20updated%20A106:%20CTBC%20Bank%20to%20CTBC%20Bank', '2018-07-01 08:41:11'),
+(1000424, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10021:%20CABANG%20ROSEY%20ANDREA', '2018-07-01 08:49:23'),
+(1000425, 'TORRES, JIK', 'Update', 'Loan%20updated%20to:%20C10021:%20CABANG%20ROSEY%20ANDREA', '2018-07-01 08:49:34'),
+(1000426, 'TORRES, JIK', 'Add', 'New%20schedule%20added:%20Rosey%20Cabang%20payment', '2018-07-01 08:55:50'),
+(1000427, 'TORRES, JIK', 'Add', 'New%20schedule%20added:%20Geneflor%20Payment', '2018-07-01 08:56:49'),
+(1000428, 'TORRES, JIK', 'Update', 'Schedule%20updated%20S16:%20Geneflor%20Cayanong%20Payment', '2018-07-01 08:57:06'),
+(1000429, 'TORRES, JIK', 'Update', 'ATM%20Bank%20updated%20A106:%20CTBC%20Bank%20to%20CTBC%20Bank', '2018-07-01 09:01:21'),
+(1000430, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-07-02 01:47:20'),
+(1000431, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-07-03 01:39:46');
+INSERT INTO `logs` (`log_id`, `user_fullname`, `log_type`, `details`, `date_time`) VALUES
+(1000432, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-07-04 03:26:02'),
+(1000433, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10009:%20BAYANI%20ESNEYRA', '2018-07-04 04:07:35'),
+(1000434, 'TORRES, JIK', 'Update', 'New%20loan%20adjustment%20to%20Loan%20ID:%20L10055%20of%20Client:%20BAYANI%20ESNEYRA', '2018-07-04 04:09:01'),
+(1000435, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10055%20of%20Client:%20BAYANI%20ESNEYRA', '2018-07-04 04:31:35'),
+(1000436, 'TORRES, JIK', 'Update', 'New%20loan%20adjustment%20to%20Loan%20ID:%20L10055%20of%20Client:%20BAYANI%20ESNEYRA', '2018-07-04 04:32:00'),
+(1000437, 'TORRES, JIK', 'Add', 'New%20interest%20added%20to%20Loan%20ID:%20L10055%20of%20Client:%20BAYANI%20ESNEYRA', '2018-07-04 04:32:23'),
+(1000438, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-07-05 03:01:31'),
+(1000439, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10054%20of%20Client:%20CABANG%20ROSEY%20ANDREA', '2018-07-05 03:03:25'),
+(1000440, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-07-05 06:32:47'),
+(1000441, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-07-05 10:28:31'),
+(1000442, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-07-06 01:09:18'),
+(1000443, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-07-06 06:34:46');
 
 -- --------------------------------------------------------
 
@@ -682,7 +736,10 @@ INSERT INTO `schedules` (`sched_id`, `title`, `date`, `time`, `remarks`, `userna
 (10, 'VXI - SM Ecoland Payday', '2018-06-14', '18:00', 'Karen, Juh, Joey', 'um_developer', '2018-06-03 22:05:02'),
 (11, 'IBEX pay day', '2018-06-25', '18:00', 'Jayrahh, Shahana, Bint, Jessa, Jessica, Yanny', 'um_developer', '2018-06-12 19:36:04'),
 (12, 'VXI - SM Ecoland Payday', '2018-06-28', '18:00', 'Karen, Juh, Joey, Erika', 'um_developer', '2018-06-20 21:44:43'),
-(13, 'IBEX payday', '2018-07-10', '18:00', 'Bint, Yanny, Jayrrah, Jessa, Jessica', 'um_developer', '2018-06-22 06:20:32');
+(13, 'IBEX payday', '2018-07-10', '18:00', 'Bint, Yanny, Jayrrah, Jessa, Jessica', 'um_developer', '2018-06-22 06:20:32'),
+(14, 'VXI - SM Ecoland Payday', '2018-07-12', '18:00', 'Karen, Juh, Erika, Joey', 'um_developer', '2018-06-26 01:23:10'),
+(15, 'Rosey Cabang payment', '2018-07-04', '18:00', 'Reysel Cabang will get the money to my office', 'um_developer', '2018-07-01 08:55:50'),
+(16, 'Geneflor Cayanong Payment', '2018-07-15', '18:00', 'She will pay personally since no ATM is surrendered', 'um_developer', '2018-07-01 08:56:49');
 
 -- --------------------------------------------------------
 
@@ -857,7 +914,21 @@ INSERT INTO `transactions` (`trans_id`, `loan_id`, `date`, `type`, `amount`, `in
 (100148, 10046, '2018-06-25', 3, -3210.00, 0.00, 0.00, '', '2018-06-25 14:35:41'),
 (100149, 10039, '2018-06-25', 3, -8560.00, 0.00, 0.00, 'Paid full to add new loan', '2018-06-25 14:40:30'),
 (100150, 10051, '2018-06-25', 1, 5000.00, 350.00, 5350.00, '', '2018-06-25 14:41:36'),
-(100151, 10052, '2018-06-25', 1, 4000.00, 280.00, 4280.00, '', '2018-06-25 14:47:48');
+(100151, 10052, '2018-06-25', 1, 4000.00, 280.00, 4280.00, '', '2018-06-25 14:47:48'),
+(100152, 10053, '2018-06-26', 1, 5000.00, 350.00, 5350.00, 'Custom due date July 15, 2018', '2018-06-26 09:55:22'),
+(100153, 10041, '2018-06-28', 2, -4300.00, 0.00, 7600.00, '', '2018-06-28 14:30:07'),
+(100154, 10041, '2018-06-28', 4, 0.00, 530.00, 8130.00, '', '2018-06-28 14:33:26'),
+(100155, 10040, '2018-06-28', 2, -5300.00, 0.00, 7750.00, '', '2018-06-28 14:36:27'),
+(100156, 10040, '2018-06-28', 4, 0.00, 550.00, 8300.00, '', '2018-06-28 14:37:15'),
+(100157, 10048, '2018-06-28', 2, -1000.00, 0.00, 1140.00, '', '2018-06-28 14:42:43'),
+(100158, 10047, '2018-06-28', 2, -1500.00, 0.00, 1710.00, '', '2018-06-28 14:45:51'),
+(100159, 10054, '2018-06-29', 1, 5000.00, 350.00, 5350.00, '', '2018-07-01 08:49:23'),
+(100160, 10055, '2018-07-04', 1, 5000.00, 350.00, 5350.00, 'She will skip July 10 payment', '2018-07-04 04:07:35'),
+(100161, 10055, '2018-07-04', 5, 3210.00, 0.00, 8560.00, '8000 total', '2018-07-04 04:09:01'),
+(100162, 10055, '2018-07-04', 2, -3210.00, 0.00, 5350.00, 'Undo mistake', '2018-07-04 04:31:34'),
+(100163, 10055, '2018-07-04', 5, 3000.00, 0.00, 8350.00, '', '2018-07-04 04:32:00'),
+(100164, 10055, '2018-07-04', 4, 0.00, 210.00, 8560.00, '', '2018-07-04 04:32:22'),
+(100165, 10054, '2018-07-05', 2, -1500.00, 0.00, 3850.00, '', '2018-07-05 03:03:25');
 
 -- --------------------------------------------------------
 
@@ -967,7 +1038,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `atm_banks`
 --
 ALTER TABLE `atm_banks`
-  MODIFY `atm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `atm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT for table `capital`
@@ -979,37 +1050,37 @@ ALTER TABLE `capital`
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10020;
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10022;
 
 --
 -- AUTO_INCREMENT for table `companies`
 --
 ALTER TABLE `companies`
-  MODIFY `comp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `comp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT for table `loans`
 --
 ALTER TABLE `loans`
-  MODIFY `loan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10053;
+  MODIFY `loan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10056;
 
 --
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000398;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000444;
 
 --
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `sched_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `sched_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100152;
+  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100166;
 
 --
 -- AUTO_INCREMENT for table `users`
