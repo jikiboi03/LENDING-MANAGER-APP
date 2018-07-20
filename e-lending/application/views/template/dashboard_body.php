@@ -122,8 +122,8 @@
                     
                     
 
-
-
+                    <div class="col-md-10"></div>
+                    <button class="control-label col-md-2 btn btn-default" onclick="back_up_db()" style="font-size: 14px;"><i class="fa fa-database"></i> &nbsp;Backup Database</button><hr>
                     
 
 

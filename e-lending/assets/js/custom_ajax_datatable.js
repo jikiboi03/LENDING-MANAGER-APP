@@ -512,6 +512,21 @@ $('#modal_form_view').on('hidden.bs.modal', function(){
     $("#userfile").val("");
 });
 
+// ============================================================ DASHBOARD BACKUP DB SECTION =======================================
+
+
+function back_up_db()
+{
+    bootbox.confirm("BACKUP DATABASE?", function(result){
+
+      if (result == true)
+      {
+        window.location.href='database-backup.php';
+      }
+
+    });
+}
+
 
 // ================================================================== VIEW IMAGE SECTION ==========================================
 
