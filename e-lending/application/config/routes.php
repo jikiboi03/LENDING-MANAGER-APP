@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['default_controller'] = 'Login_controller/index';
 $route['404_override'] = '';
-$route['error500'] = 'error_controller';
+$route['error500'] = 'Login_controller/index';
 $route['translate_uri_dashes'] = TRUE;
 
 
