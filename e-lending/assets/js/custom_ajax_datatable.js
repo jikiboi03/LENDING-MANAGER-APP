@@ -381,7 +381,17 @@ $(document).ready(function()
 
                   // set color based on log type
                   if (has_balance != 0) {
-                     $node.css('background-color', '#ffff66');
+                    //  $node.css('background-color', '#ffff66');
+                    function isOdd(num) { return num % 2;}
+                    
+                    if (isOdd(index) == 1) // to have different color when changed color is in sequence
+                    {
+                      $node.css('background-color', '#ffffcc');
+                    }
+                    else
+                    {
+                      $node.css('background-color', '#ffff99');
+                    }
                   }
 
                 },   
