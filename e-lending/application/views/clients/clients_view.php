@@ -50,7 +50,7 @@
                                         <th>Contact</th>
                                         <th>Company</th>
                                         <th>ATM Bank</th>
-                                        <th>ATM Type</th>
+                                        <th>Balance</th>
                                         <th>Pin</th>
 
                                         <th style="width:90px;">Action</th>

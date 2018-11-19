@@ -91,6 +91,19 @@ class Loans_model extends CI_Model {
         return $query->result();
     }
 
+    function get_client_total_balance($client_id)
+    {
+        $this->db->select('SUM(balance) AS balance');
+        $this->db->from($this->table);
+        $this->db->where('client_id',$client_id);
+
+        $query = $this->db->get();
+
+        $row = $query->row();
+
+        return $row->balance;
+    }
+
     // check for new or ongoing loan transaction
     function has_active_loan($client_id)
     {

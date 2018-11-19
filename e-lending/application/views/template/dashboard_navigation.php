@@ -113,7 +113,7 @@
                                         <a href="<?php echo base_url();?>companies-page">
                                             <i class="fa fa-building"></i>
                                             <strong><span class="menu-title">Companies</span></strong>
-                                            <span class="label label-danger pull-right">Admin</span>
+                                            
                                         </a>
                                     </li>
 
@@ -123,7 +123,7 @@
                                         <a href="<?php echo base_url();?>companies-page">
                                             <i class="fa fa-building"></i>
                                             <span class="menu-title">Companies</span>
-                                            <span class="label label-danger pull-right">Admin</span>
+                                            
                                         </a>
                                     </li>
 
@@ -144,7 +144,7 @@
                                         <a href="<?php echo base_url();?>atm-page">
                                             <i class="fa fa-university"></i>
                                             <strong><span class="menu-title">ATM Banks</span></strong>
-                                            <span class="label label-danger pull-right">Admin</span>
+                                            
                                         </a>
                                     </li>
 
@@ -154,7 +154,7 @@
                                         <a href="<?php echo base_url();?>atm-page">
                                             <i class="fa fa-university"></i>
                                             <span class="menu-title">ATM Banks</span>
-                                            <span class="label label-danger pull-right">Admin</span>
+                                            
                                         </a>
                                     </li>
 
@@ -175,7 +175,7 @@
                                         <a href="<?php echo base_url();?>clients-page">
                                             <i class="fa fa-users"></i>
                                             <strong><span class="menu-title">Clients</span></strong>
-                                            <span class="label label-danger pull-right">Admin</span>
+                                            
                                         </a>
                                     </li>
 
@@ -185,7 +185,7 @@
                                         <a href="<?php echo base_url();?>clients-page">
                                             <i class="fa fa-users"></i>
                                             <span class="menu-title">Clients</span>
-                                            <span class="label label-danger pull-right">Admin</span>
+                                            
                                         </a>
                                     </li>
 
@@ -206,7 +206,7 @@
                                         <a href="<?php echo base_url();?>capital-page">
                                             <i class="fa fa-money"></i>
                                             <strong><span class="menu-title">Capital</span></strong>
-                                            <span class="label label-danger pull-right">Admin</span>
+                                            <span class="label label-danger pull-right">sudo</span>
                                         </a>
                                     </li>
 
@@ -216,7 +216,7 @@
                                         <a href="<?php echo base_url();?>capital-page">
                                             <i class="fa fa-money"></i>
                                             <span class="menu-title">Capital</span>
-                                            <span class="label label-danger pull-right">Admin</span>
+                                            <span class="label label-danger pull-right">sudo</span>
                                         </a>
                                     </li>
 
@@ -247,33 +247,23 @@
                                     <?php if($this->uri->segment(1) == 'users-page'){ ?>
 
                                     <li class="active-link">
-                                        <a href="#">
+                                        <a href="<?php echo base_url();?>users-page">
                                             <i class="fa fa-user-circle"></i>
                                             <strong><span class="menu-title">Users</span></strong>
-                                            <span class="label label-danger pull-right">Admin</span>
+                                            <span class="label label-danger pull-right">sudo</span>
                                             
                                         </a>
-                                    
-                                        <!--Submenu-->
-                                        <ul class="collapse">
-                                            <li><a href="<?php echo base_url();?>users-page">Show List</a></li>
-                                        </ul>
                                     </li>
 
                                     <?php }else{ ?>
 
                                     <li>
-                                        <a href="#">
+                                        <a href="<?php echo base_url();?>users-page">
                                             <i class="fa fa-user-circle"></i>
                                             <span class="menu-title">Users</span>
-                                            <span class="label label-danger pull-right">Admin</span>
+                                            <span class="label label-danger pull-right">sudo</span>
                                             
                                         </a>
-                                    
-                                        <!--Submenu-->
-                                        <ul class="collapse">
-                                            <li><a href="<?php echo base_url();?>users-page">Show List</a></li>
-                                        </ul>
                                     </li>
 
                                     <?php } ?>
@@ -319,31 +309,7 @@
 
                                     <!--Menu list item-->
                                     
-                                    <?php if($this->session->userdata('administrator') == '1'): ?>
-
-                                    <?php if($this->uri->segment(1) == 'reports-page'){ ?>
-
-                                    <li class="active-link">
-                                        <a href="<?php echo base_url();?>reports-page">
-                                            <i class="fa fa-file"></i>
-                                            <strong><span class="menu-title">Reports</span></strong>
-                                            <span class="label label-danger pull-right">Admin</span>
-                                        </a>
-                                    </li>
-
-                                    <?php }else{ ?>
-
-                                    <li>
-                                        <a href="<?php echo base_url();?>reports-page">
-                                            <i class="fa fa-file"></i>
-                                            <span class="menu-title">Reports</span>
-                                            <span class="label label-danger pull-right">Admin</span>
-                                        </a>
-                                    </li>
-
-                                    <?php } ?>
-
-                                    <?php endif ?>
+                                    <!-- REPORTS -->
 
 
 
@@ -352,31 +318,19 @@
                                     <?php if($this->uri->segment(1) == 'schedules-page'){ ?>
 
                                     <li class="active-link">
-                                        <a href="#">
+                                        <a href="<?php echo base_url();?>schedules-page">
                                             <i class="fa fa-clock-o"></i>
                                             <strong><span class="menu-title">Schedules</span></strong>
-                                            <i class="arrow"></i>
                                         </a>
-                                    
-                                        <!--Submenu-->
-                                        <ul class="collapse">
-                                            <li><a href="<?php echo base_url();?>schedules-page">Schedules</a></li>
-                                        </ul>
                                     </li>
 
                                     <?php }else{ ?>
 
                                     <li>
-                                        <a href="#">
+                                        <a href="<?php echo base_url();?>schedules-page">
                                             <i class="fa fa-clock-o"></i>
                                             <span class="menu-title">Schedules</span>
-                                            <i class="arrow"></i>
                                         </a>
-                                    
-                                        <!--Submenu-->
-                                        <ul class="collapse">
-                                            <li><a href="<?php echo base_url();?>schedules-page">Show List</a></li>
-                                        </ul>
                                     </li>
 
                                     <?php } ?>
@@ -385,54 +339,7 @@
 
                                     <!--Menu list item-->
                                     
-
-                                    <?php if($this->uri->segment(1) == 'notifications-page'){ ?>
-
-                                    <li class="active-link">
-                                        <a href="#">
-                                            <i class="fa fa-bell"></i>
-                                            <strong><span class="menu-title">Notifications</span></strong>
-                                            <i class="arrow"></i>
-                                        </a>
-                                    
-                                        <!--Submenu-->
-                                        <ul class="collapse">
-                                            <li><a href="<?php echo base_url();?>notifications-page/notifications-monthly-page">No Monthly Checkup</a>
-                                            </li>                                            
-                                            <li><a href="<?php echo base_url();?>notifications-page/notifications-quarterly-page">No HVI (Quarterly)</a>
-                                            </li>
-                                            <li><a href="<?php echo base_url();?>notifications-page/notifications-deworming-page">No Deworming</a>
-                                            </li>
-                                            <li><a href="<?php echo base_url();?>notifications-page/notifications-severe-page">Severe Malnutrition</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-
-                                    <?php }else{ ?>
-
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-bell"></i>
-                                            <span class="menu-title">Notifications</span>
-                                            <i class="arrow"></i>
-                                        </a>
-                                    
-                                        <!--Submenu-->
-                                        <ul class="collapse">
-                                            <li><a href="<?php echo base_url();?>notifications-page/notifications-monthly-page">No Monthly Checkup</a>
-                                            </li>                                            
-                                            <li><a href="<?php echo base_url();?>notifications-page/notifications-quarterly-page">No HVI (Quarterly)</a>
-                                            </li>
-                                            <li><a href="<?php echo base_url();?>notifications-page/notifications-deworming-page">No Deworming</a>
-                                            </li>
-                                            <li><a href="<?php echo base_url();?>notifications-page/notifications-severe-page">Severe Malnutrition</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-
-                                    <?php } ?>
-
-
+                                    <!-- NOTIFICATIONS -->
                                     
 
 

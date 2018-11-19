@@ -110,6 +110,8 @@
 
                             <label class="control-label col-md-3">ATM Pin: <h4><?php echo $client->pin ?></h4></label>
 
+                            <label class="control-label col-md-3">Total Balance: <h4> ₱ <?php echo number_format($loan_balance, 2, '.', ',') ?></h4></label>
+
                         </div>
                         </div>
 

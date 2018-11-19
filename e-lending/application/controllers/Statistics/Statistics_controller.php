@@ -66,6 +66,27 @@ class Statistics_controller extends CI_Controller {
     $prev_year_total = ($prev_jan + $prev_feb + $prev_mar + $prev_apr + $prev_may + $prev_jun + $prev_jul + $prev_aug + $prev_sep + $prev_oct + $prev_nov + $prev_dec);
 
 
+
+    $prev_prev_year = $current_year - 2;
+
+    $prev_prev_jan = $this->transactions->get_monthly_loan_interests('01', $prev_prev_year)['interest'];
+    $prev_prev_feb = $this->transactions->get_monthly_loan_interests('02', $prev_prev_year)['interest'];
+    $prev_prev_mar = $this->transactions->get_monthly_loan_interests('03', $prev_prev_year)['interest'];
+    $prev_prev_apr = $this->transactions->get_monthly_loan_interests('04', $prev_prev_year)['interest'];
+
+    $prev_prev_may = $this->transactions->get_monthly_loan_interests('05', $prev_prev_year)['interest'];
+    $prev_prev_jun = $this->transactions->get_monthly_loan_interests('06', $prev_prev_year)['interest'];
+    $prev_prev_jul = $this->transactions->get_monthly_loan_interests('07', $prev_prev_year)['interest'];
+    $prev_prev_aug = $this->transactions->get_monthly_loan_interests('08', $prev_prev_year)['interest'];
+
+    $prev_prev_sep = $this->transactions->get_monthly_loan_interests('09', $prev_prev_year)['interest'];
+    $prev_prev_oct = $this->transactions->get_monthly_loan_interests('10', $prev_prev_year)['interest'];
+    $prev_prev_nov = $this->transactions->get_monthly_loan_interests('11', $prev_prev_year)['interest'];
+    $prev_prev_dec = $this->transactions->get_monthly_loan_interests('12', $prev_prev_year)['interest'];
+
+    $prev_prev_year_total = ($prev_prev_jan + $prev_prev_feb + $prev_prev_mar + $prev_prev_apr + $prev_prev_may + $prev_prev_jun + $prev_prev_jul + $prev_prev_aug + $prev_prev_sep + $prev_prev_oct + $prev_prev_nov + $prev_prev_dec);
+
+
     $data['current_year'] = $current_year;
     
     $data['jan'] = $jan;
@@ -105,6 +126,27 @@ class Statistics_controller extends CI_Controller {
     $data['prev_dec'] = $prev_dec;
 
     $data['prev_year_total'] = number_format($prev_year_total, 2, '.', ',');
+
+
+
+    $data['prev_prev_year'] = $prev_prev_year;
+    
+    $data['prev_prev_jan'] = $prev_prev_jan;
+    $data['prev_prev_feb'] = $prev_prev_feb;
+    $data['prev_prev_mar'] = $prev_prev_mar;
+    $data['prev_prev_apr'] = $prev_prev_apr;
+
+    $data['prev_prev_may'] = $prev_prev_may;
+    $data['prev_prev_jun'] = $prev_prev_jun;
+    $data['prev_prev_jul'] = $prev_prev_jul;
+    $data['prev_prev_aug'] = $prev_prev_aug;
+
+    $data['prev_prev_sep'] = $prev_prev_sep;
+    $data['prev_prev_oct'] = $prev_prev_oct;
+    $data['prev_prev_nov'] = $prev_prev_nov;
+    $data['prev_prev_dec'] = $prev_prev_dec;
+
+    $data['prev_prev_year_total'] = number_format($prev_prev_year_total, 2, '.', ',');
     
 
     $data['title'] = 'Statistics / Charts';	
@@ -129,6 +171,8 @@ class Statistics_controller extends CI_Controller {
             $row[] = number_format($loans->total_loans, 2, '.', ',');
             $row[] = number_format($loans->paid, 2, '.', ',');
             $row[] = number_format($loans->balance, 2, '.', ',');
+
+            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_profile('."'".$loans->client_id."'".')"><i class="fa fa-eye"></i> </a>';
  
             $data[] = $row;
         }

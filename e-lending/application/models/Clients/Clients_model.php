@@ -18,7 +18,6 @@ class Clients_model extends CI_Model {
  
     private function _get_datatables_query()
     {
-         
         $this->db->from($this->table);
  
         $i = 0;

@@ -12,6 +12,7 @@ class Dashboard_controller extends CI_Controller {
     $this->load->model('Loans/Loans_model','loans');
     $this->load->model('Schedules/Schedules_model','schedules');
     $this->load->model('Transactions/Transactions_model','transactions');
+    $this->load->model('Capital/Capital_model','capital');
     
   }
 
@@ -55,6 +56,33 @@ class Dashboard_controller extends CI_Controller {
 
     $loans_cleared = $this->loans->count_loans_cleared();
     $loans_count = $this->loans->count_all_loans();
+
+
+
+
+
+
+    $total_capital = $this->capital->get_total_capital();
+
+    if ($total_capital == null)
+    {
+      $total_capital = 0;
+    }
+    else
+    {
+      $total_capital = $total_capital['total_capital'];
+    }
+
+    // getting cash on hand. total capital + total interests - cash receivable
+    $cash_on_hand = $total_capital + $total_interests - $total_balance;
+
+    $gross_capital = $total_balance + $cash_on_hand; // gross capital = total receivable + cash on hand
+
+    $data['cash_on_hand'] = $cash_on_hand;
+
+    $data['gross_capital'] = $gross_capital;  
+
+
 
     // // get gender count active and graduated
     // $children_active_male = $this->cis->count_gender_active('male');

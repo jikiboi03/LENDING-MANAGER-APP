@@ -29,6 +29,8 @@ class Profiles_controller extends CI_Controller {
         $data['companies'] = $this->companies->get_companies();
         $data['atm'] = $this->atm->get_atm();
 
+        $data['loan_balance'] = $this->loans->get_client_total_balance($client_id);
+
         $this->load->helper('url');							
         											
         $data['title'] = 'Client Profile';					

@@ -38,16 +38,32 @@
                         <h3 class="panel-title">e-Lending Statistics / Charts</h3>
                     </div>
                     <br>
+                    <?php 
+                        if ($prev_prev_year_total != 0)
+                        {
+                    ?>
+                            <div id="container-interests-prev-prev" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
 
-                    
+                            <hr style="background-color: #ccccff; height: 5px;">
+                    <?php 
+                        }
+                    ?>        
 
-                    <div id="container-interests-prev" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+                    <?php 
+                        if ($prev_year_total != 0)
+                        {
+                    ?>
+                            <div id="container-interests-prev" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
 
-                    <hr style="background-color: #ccccff; height: 5px;">
+                            <hr style="background-color: #ccccff; height: 5px;">
+                    <?php 
+                        }
+                    ?>
 
                     <div id="container-interests" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
 
                     <hr style="background-color: #ccccff; height: 40px;">
+                    
 
                     <!-- Basic Data Tables -->
                     <!--===================================================-->
@@ -65,6 +81,7 @@
                                         <th>Total Loans *</th>
                                         <th>Total Paid</th>
                                         <th>Total Balance</th>
+                                        <th style="width:10px;">Action</th>
                                         
                                     </tr>
                                 </thead>
@@ -124,6 +141,28 @@
                     <input type="hidden" value=<?php echo "'" . $prev_dec . "'"; ?> name="prev_dec"/>
 
                     <input type="hidden" value=<?php echo "'" . $prev_year_total . "'"; ?> name="prev_year_total"/>
+
+
+
+
+                    <input type="hidden" value=<?php echo "'" . $prev_prev_year . "'"; ?> name="prev_prev_year"/>
+
+                    <input type="hidden" value=<?php echo "'" . $prev_prev_jan . "'"; ?> name="prev_prev_jan"/>
+                    <input type="hidden" value=<?php echo "'" . $prev_prev_feb . "'"; ?> name="prev_prev_feb"/>
+                    <input type="hidden" value=<?php echo "'" . $prev_prev_mar . "'"; ?> name="prev_prev_mar"/>
+                    <input type="hidden" value=<?php echo "'" . $prev_prev_apr . "'"; ?> name="prev_prev_apr"/>
+
+                    <input type="hidden" value=<?php echo "'" . $prev_prev_may . "'"; ?> name="prev_prev_may"/>
+                    <input type="hidden" value=<?php echo "'" . $prev_prev_jun . "'"; ?> name="prev_prev_jun"/>
+                    <input type="hidden" value=<?php echo "'" . $prev_prev_jul . "'"; ?> name="prev_prev_jul"/>
+                    <input type="hidden" value=<?php echo "'" . $prev_prev_aug . "'"; ?> name="prev_prev_aug"/>
+
+                    <input type="hidden" value=<?php echo "'" . $prev_prev_sep . "'"; ?> name="prev_prev_sep"/>
+                    <input type="hidden" value=<?php echo "'" . $prev_prev_oct . "'"; ?> name="prev_prev_oct"/>
+                    <input type="hidden" value=<?php echo "'" . $prev_prev_nov . "'"; ?> name="prev_prev_nov"/>
+                    <input type="hidden" value=<?php echo "'" . $prev_prev_dec . "'"; ?> name="prev_prev_dec"/>
+
+                    <input type="hidden" value=<?php echo "'" . $prev_prev_year_total . "'"; ?> name="prev_prev_year_total"/>
 
 
 

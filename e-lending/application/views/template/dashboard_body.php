@@ -116,6 +116,30 @@
                                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                                 <!--End Large tile (New orders)-->
 
+                                <!--Large tile (New orders)-->
+                                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="panel panel-info panel-colorful">
+                                        <div class="panel-body text-center">GROSS CAPITAL
+                                            <p class="h1 text-thin"><i class="fa fa-signal fa-1x"></i> ₱ <?php echo number_format($gross_capital, 2, '.', ','); ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                                <!--End Large tile (New orders)-->
+
+                                <!--Large tile (New orders)-->
+                                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="panel panel-primary panel-colorful">
+                                        <div class="panel-body text-center">CASH ON HAND
+                                            <p class="h1 text-thin"><i class="fa fa-hand-paper-o fa-1x"></i> ₱ <?php echo number_format($cash_on_hand, 2, '.', ','); ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                                <!--End Large tile (New orders)-->
+
                             </div>                
                         </div>
                     </div>

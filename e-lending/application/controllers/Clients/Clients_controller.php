@@ -49,8 +49,10 @@ class Clients_controller extends CI_Controller {
             $row[] = $this->companies->get_company_name($clients->comp_id); // company name
             $row[] = $this->atm->get_atm_name($clients->atm_id); // atm bank name
 
-            $row[] = $clients->atm_type;         
-            $row[] = $clients->pin;
+            $loan_balance = $this->loans->get_client_total_balance($clients->client_id);
+
+            $row[] = '<i>₱ ' . number_format($loan_balance, 2, '.', ',') . '</i>';      
+            $row[] = '<b>' . $clients->pin . '</b>';
 
             // $row[] = $clients->job;
             // $row[] = $clients->salary;
