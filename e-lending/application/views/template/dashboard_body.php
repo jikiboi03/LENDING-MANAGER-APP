@@ -5,7 +5,7 @@
                 <!--Page Title-->
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <div id="page-title">
-                    <h1 class="page-header text-overflow"><img src="assets/img/jikiapps.png" style="width: 12%; margin-top: 0%; margin-right: 1%;">e - L e n d i n g | Lending Manager App </h1>
+                    <h1 class="page-header text-overflow"><img src="assets/img/jikiapps.png" style="width: 10%; margin-top: 0%; margin-right: 1%;"> [ e-Lending ] Lending Manager App </h1>
 
                     <!-- For alert and notifications assets/js/demo/nifty-demo.js-->
 
@@ -39,8 +39,10 @@
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <!--End breadcrumb-->
                 <!--Page content-->
+                <hr>
+
                 <!--===================================================-->
-                <div id="page-content">
+                <div id="page-content" style="background-color: white">
                 
                     <!--Tiles - Bright Version-->
                     <!--===================================================-->
@@ -146,8 +148,10 @@
                     
                     
 
-                    <div class="col-md-10"></div>
-                    <button class="control-label col-md-2 btn btn-default" onclick="back_up_db()" style="font-size: 14px;"><i class="fa fa-database"></i> &nbsp;Backup Database</button><hr>
+                    
+
+
+                    
                     
 
 
@@ -168,13 +172,24 @@
                 </div>
                 <!--===================================================-->
                 <!--End page content-->
-                <hr style="background-color: #cccccc; height:1px;">
-                <hr>
                 <hr>
 
+                <div class="col-md-9"></div>
+                <div class="col-md-3"><button class="control-label col-md-12 btn btn-default" onclick="back_up_db()" style="font-size: 14px;"><i class="fa fa-database"></i> &nbsp;Backup Database</button><hr>
+                <br><br><br><br><br><br> 
+                </div>
+
+
+                
+            </div>
+            <div class="col-md-9">
+            </div>
+            <div class="col-md-3">
+                eLending - Lending Manager App Vv1.1 JikiApps Solutions / Jik Torres © 2018
             </div>
             <!--===================================================-->
             <!--END CONTENT CONTAINER-->
+
 
 
             

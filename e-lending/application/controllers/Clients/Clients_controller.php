@@ -25,7 +25,7 @@ class Clients_controller extends CI_Controller {
 
         $this->load->helper('url');							
         											
-        $data['title'] = 'Clients Information List';					
+        $data['title'] = '<i class="fa fa-users"></i> &nbsp; Clients Information List';					
         $this->load->view('template/dashboard_header',$data);
         $this->load->view('clients/clients_view',$data);
         $this->load->view('template/dashboard_navigation');

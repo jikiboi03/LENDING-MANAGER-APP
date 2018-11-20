@@ -18,7 +18,7 @@ class Logs_controller extends CI_Controller {
 
         $this->load->helper('url');							
         											
-        $data['title'] = 'System Logs Information Records';					
+        $data['title'] = '<i class="fa fa-history"></i> &nbsp; System Logs Information Records';					
         $this->load->view('template/dashboard_header',$data);
         $this->load->view('logs/logs_view',$data);
         $this->load->view('template/dashboard_navigation');

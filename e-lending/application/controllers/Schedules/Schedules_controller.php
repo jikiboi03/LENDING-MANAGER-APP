@@ -18,7 +18,7 @@ class Schedules_controller extends CI_Controller {
       
    	  $this->load->helper('url');							
    													
-   	  $data['title'] = 'Schedules Information List';					
+   	  $data['title'] = "<i class='fa fa-clock-o'></i> &nbsp; Schedules Information List";					
       $this->load->view('template/dashboard_header',$data);
       $this->load->view('schedules/schedules_view',$data);   //Kani lang ang ilisi kung mag dungag mo ug Page
       $this->load->view('template/dashboard_navigation');

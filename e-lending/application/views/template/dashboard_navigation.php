@@ -32,7 +32,7 @@
                     <!--================================-->
                     <div id="mainnav-menu-wrap">
                         <div class="nano">
-                            <div class="nano-content">
+                            <div class="nano-content" style="font-size: 13px;">
                                 <ul id="mainnav-menu" class="list-group">
                         
                                     <!--Category name-->

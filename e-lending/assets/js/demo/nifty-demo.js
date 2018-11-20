@@ -612,9 +612,26 @@ $(document).ready(function () {
 		
 	});
 
+	if (schedules_today_str != "None")
+	{
+		var dataNum = 1,
+			timer = 32000;
 
-
-
+		// Show random page alerts.
+		$.niftyNoty({
+			type: dataAlert[dataNum].type,
+			icon: dataAlert[dataNum].icon,
+			title: function () {
+				if (timer > 0) {
+					return 'Welcome ' + $('[name="user_fullname"]').val()
+				}
+				return 'Sticky Alert Box'
+			}(),
+			message: '' + $('[name="current_date"]').val() + ' | '
+			 + ' Appointment schedules today: ' + schedules_today_str,
+			timer: timer
+		});
+	}
 
 
 	// ALERT ON TOP PAGE

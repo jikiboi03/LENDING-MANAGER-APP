@@ -45,9 +45,10 @@
 		<div class="cls-content">
 			<div class="cls-content-sm panel">
 				<div class="panel-body">
-					<!-- <img src="assets/img/anc.jpg" style="width: 70%;"> -->
+					<img src="assets/img/jikiapps.png" style="width: 50%;">
+					<p class="pad-btm h3">Sign in to your account</p>
 					<hr>
-					<p class="pad-btm">Sign In to your account</p>
+					
 					<form id="login" action="<?php echo base_url();?>login_controller/login_validation" method="post" >
 						<div class="form-group">
 							<div class="input-group">
@@ -58,11 +59,12 @@
 						</div>
 						<div class="form-group">
 							<div class="input-group">
-								<div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
+								<div class="input-group-addon"><i class="fa fa-lock"></i></div>
 								<input type="password" class="form-control" name="password" id="password" placeholder="Password">
 								<span class="text-danger"><?php echo form_error('password');?></span>
 							</div>
 						</div>
+						<hr>
 						<?php echo '<label class="text-danger">'.$this->session->flashdata("error").'</label>';?>
 						<div class="row">
 							<div class="col-xs-8 text-left checkbox">
@@ -72,7 +74,7 @@
 							</div>
 							<div class="col-xs-4">
 								<div class="form-group text-right">
-								<input class="btn btn-success text-uppercase" name="insert" type="submit" value="Sign In"/>
+								<input class="btn btn-primary text-uppercase" name="insert" type="submit" value=" Sign In "/>
 								</div>
 							</div>
 						</div>
