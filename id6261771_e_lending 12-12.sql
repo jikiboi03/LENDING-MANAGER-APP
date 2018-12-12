@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 16, 2018 at 08:46 AM
+-- Generation Time: Dec 12, 2018 at 02:45 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.0.26
 
@@ -48,7 +48,8 @@ INSERT INTO `atm_banks` (`atm_id`, `name`, `branch`, `remarks`, `encoded`, `remo
 (104, 'Union Bank of the Philippines', 'Victoria, ADDU Jacinto, Bankerohan', '', '2018-05-23 22:19:31', 0),
 (105, 'Philippine National Bank', 'ADDU Jacinto, San Pedro, Agdao, Victoria, Lanang, NCCC Uyanguren', '', '2018-05-23 22:23:39', 0),
 (106, 'CTBC Bank', 'Bancnet ATM Machines', 'Provided by a manpower agency', '2018-07-01 08:40:52', 0),
-(107, 'Metrobank', 'Victoria, Abreeza, Insular, SM Malls', 'Apollo Technologies Payroll ATM', '2018-10-29 06:02:29', 0);
+(107, 'Metrobank', 'Victoria, Abreeza, Insular, SM Malls', 'Apollo Technologies Payroll ATM', '2018-10-29 06:02:29', 0),
+(108, 'BDO', 'All over Davao', 'Alorica, Globewest, also the largest bank in the Philippines', '2018-12-07 09:22:40', 0);
 
 -- --------------------------------------------------------
 
@@ -141,9 +142,15 @@ INSERT INTO `clients` (`client_id`, `comp_id`, `atm_id`, `atm_type`, `lname`, `f
 (10029, 104, 102, 'Savings', 'DE REAL', 'MAYUMI J.', '09483807108', '9864', 'Female', 'Associate', 17000.00, 'Prk.12B, St. John Brgy Bucana, Davao City', '', '10029.jpg', '10029.jpg', '', '2018-10-25 04:10:03', 0),
 (10030, 108, 107, 'Savings', 'ANG', 'MICO', 'n/a', '000000', 'Male', 'Software Developer', 18000.00, 'Bo. Obrero, Davao City', 'Office coworker', '', '', '', '2018-10-29 06:01:05', 0),
 (10031, 103, 104, 'Savings', 'CAGAMPANG', 'MARY GRACE', '09096308006', '120115', 'Female', 'Associate', 17000.00, '84-R. Castillo St. Agdao, Davao City', '', '10031.jpg', '', '', '2018-11-05 06:24:31', 0),
-(10032, 104, 102, 'Savings', 'ANIMA', 'CHERRYL', '09507622878', '653510', 'Female', 'Associate', 17000.00, 'Door 2 Park 50 Diho IV Subd. Maa, Davao City', 'Friend of Rose', '10032.jpg', '', '', '2018-11-06 08:38:23', 0),
+(10032, 104, 102, 'Savings', 'ANIMA', 'CHERRYL', '09507622878', '0613', 'Female', 'Associate', 17000.00, 'Door 2 Park 50 Diho IV Subd. Maa, Davao City', 'Friend of Rose', '10032.jpg', '', '', '2018-11-06 08:38:23', 0),
 (10033, 103, 104, 'Savings', 'JIMENEZ', 'JAZZRIC', '09120485540', '062197', 'Male', 'CSR', 17000.00, 'Coronon, Sta. Cruz Davao Del Sur', 'Friend of Jessa', '', '', '', '2018-11-15 08:21:40', 0),
-(10034, 103, 104, 'Savings', 'CALAMAAN', 'ANGELIKA JOYCE', '09076403579', '753538', 'Female', 'CSR', 17000.00, 'Door no. 10, Cunanan Apartment, Santa Maria St. Dumanlas, Buhangin Davao City', 'Friend of Jessa', '', '', '', '2018-11-16 06:15:12', 0);
+(10034, 103, 104, 'Savings', 'CALAMAAN', 'ANGELIKA JOYCE', '09076403579', '753538', 'Female', 'CSR', 17000.00, 'Door no. 10, Cunanan Apartment, Santa Maria St. Dumanlas, Buhangin Davao City', 'Friend of Jessa', '', '', '', '2018-11-16 06:15:12', 0),
+(10035, 104, 102, 'Savings', 'TALAMERA', 'MARIA LINEL', '09501714086', '1993', 'Female', 'CSR', 17000.00, 'Padre Gomez St., Roxas, Davao City / Conchita Ong Subd., Mati City', 'Friend of Rose', '', '', '', '2018-11-23 07:12:59', 0),
+(10036, 103, 104, 'Savings', 'ATABELO', 'MA. LYNN DABON', '09562052799', '880243', 'Female', 'CSR', 17000.00, 'Purok Bisbara Dumanlas, Buhangin, Davao City', 'Friend of Yanny', '', '', '', '2018-11-28 03:39:08', 0),
+(10037, 101, 104, 'Savings', 'NEPOMUCENO', 'CEDDIERICK', '09499220206', '0613', 'Male', 'CSR', 17000.00, '108 Mangga St. Donnasville, Lanang, Davao City', '', '', '', '', '2018-11-29 03:44:43', 0),
+(10038, 109, 107, 'Savings', 'ESPINA', 'KRYSTYN KYNE', '09953691318', '122116', 'Female', 'Nurse', 12000.00, 'Davao Doctors, Davao City', 'Friend of Sej and Ladz', '', '', '', '2018-12-02 02:24:44', 0),
+(10039, 110, 107, 'Savings', 'ANIMA', 'DARRIN', '09507622878', '653510', 'Male', 'CSR', 17000.00, 'Door 2 Park 50 Diho IV Subd. Maa, Davao City', 'Husband of Cherryl Anima', '', '', '', '2018-12-07 09:20:51', 0),
+(10040, 104, 102, 'Savings', 'ESTILLORE', 'MARY JOY', '09205613557', '1993', 'Female', 'CSR', 17000.00, 'Prk. 18 New Visayas , Panabo City', 'Friend of Yumi', '', '', '', '2018-12-11 01:31:10', 0);
 
 -- --------------------------------------------------------
 
@@ -172,7 +179,9 @@ INSERT INTO `companies` (`comp_id`, `name`, `address`, `remarks`, `encoded`, `re
 (105, 'DENR LMS XI', 'Bangkal, Davao City', 'Government Agency', '2018-04-08 22:50:10', 0),
 (106, 'Fubu - SM City Davao', 'SM Ecoland, Davao City', 'Apparel Store', '2018-07-01 08:37:21', 0),
 (107, 'VXI Global Solutions, LLC - Felcris Centrale', 'Felcris Centrale', 'BPO Company', '2018-09-10 02:10:13', 0),
-(108, 'Apollo Technologies Inc.', 'Bo. Obrero, Davao City', 'Currently employed here as Software Developer', '2018-10-29 06:05:43', 0);
+(108, 'Apollo Technologies Inc.', 'Bo. Obrero, Davao City', 'Currently employed here as Software Developer', '2018-10-29 06:05:43', 0),
+(109, 'Davao Doctors Hospital', 'Quirino, Davao City', 'Hospital Company', '2018-12-05 03:04:08', 0),
+(110, 'Alorica', 'Matina IT Park', 'BPO Company', '2018-12-07 09:21:47', 0);
 
 -- --------------------------------------------------------
 
@@ -272,7 +281,7 @@ INSERT INTO `loans` (`loan_id`, `client_id`, `amount`, `interest`, `total`, `sta
 (10070, 10017, 5000.00, 350.00, 5350.00, 3, '2018-08-10', '2018-09-10', 5350.00, 0.00, '', '2018-08-10 03:22:21'),
 (10071, 10003, 5000.00, 350.00, 5350.00, 3, '2018-08-10', '2018-08-29', 5350.00, 0.00, '', '2018-08-10 03:34:01'),
 (10072, 10005, 10000.00, 700.00, 10700.00, 3, '2018-08-12', '2018-08-24', 10700.00, 0.00, '', '2018-08-12 03:54:28'),
-(10073, 10013, 15000.00, 1050.00, 16050.00, 2, '2018-08-16', 'n/a', 13400.00, 3900.00, '', '2018-08-16 09:10:29'),
+(10073, 10013, 15000.00, 1050.00, 16050.00, 2, '2018-08-16', 'n/a', 16400.00, 900.00, '', '2018-08-16 09:10:29'),
 (10074, 10004, 15000.00, 1050.00, 16050.00, 3, '2018-08-23', '2018-10-05', 16300.00, 0.00, '', '2018-08-23 15:00:10'),
 (10075, 10018, 5000.00, 350.00, 5350.00, 3, '2018-08-24', '2018-09-25', 5350.00, 0.00, '', '2018-08-24 04:01:59'),
 (10076, 10022, 5000.00, 350.00, 5350.00, 3, '2018-08-24', '2018-09-10', 5350.00, 0.00, '', '2018-08-24 04:03:39'),
@@ -296,13 +305,13 @@ INSERT INTO `loans` (`loan_id`, `client_id`, `amount`, `interest`, `total`, `sta
 (10094, 10016, 7000.00, 490.00, 7490.00, 3, '2018-09-26', '2018-10-12', 7490.00, 0.00, '', '2018-09-26 04:41:23'),
 (10095, 10027, 1000.00, 70.00, 1070.00, 3, '2018-09-28', '2018-10-25', 1070.00, 0.00, '', '2018-09-28 01:32:55'),
 (10096, 10027, 2000.00, 140.00, 2140.00, 3, '2018-10-01', '2018-10-25', 2700.00, 0.00, 'Add loan for expected incentives', '2018-10-01 01:28:19'),
-(10097, 10004, 15000.00, 1050.00, 16050.00, 2, '2018-10-05', 'n/a', 12450.00, 4150.00, '', '2018-10-05 01:30:20'),
+(10097, 10004, 15000.00, 1050.00, 16050.00, 3, '2018-10-05', '2018-11-19', 16600.00, 0.00, '', '2018-10-05 01:30:20'),
 (10098, 10028, 5000.00, 350.00, 5350.00, 3, '2018-10-08', '2018-10-23', 5350.00, 0.00, '', '2018-10-08 06:54:56'),
 (10099, 10022, 10000.00, 700.00, 10700.00, 3, '2018-10-10', '2018-10-25', 10700.00, 0.00, '', '2018-10-10 01:59:33'),
-(10100, 10024, 7000.00, 490.00, 7490.00, 2, '2018-10-10', 'n/a', 4000.00, 4000.00, '', '2018-10-10 02:02:05'),
+(10100, 10024, 7000.00, 490.00, 7490.00, 3, '2018-10-10', '2018-12-08', 8000.00, 0.00, '', '2018-10-10 02:02:05'),
 (10101, 10017, 15000.00, 1050.00, 16050.00, 3, '2018-10-10', '2018-10-25', 16050.00, 0.00, '', '2018-10-10 03:01:47'),
 (10102, 10009, 5000.00, 350.00, 5350.00, 3, '2018-10-11', '2018-11-07', 5350.00, 0.00, '', '2018-10-10 17:57:06'),
-(10103, 10016, 15000.00, 1050.00, 16050.00, 2, '2018-10-12', 'n/a', 4550.00, 12550.00, '', '2018-10-12 02:49:10'),
+(10103, 10016, 15000.00, 1050.00, 16050.00, 2, '2018-10-12', 'n/a', 12200.00, 4900.00, '', '2018-10-12 02:49:10'),
 (10104, 10025, 5000.00, 350.00, 5350.00, 3, '2018-10-12', '2018-10-25', 5350.00, 0.00, '', '2018-10-12 07:39:02'),
 (10105, 10005, 10000.00, 700.00, 10700.00, 3, '2018-10-15', '2018-10-25', 10700.00, 0.00, '', '2018-10-14 17:02:02'),
 (10106, 10017, 5000.00, 350.00, 5350.00, 3, '2018-10-17', '2018-11-09', 5350.00, 0.00, '', '2018-10-17 02:31:54'),
@@ -311,23 +320,45 @@ INSERT INTO `loans` (`loan_id`, `client_id`, `amount`, `interest`, `total`, `sta
 (10109, 10025, 10000.00, 700.00, 10700.00, 3, '2018-10-25', '2018-11-09', 10700.00, 0.00, '', '2018-10-25 03:44:57'),
 (10110, 10022, 10000.00, 700.00, 10700.00, 3, '2018-10-25', '2018-11-09', 10700.00, 0.00, '', '2018-10-25 03:48:47'),
 (10111, 10022, 5000.00, 350.00, 5350.00, 3, '2018-10-25', '2018-11-09', 5350.00, 0.00, '', '2018-10-25 03:49:17'),
-(10112, 10027, 8000.00, 560.00, 8560.00, 2, '2018-10-25', 'n/a', 4680.00, 4560.00, '', '2018-10-25 04:02:03'),
+(10112, 10027, 8000.00, 560.00, 8560.00, 2, '2018-10-25', 'n/a', 6960.00, 2280.00, '', '2018-10-25 04:02:03'),
 (10113, 10029, 5000.00, 350.00, 5350.00, 3, '2018-10-25', '2018-11-15', 5350.00, 0.00, '', '2018-10-25 04:10:17'),
 (10114, 10005, 10000.00, 700.00, 10700.00, 3, '2018-10-25', '2018-11-09', 10700.00, 0.00, '', '2018-10-25 05:07:12'),
 (10115, 10017, 5000.00, 350.00, 5350.00, 3, '2018-10-29', '2018-11-09', 5350.00, 0.00, '', '2018-10-29 02:27:04'),
-(10116, 10030, 4000.00, 280.00, 4280.00, 2, '2018-10-29', 'n/a', 2100.00, 2180.00, '', '2018-10-29 06:06:26'),
-(10117, 10001, 5000.00, 350.00, 5350.00, 1, '2018-11-03', 'n/a', 0.00, 5350.00, '', '2018-11-03 04:27:53'),
+(10116, 10030, 4000.00, 280.00, 4280.00, 3, '2018-10-29', '2018-12-03', 4280.00, 0.00, '', '2018-10-29 06:06:26'),
+(10117, 10001, 5000.00, 350.00, 5350.00, 3, '2018-11-03', '2018-11-30', 5350.00, 0.00, '', '2018-11-03 04:27:53'),
 (10118, 10031, 5000.00, 350.00, 5350.00, 3, '2018-11-05', '2018-11-09', 5350.00, 0.00, '', '2018-11-05 06:25:46'),
-(10119, 10032, 5000.00, 350.00, 5350.00, 2, '2018-11-06', 'n/a', 2700.00, 2650.00, '', '2018-11-06 08:38:44'),
-(10120, 10009, 5000.00, 350.00, 5350.00, 1, '2018-11-07', 'n/a', 0.00, 5350.00, '', '2018-11-07 12:39:40'),
-(10121, 10017, 15000.00, 1050.00, 16050.00, 2, '2018-11-09', 'n/a', 2000.00, 14050.00, '', '2018-11-09 05:17:41'),
-(10122, 10022, 15000.00, 1050.00, 16050.00, 1, '2018-11-09', 'n/a', 0.00, 16050.00, '', '2018-11-09 05:31:47'),
-(10123, 10025, 15000.00, 1050.00, 16050.00, 1, '2018-11-09', 'n/a', 0.00, 16050.00, '', '2018-11-09 05:47:54'),
-(10124, 10031, 5000.00, 350.00, 5350.00, 1, '2018-11-09', 'n/a', 0.00, 5350.00, '', '2018-11-09 05:49:02'),
-(10125, 10005, 10000.00, 700.00, 10700.00, 1, '2018-11-09', 'n/a', 0.00, 10700.00, '', '2018-11-09 12:40:28'),
-(10126, 10003, 15000.00, 1050.00, 16050.00, 1, '2018-11-12', 'n/a', 0.00, 16050.00, '', '2018-11-12 05:45:49'),
-(10127, 10033, 5000.00, 350.00, 5350.00, 1, '2018-11-15', 'n/a', 0.00, 5350.00, '', '2018-11-15 08:22:55'),
-(10128, 10034, 5000.00, 350.00, 5350.00, 1, '2018-11-16', 'n/a', 0.00, 5350.00, '', '2018-11-16 06:17:51');
+(10119, 10032, 5000.00, 350.00, 5350.00, 3, '2018-11-06', '2018-11-30', 5350.00, 0.00, '', '2018-11-06 08:38:44'),
+(10120, 10009, 5000.00, 350.00, 5350.00, 3, '2018-11-07', '2018-11-23', 5350.00, 0.00, '', '2018-11-07 12:39:40'),
+(10121, 10017, 15000.00, 1050.00, 16050.00, 2, '2018-11-09', 'n/a', 6900.00, 10200.00, '', '2018-11-09 05:17:41'),
+(10122, 10022, 15000.00, 1050.00, 16050.00, 3, '2018-11-09', '2018-11-23', 16050.00, 0.00, '', '2018-11-09 05:31:47'),
+(10123, 10025, 15000.00, 1050.00, 16050.00, 3, '2018-11-09', '2018-11-23', 16050.00, 0.00, '', '2018-11-09 05:47:54'),
+(10124, 10031, 5000.00, 350.00, 5350.00, 3, '2018-11-09', '2018-11-23', 5350.00, 0.00, '', '2018-11-09 05:49:02'),
+(10125, 10005, 10000.00, 700.00, 10700.00, 3, '2018-11-09', '2018-11-23', 10700.00, 0.00, '', '2018-11-09 12:40:28'),
+(10126, 10003, 15000.00, 1050.00, 16050.00, 3, '2018-11-12', '2018-12-11', 16690.00, 0.00, '', '2018-11-12 05:45:49'),
+(10127, 10033, 5000.00, 350.00, 5350.00, 3, '2018-11-15', '2018-11-26', 5350.00, 0.00, '', '2018-11-15 08:22:55'),
+(10128, 10034, 5000.00, 350.00, 5350.00, 3, '2018-11-16', '2018-12-09', 5350.00, 0.00, '', '2018-11-16 06:17:51'),
+(10129, 10004, 15000.00, 1050.00, 16050.00, 2, '2018-11-19', 'n/a', 4150.00, 11900.00, '', '2018-11-19 03:12:34'),
+(10130, 10022, 15000.00, 1050.00, 16050.00, 3, '2018-11-23', '2018-12-08', 16050.00, 0.00, '', '2018-11-23 01:33:14'),
+(10131, 10031, 5000.00, 350.00, 5350.00, 3, '2018-11-23', '2018-12-09', 5350.00, 0.00, '', '2018-11-23 01:38:43'),
+(10132, 10025, 15000.00, 1050.00, 16050.00, 3, '2018-11-23', '2018-12-10', 16050.00, 0.00, '', '2018-11-23 03:02:26'),
+(10133, 10031, 5000.00, 350.00, 5350.00, 3, '2018-11-23', '2018-12-09', 5350.00, 0.00, '', '2018-11-23 03:03:22'),
+(10134, 10035, 5000.00, 350.00, 5350.00, 3, '2018-11-23', '2018-12-06', 5350.00, 0.00, '', '2018-11-23 07:14:41'),
+(10135, 10009, 5000.00, 350.00, 5350.00, 2, '2018-11-23', 'n/a', 2000.00, 3350.00, '', '2018-11-23 09:10:31'),
+(10136, 10005, 10000.00, 700.00, 10700.00, 2, '2018-11-23', 'n/a', 5350.00, 5350.00, '', '2018-11-23 09:11:57'),
+(10137, 10027, 1000.00, 70.00, 1070.00, 1, '2018-11-26', 'n/a', 0.00, 1070.00, '', '2018-11-26 02:46:31'),
+(10138, 10033, 7000.00, 490.00, 7490.00, 2, '2018-11-26', 'n/a', 3500.00, 3990.00, '', '2018-11-26 05:09:43'),
+(10139, 10036, 5000.00, 350.00, 5350.00, 2, '2018-11-28', 'n/a', 2700.00, 2650.00, '', '2018-11-28 03:39:44'),
+(10140, 10037, 3000.00, 210.00, 3210.00, 3, '2018-11-29', '2018-12-06', 3210.00, 0.00, '', '2018-11-29 03:46:40'),
+(10141, 10001, 3000.00, 210.00, 3210.00, 1, '2018-12-02', 'n/a', 0.00, 3210.00, '', '2018-12-02 02:17:29'),
+(10142, 10038, 5000.00, 350.00, 5350.00, 3, '2018-12-02', '2018-12-07', 5350.00, 0.00, '', '2018-12-02 02:25:56'),
+(10143, 10032, 10000.00, 700.00, 10700.00, 1, '2018-12-03', 'n/a', 0.00, 10700.00, '', '2018-12-03 04:56:53'),
+(10144, 10039, 6000.00, 420.00, 6420.00, 1, '2018-12-07', 'n/a', 0.00, 6420.00, '', '2018-12-07 09:28:06'),
+(10145, 10022, 15000.00, 1050.00, 16050.00, 1, '2018-12-08', 'n/a', 0.00, 16050.00, '', '2018-12-08 15:43:21'),
+(10146, 10031, 10000.00, 700.00, 10700.00, 1, '2018-12-09', 'n/a', 0.00, 10700.00, '', '2018-12-09 03:20:45'),
+(10147, 10029, 5000.00, 350.00, 5350.00, 1, '2018-12-10', 'n/a', 0.00, 5350.00, '', '2018-12-10 01:09:57'),
+(10148, 10025, 15000.00, 1050.00, 16050.00, 1, '2018-12-10', 'n/a', 0.00, 16050.00, '', '2018-12-10 04:47:39'),
+(10149, 10040, 5000.00, 350.00, 5350.00, 1, '2018-12-11', 'n/a', 0.00, 5350.00, '', '2018-12-11 01:32:16'),
+(10150, 10003, 15000.00, 1050.00, 16050.00, 1, '2018-12-11', 'n/a', 0.00, 16050.00, '', '2018-12-11 05:39:46');
 
 -- --------------------------------------------------------
 
@@ -1314,7 +1345,172 @@ INSERT INTO `logs` (`log_id`, `user_fullname`, `log_type`, `details`, `date_time
 (1000962, 'TORRES, JIK', 'Add', 'New%20client%20record%20added:%20CALAMANAN%20ANGELIKA%20JOYCE', '2018-11-16 06:15:14'),
 (1000963, 'TORRES, JIK', 'Update', 'Client%20updated%20C10034:%20CALAMANAN%20ANGELIKA%20JOYCE', '2018-11-16 06:15:29'),
 (1000964, 'TORRES, JIK', 'Update', 'Client%20updated%20C10034:%20CALAMAAN%20ANGELIKA%20JOYCE', '2018-11-16 06:15:43'),
-(1000965, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10034:%20CALAMAAN%20ANGELIKA%20JOYCE', '2018-11-16 06:17:51');
+(1000965, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10034:%20CALAMAAN%20ANGELIKA%20JOYCE', '2018-11-16 06:17:51'),
+(1000966, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-16 17:14:13'),
+(1000967, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10126%20of%20Client:%20ALDERITE%20ROSE%20ANN', '2018-11-16 17:43:39'),
+(1000968, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10117%20of%20Client:%20ISRAEL%20LADY%20GRACE', '2018-11-16 17:45:18'),
+(1000969, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-18 03:18:22'),
+(1000970, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-18 16:00:35'),
+(1000971, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-19 01:30:08'),
+(1000972, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10097%20of%20Client:%20ZABATE%20KAREN%20JANE', '2018-11-19 03:12:15'),
+(1000973, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10004:%20ZABATE%20KAREN%20JANE', '2018-11-19 03:12:34'),
+(1000974, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-19 07:55:11'),
+(1000975, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-19 14:42:16'),
+(1000976, 'TORRES, JIK', 'Delete', 'User%20record%20deleted', '2018-11-19 14:47:09'),
+(1000977, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-20 01:33:55'),
+(1000978, 'TORRES, JIK', 'Logout', 'System user logout as Administrator', '2018-11-20 01:35:14'),
+(1000979, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-20 09:57:41'),
+(1000980, 'TORRES, JIK', 'Logout', 'System user logout as Administrator', '2018-11-20 10:11:02'),
+(1000981, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-20 10:11:30'),
+(1000982, 'TORRES, JIK', 'Logout', 'System user logout as Administrator', '2018-11-20 10:12:09'),
+(1000983, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-20 10:12:38'),
+(1000984, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-20 15:53:18'),
+(1000985, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-21 01:11:34'),
+(1000986, 'TORRES, JIK', 'Add', 'New%20schedule%20added:%20IBEX%2013th%20month', '2018-11-21 03:59:21'),
+(1000987, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-21 16:34:40'),
+(1000988, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-22 01:05:35'),
+(1000989, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-22 07:35:24'),
+(1000990, 'TORRES, JIK', 'Add', 'New%20schedule%20added:%20VXI%2013th%20month', '2018-11-22 07:41:21'),
+(1000991, 'TORRES, JIK', 'Update', 'Schedule%20updated%20S41:%20VXI%2013th%20month', '2018-11-22 07:41:34'),
+(1000992, 'TORRES, JIK', 'Add', 'New%20schedule%20added:%20Apollo%20Ladz%20Payday', '2018-11-22 07:42:47'),
+(1000993, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-22 15:14:44'),
+(1000994, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-23 00:46:13'),
+(1000995, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10122%20of%20Client:%20CARIM%20MARY%20JASMIN', '2018-11-23 01:32:11'),
+(1000996, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10022:%20CARIM%20MARY%20JASMIN', '2018-11-23 01:33:15'),
+(1000997, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10100%20of%20Client:%20SISON%20BERNARD%20IAN', '2018-11-23 01:37:46'),
+(1000998, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10124%20of%20Client:%20CAGAMPANG%20MARY%20GRACE', '2018-11-23 01:38:19'),
+(1000999, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10031:%20CAGAMPANG%20MARY%20GRACE', '2018-11-23 01:38:43'),
+(1001000, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10128%20of%20Client:%20CALAMAAN%20ANGELIKA%20JOYCE', '2018-11-23 01:39:22'),
+(1001001, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10127%20of%20Client:%20JIMENEZ%20JAZZRIC', '2018-11-23 01:39:59'),
+(1001002, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10123%20of%20Client:%20OCZON%20JORELH%20TRAYA', '2018-11-23 03:02:11'),
+(1001003, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10025:%20OCZON%20JORELH%20TRAYA', '2018-11-23 03:02:27'),
+(1001004, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10031:%20CAGAMPANG%20MARY%20GRACE', '2018-11-23 03:03:22'),
+(1001005, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-23 06:44:58'),
+(1001006, 'TORRES, JIK', 'Add', 'New%20client%20record%20added:%20TALAMERA%20MARIA%20LINEL', '2018-11-23 07:13:01'),
+(1001007, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10035:%20TALAMERA%20MARIA%20LINEL', '2018-11-23 07:14:41'),
+(1001008, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10073%20of%20Client:%20BIWANG%20JUHAIRY', '2018-11-23 09:07:15'),
+(1001009, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10120%20of%20Client:%20BAYANI%20ESNEYRA', '2018-11-23 09:10:16'),
+(1001010, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10009:%20BAYANI%20ESNEYRA', '2018-11-23 09:10:31'),
+(1001011, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10125%20of%20Client:%20ABDULLAH%20FARHANA%20BINT', '2018-11-23 09:11:13'),
+(1001012, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10005:%20ABDULLAH%20FARHANA%20BINT', '2018-11-23 09:11:58'),
+(1001013, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-23 19:15:26'),
+(1001014, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10121%20of%20Client:%20PADILLA%20SHAHANA%20ROSE', '2018-11-23 19:17:24'),
+(1001015, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-24 04:29:01'),
+(1001016, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-25 11:40:11'),
+(1001017, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-26 01:28:25'),
+(1001018, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10027:%20LOPEZ%20FEJIE', '2018-11-26 02:46:32'),
+(1001019, 'TORRES, JIK', 'Update', 'Schedule%20updated%20S39:%20VXI%20-SM%20Ecoland%20Payday', '2018-11-26 03:04:38'),
+(1001020, 'TORRES, JIK', 'Add', 'New%20schedule%20added:%20IBEX%20payday', '2018-11-26 03:06:41'),
+(1001021, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-26 05:08:39'),
+(1001022, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10127%20of%20Client:%20JIMENEZ%20JAZZRIC', '2018-11-26 05:09:24'),
+(1001023, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10033:%20JIMENEZ%20JAZZRIC', '2018-11-26 05:09:44'),
+(1001024, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-26 09:05:41'),
+(1001025, 'TORRES, JIK', 'Update', 'Schedule%20updated%20S39:%20VXI%20-SM%20Ecoland%20Payday', '2018-11-26 09:54:39'),
+(1001026, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-26 16:31:41'),
+(1001027, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10121%20of%20Client:%20PADILLA%20SHAHANA%20ROSE', '2018-11-26 16:37:12'),
+(1001028, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-27 01:18:42'),
+(1001029, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-28 03:35:21'),
+(1001030, 'TORRES, JIK', 'Add', 'New%20client%20record%20added:%20ATABELO%20MA.%20LYNN%20DABON', '2018-11-28 03:39:08'),
+(1001031, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10036:%20ATABELO%20MA.%20LYNN%20DABON', '2018-11-28 03:39:45'),
+(1001032, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-28 05:52:46'),
+(1001033, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-28 09:52:47'),
+(1001034, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-28 16:51:19'),
+(1001035, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-28 16:52:15'),
+(1001036, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-29 02:10:36'),
+(1001037, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10117%20of%20Client:%20ISRAEL%20LADY%20GRACE', '2018-11-29 02:13:22'),
+(1001038, 'TORRES, JIK', 'Add', 'New%20client%20record%20added:%20NEPOMUCENO%20CEDDIERICK', '2018-11-29 03:44:45'),
+(1001039, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10037:%20NEPOMUCENO%20CEDDIERICK', '2018-11-29 03:46:40'),
+(1001040, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-29 09:14:41'),
+(1001041, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-29 17:50:21'),
+(1001042, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-29 17:53:33'),
+(1001043, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-29 17:53:49'),
+(1001044, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-29 23:04:10'),
+(1001045, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-11-29 23:09:10'),
+(1001046, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10129%20of%20Client:%20ZABATE%20KAREN%20JANE', '2018-11-30 00:12:04'),
+(1001047, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10119%20of%20Client:%20ANIMA%20CHERRYL', '2018-11-30 00:14:10'),
+(1001048, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10134%20of%20Client:%20TALAMERA%20MARIA%20LINEL', '2018-11-30 00:14:49'),
+(1001049, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-02 02:09:24'),
+(1001050, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10126%20of%20Client:%20ALDERITE%20ROSE%20ANN', '2018-12-02 02:13:56'),
+(1001051, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10117%20of%20Client:%20ISRAEL%20LADY%20GRACE', '2018-12-02 02:17:09'),
+(1001052, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10001:%20ISRAEL%20LADY%20GRACE', '2018-12-02 02:17:29'),
+(1001053, 'TORRES, JIK', 'Add', 'New%20client%20record%20added:%20ESPINA%20KRYSTYN%20KYNE', '2018-12-02 02:24:46'),
+(1001054, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10038:%20ESPINA%20KRYSTYN%20KYNE', '2018-12-02 02:25:57'),
+(1001055, 'TORRES, JIK', 'Add', 'New%20schedule%20added:%20Kyne%20payment', '2018-12-02 05:39:46'),
+(1001056, 'TORRES, JIK', 'Add', 'New%20schedule%20added:%20Ceddie%20Payment', '2018-12-02 05:40:22'),
+(1001057, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-03 02:11:42'),
+(1001058, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10116%20of%20Client:%20ANG%20MICO', '2018-12-03 03:52:04'),
+(1001059, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10032:%20ANIMA%20CHERRYL', '2018-12-03 04:56:54'),
+(1001060, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-03 09:36:40'),
+(1001061, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-04 02:41:58'),
+(1001062, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-04 02:42:45'),
+(1001063, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-04 04:05:34'),
+(1001064, 'TORRES, JIK', 'Update', 'Schedule%20updated%20S40:%20IBEX%2013th%20month', '2018-12-04 06:39:30'),
+(1001065, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-04 13:53:24'),
+(1001066, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-05 01:22:07'),
+(1001067, 'TORRES, JIK', 'Add', 'New%20company%20added:%20Davao%20Doctors%20Hospital', '2018-12-05 03:04:28'),
+(1001068, 'TORRES, JIK', 'Update', 'Client%20updated%20C10038:%20ESPINA%20KRYSTYN%20KYNE', '2018-12-05 03:10:10'),
+(1001069, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-05 07:05:52'),
+(1001070, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-05 16:07:18'),
+(1001071, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10140%20of%20Client:%20NEPOMUCENO%20CEDDIERICK', '2018-12-05 17:56:02'),
+(1001072, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-06 01:24:19'),
+(1001073, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-06 09:44:55'),
+(1001074, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-06 16:01:27'),
+(1001075, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10134%20of%20Client:%20TALAMERA%20MARIA%20LINEL', '2018-12-06 16:03:01'),
+(1001076, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-07 01:22:27'),
+(1001077, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10142%20of%20Client:%20ESPINA%20KRYSTYN%20KYNE', '2018-12-07 01:54:32'),
+(1001078, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-07 05:51:08'),
+(1001079, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-07 09:03:42'),
+(1001080, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10126%20of%20Client:%20ALDERITE%20ROSE%20ANN', '2018-12-07 09:05:25'),
+(1001081, 'TORRES, JIK', 'Add', 'New%20interest%20added%20to%20Loan%20ID:%20L10126%20of%20Client:%20ALDERITE%20ROSE%20ANN', '2018-12-07 09:06:52'),
+(1001082, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10112%20of%20Client:%20LOPEZ%20FEJIE', '2018-12-07 09:13:00'),
+(1001083, 'TORRES, JIK', 'Add', 'New%20client%20record%20added:%20ANIMA%20DARRIN', '2018-12-07 09:20:54'),
+(1001084, 'TORRES, JIK', 'Add', 'New%20company%20added:%20Alorica', '2018-12-07 09:21:48'),
+(1001085, 'TORRES, JIK', 'Add', 'New%20ATM%20bank%20added:%20BDO', '2018-12-07 09:22:42'),
+(1001086, 'TORRES, JIK', 'Update', 'ATM%20Bank%20updated%20A108:%20BDO%20to%20BDO', '2018-12-07 09:23:14'),
+(1001087, 'TORRES, JIK', 'Update', 'Client%20updated%20C10032:%20ANIMA%20CHERRYL', '2018-12-07 09:25:11'),
+(1001088, 'TORRES, JIK', 'Update', 'Client%20updated%20C10038:%20ESPINA%20KRYSTYN%20KYNE', '2018-12-07 09:25:38'),
+(1001089, 'TORRES, JIK', 'Update', 'Client%20updated%20C10032:%20ANIMA%20CHERRYL', '2018-12-07 09:26:09'),
+(1001090, 'TORRES, JIK', 'Update', 'Client%20updated%20C10039:%20ANIMA%20DARRIN', '2018-12-07 09:26:48'),
+(1001091, 'TORRES, JIK', 'Update', 'Client%20updated%20C10039:%20ANIMA%20DARRIN', '2018-12-07 09:27:31'),
+(1001092, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10039:%20ANIMA%20DARRIN', '2018-12-07 09:28:09'),
+(1001093, 'TORRES, JIK', 'Update', 'Client%20updated%20C10039:%20ANIMA%20DARRIN', '2018-12-07 09:35:31'),
+(1001094, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-07 15:31:16'),
+(1001095, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-08 12:25:20'),
+(1001096, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-08 15:22:02'),
+(1001097, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10135%20of%20Client:%20BAYANI%20ESNEYRA', '2018-12-08 15:37:31'),
+(1001098, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10136%20of%20Client:%20ABDULLAH%20FARHANA%20BINT', '2018-12-08 15:38:11'),
+(1001099, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10130%20of%20Client:%20CARIM%20MARY%20JASMIN', '2018-12-08 15:41:54'),
+(1001100, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10130%20of%20Client:%20CARIM%20MARY%20JASMIN', '2018-12-08 15:42:54'),
+(1001101, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10022:%20CARIM%20MARY%20JASMIN', '2018-12-08 15:43:22'),
+(1001102, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10139%20of%20Client:%20ATABELO%20MA.%20LYNN%20DABON', '2018-12-08 15:45:10'),
+(1001103, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10100%20of%20Client:%20SISON%20BERNARD%20IAN', '2018-12-08 16:00:22'),
+(1001104, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10128%20of%20Client:%20CALAMAAN%20ANGELIKA%20JOYCE', '2018-12-08 16:12:54'),
+(1001105, 'TORRES, JIK', 'Add', 'New%20schedule%20added:%20VXI%20-SM%20Ecoland%20Payday', '2018-12-08 16:27:15'),
+(1001106, 'TORRES, JIK', 'Add', 'New%20schedule%20added:%20IBEX%20Payday', '2018-12-08 16:28:17'),
+(1001107, 'TORRES, JIK', 'Add', 'New%20schedule%20added:%20Apollo%20Ladz%20Payday', '2018-12-08 16:29:08'),
+(1001108, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-09 02:02:21'),
+(1001109, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10138%20of%20Client:%20JIMENEZ%20JAZZRIC', '2018-12-09 03:19:28'),
+(1001110, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10133%20of%20Client:%20CAGAMPANG%20MARY%20GRACE', '2018-12-09 03:20:08'),
+(1001111, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10131%20of%20Client:%20CAGAMPANG%20MARY%20GRACE', '2018-12-09 03:20:29'),
+(1001112, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10031:%20CAGAMPANG%20MARY%20GRACE', '2018-12-09 03:20:45'),
+(1001113, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-10 01:08:57'),
+(1001114, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10029:%20DE%20REAL%20MAYUMI%20J.', '2018-12-10 01:09:57'),
+(1001115, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10103%20of%20Client:%20PRESENTE%20JAYRRAH%20PRAISE%20A.', '2018-12-10 01:23:30'),
+(1001116, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10132%20of%20Client:%20OCZON%20JORELH%20TRAYA', '2018-12-10 04:47:11'),
+(1001117, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10025:%20OCZON%20JORELH%20TRAYA', '2018-12-10 04:47:40'),
+(1001118, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-10 10:03:06'),
+(1001119, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-10 15:50:33'),
+(1001120, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10121%20of%20Client:%20PADILLA%20SHAHANA%20ROSE', '2018-12-10 16:48:03'),
+(1001121, 'TORRES, JIK', 'Add', 'New%20interest%20added%20to%20Loan%20ID:%20L10121%20of%20Client:%20PADILLA%20SHAHANA%20ROSE', '2018-12-10 16:48:44'),
+(1001122, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-11 01:14:55'),
+(1001123, 'TORRES, JIK', 'Add', 'New%20client%20record%20added:%20ESTILLORE%20MARY%20JOY', '2018-12-11 01:31:13'),
+(1001124, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10040:%20ESTILLORE%20MARY%20JOY', '2018-12-11 01:32:17'),
+(1001125, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-11 05:34:36'),
+(1001126, 'TORRES, JIK', 'Add', 'New%20payment%20added%20to%20Loan%20ID:%20L10126%20of%20Client:%20ALDERITE%20ROSE%20ANN', '2018-12-11 05:39:07'),
+(1001127, 'TORRES, JIK', 'Add', 'New%20loan%20added%20to:%20C10003:%20ALDERITE%20ROSE%20ANN', '2018-12-11 05:39:47'),
+(1001128, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-12 01:59:11'),
+(1001129, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-12 07:17:13'),
+(1001130, 'TORRES, JIK', 'Login', 'System user login as Administrator', '2018-12-12 14:27:05');
 
 -- --------------------------------------------------------
 
@@ -1375,7 +1571,16 @@ INSERT INTO `schedules` (`sched_id`, `title`, `date`, `time`, `remarks`, `userna
 (36, 'VXI -SM Ecoland Payday, Felcris', '2018-11-15', '18:00', 'Karen, Rose, Juh, Fejie, January, Mayumi', 'um_developer', '2018-10-26 06:00:08'),
 (37, 'Apollo Payday, Ladz Remittance', '2018-11-15', '18:00', 'Mico, Ladz', 'um_developer', '2018-11-05 07:32:41'),
 (38, 'IBEX Payday', '2018-11-23', '18:00', 'Jazh, Esning, Bint, Shahana, Ben, Jayrrah, Jorelh, Gracey', 'um_developer', '2018-11-11 16:17:04'),
-(39, 'VXI -SM Ecoland Payday', '2018-11-29', '18:00', 'Karen, Rose, Fejie, Cherryl', 'um_developer', '2018-11-15 15:38:31');
+(39, 'VXI -SM Ecoland Payday', '2018-11-28', '18:00', 'Karen, Rose, Fejie, Cherryl, Talming', 'um_developer', '2018-11-15 15:38:31'),
+(40, 'IBEX 13th month', '2018-12-14', '18:00', 'Yanny, Bint, Jayrrah, Shahana, Jazh, Ben, Jorelh, Gracey, Cara, Angelika', 'um_developer', '2018-11-21 03:59:21'),
+(41, 'VXI 13th month', '2018-12-07', '18:00', 'Karen, Rose, Fejie, Cherryl, Talming', 'um_developer', '2018-11-22 07:41:21'),
+(42, 'Apollo, Ladz Payday', '2018-12-03', '18:00', 'Mico, Ladz', 'um_developer', '2018-11-22 07:42:46'),
+(43, 'IBEX payday', '2018-12-10', '18:00', 'Yanny, Bint, Jayrrah, Shahana, Jazh, Ben, Jorelh, Gracey, Cara, Angelika', 'um_developer', '2018-11-26 03:06:40'),
+(44, 'Kyne payment', '2018-12-10', '18:00', 'Kyne Espina payment', 'um_developer', '2018-12-02 05:39:46'),
+(45, 'Ceddie Payment', '2018-12-06', '18:00', 'Ceddierick Nepomuceno payment', 'um_developer', '2018-12-02 05:40:21'),
+(46, 'VXI -SM Ecoland Payday', '2018-12-13', '18:00', 'Karen, Rose, Fejie, Cherryl, Darrin - Alorica', 'um_developer', '2018-12-08 16:27:14'),
+(47, 'IBEX Payday', '2018-12-25', '18:00', 'Yanny, Bint, Jayrrah, Shahana, Jazh, Jorelh, Gracey, Cara', 'um_developer', '2018-12-08 16:28:17'),
+(48, 'Apollo, Ladz Payday', '2018-12-14', '18:00', 'Ladz Israel', 'um_developer', '2018-12-08 16:29:07');
 
 -- --------------------------------------------------------
 
@@ -1790,7 +1995,72 @@ INSERT INTO `transactions` (`trans_id`, `loan_id`, `date`, `type`, `amount`, `in
 (100388, 10116, '2018-11-16', 2, -2100.00, 0.00, 2180.00, '', '2018-11-16 02:24:46'),
 (100389, 10112, '2018-11-16', 2, -2280.00, 0.00, 3980.00, '', '2018-11-16 02:25:55'),
 (100390, 10112, '2018-11-16', 4, 0.00, 580.00, 4560.00, '', '2018-11-16 02:26:37'),
-(100391, 10128, '2018-11-16', 1, 5000.00, 350.00, 5350.00, '', '2018-11-16 06:17:51');
+(100391, 10128, '2018-11-16', 1, 5000.00, 350.00, 5350.00, '', '2018-11-16 06:17:51'),
+(100392, 10126, '2018-11-17', 2, -300.00, 0.00, 15750.00, '', '2018-11-16 17:43:38'),
+(100393, 10117, '2018-11-17', 2, -2700.00, 0.00, 2650.00, '', '2018-11-16 17:45:17'),
+(100394, 10097, '2018-11-19', 3, -4150.00, 0.00, 0.00, '', '2018-11-19 03:12:14'),
+(100395, 10129, '2018-11-19', 1, 15000.00, 1050.00, 16050.00, '', '2018-11-19 03:12:34'),
+(100396, 10122, '2018-11-23', 3, -16050.00, 0.00, 0.00, '', '2018-11-23 01:32:10'),
+(100397, 10130, '2018-11-23', 1, 15000.00, 1050.00, 16050.00, '', '2018-11-23 01:33:14'),
+(100398, 10100, '2018-11-23', 2, -2000.00, 0.00, 2000.00, '', '2018-11-23 01:37:45'),
+(100399, 10124, '2018-11-23', 3, -5350.00, 0.00, 0.00, '', '2018-11-23 01:38:19'),
+(100400, 10131, '2018-11-23', 1, 5000.00, 350.00, 5350.00, '', '2018-11-23 01:38:43'),
+(100401, 10128, '2018-11-23', 2, -2700.00, 0.00, 2650.00, '', '2018-11-23 01:39:21'),
+(100402, 10127, '2018-11-23', 2, -2700.00, 0.00, 2650.00, '', '2018-11-23 01:39:58'),
+(100403, 10123, '2018-11-23', 3, -16050.00, 0.00, 0.00, '', '2018-11-23 03:02:10'),
+(100404, 10132, '2018-11-23', 1, 15000.00, 1050.00, 16050.00, '', '2018-11-23 03:02:26'),
+(100405, 10133, '2018-11-23', 1, 5000.00, 350.00, 5350.00, '', '2018-11-23 03:03:22'),
+(100406, 10134, '2018-11-23', 1, 5000.00, 350.00, 5350.00, '', '2018-11-23 07:14:41'),
+(100407, 10073, '2018-11-23', 2, -3000.00, 0.00, 900.00, '', '2018-11-23 09:07:14'),
+(100408, 10120, '2018-11-23', 3, -5350.00, 0.00, 0.00, '', '2018-11-23 09:10:15'),
+(100409, 10135, '2018-11-23', 1, 5000.00, 350.00, 5350.00, '', '2018-11-23 09:10:31'),
+(100410, 10125, '2018-11-23', 3, -10700.00, 0.00, 0.00, '', '2018-11-23 09:11:12'),
+(100411, 10136, '2018-11-23', 1, 10000.00, 700.00, 10700.00, '', '2018-11-23 09:11:57'),
+(100412, 10121, '2018-11-24', 2, -500.00, 0.00, 13550.00, '', '2018-11-23 19:17:24'),
+(100413, 10137, '2018-11-26', 1, 1000.00, 70.00, 1070.00, '', '2018-11-26 02:46:31'),
+(100414, 10127, '2018-11-26', 3, -2650.00, 0.00, 0.00, '', '2018-11-26 05:09:24'),
+(100415, 10138, '2018-11-26', 1, 7000.00, 490.00, 7490.00, '', '2018-11-26 05:09:43'),
+(100416, 10121, '2018-11-27', 2, -1900.00, 0.00, 11650.00, '', '2018-11-26 16:37:04'),
+(100417, 10139, '2018-11-28', 1, 5000.00, 350.00, 5350.00, '', '2018-11-28 03:39:44'),
+(100418, 10117, '2018-11-29', 2, -2000.00, 0.00, 650.00, '', '2018-11-29 02:13:22'),
+(100419, 10140, '2018-11-29', 1, 3000.00, 210.00, 3210.00, '', '2018-11-29 03:46:40'),
+(100420, 10129, '2018-11-29', 2, -4150.00, 0.00, 11900.00, '', '2018-11-30 00:11:58'),
+(100421, 10119, '2018-11-30', 3, -2650.00, 0.00, 0.00, '', '2018-11-30 00:14:09'),
+(100422, 10134, '2018-11-29', 2, -2700.00, 0.00, 2650.00, '', '2018-11-30 00:14:49'),
+(100423, 10126, '2018-12-02', 2, -1400.00, 0.00, 14350.00, '', '2018-12-02 02:13:55'),
+(100424, 10117, '2018-11-30', 3, -650.00, 0.00, 0.00, '', '2018-12-02 02:17:09'),
+(100425, 10141, '2018-12-02', 1, 3000.00, 210.00, 3210.00, '', '2018-12-02 02:17:29'),
+(100426, 10142, '2018-12-02', 1, 5000.00, 350.00, 5350.00, '', '2018-12-02 02:25:56'),
+(100427, 10116, '2018-12-03', 3, -2180.00, 0.00, 0.00, '', '2018-12-03 03:52:04'),
+(100428, 10143, '2018-12-03', 1, 10000.00, 700.00, 10700.00, '', '2018-12-03 04:56:53'),
+(100429, 10140, '2018-12-06', 3, -3210.00, 0.00, 0.00, '', '2018-12-05 17:56:01'),
+(100430, 10134, '2018-12-06', 3, -2650.00, 0.00, 0.00, '', '2018-12-06 16:03:00'),
+(100431, 10142, '2018-12-07', 3, -5350.00, 0.00, 0.00, '', '2018-12-07 01:54:29'),
+(100432, 10126, '2018-12-07', 2, -5200.00, 0.00, 9150.00, '', '2018-12-07 09:05:25'),
+(100433, 10126, '2018-12-07', 4, 0.00, 640.00, 9790.00, '', '2018-12-07 09:06:51'),
+(100434, 10112, '2018-12-07', 2, -2280.00, 0.00, 2280.00, '', '2018-12-07 09:12:58'),
+(100435, 10144, '2018-12-07', 1, 6000.00, 420.00, 6420.00, '', '2018-12-07 09:28:07'),
+(100436, 10135, '2018-12-08', 2, -2000.00, 0.00, 3350.00, '', '2018-12-08 15:37:30'),
+(100437, 10136, '2018-12-08', 2, -5350.00, 0.00, 5350.00, '', '2018-12-08 15:38:11'),
+(100438, 10130, '2018-12-08', 2, -1050.00, 0.00, 15000.00, '', '2018-12-08 15:41:53'),
+(100439, 10130, '2018-12-08', 3, -15000.00, 0.00, 0.00, '', '2018-12-08 15:42:52'),
+(100440, 10145, '2018-12-08', 1, 15000.00, 1050.00, 16050.00, '', '2018-12-08 15:43:21'),
+(100441, 10139, '2018-12-08', 2, -2700.00, 0.00, 2650.00, '', '2018-12-08 15:45:09'),
+(100442, 10100, '2018-12-08', 3, -2000.00, 0.00, 0.00, '', '2018-12-08 16:00:21'),
+(100443, 10128, '2018-12-09', 3, -2650.00, 0.00, 0.00, '', '2018-12-08 16:12:54'),
+(100444, 10138, '2018-12-09', 2, -3500.00, 0.00, 3990.00, '', '2018-12-09 03:19:27'),
+(100445, 10133, '2018-12-09', 3, -5350.00, 0.00, 0.00, '', '2018-12-09 03:20:07'),
+(100446, 10131, '2018-12-09', 3, -5350.00, 0.00, 0.00, '', '2018-12-09 03:20:28'),
+(100447, 10146, '2018-12-09', 1, 10000.00, 700.00, 10700.00, '', '2018-12-09 03:20:45'),
+(100448, 10147, '2018-12-10', 1, 5000.00, 350.00, 5350.00, '', '2018-12-10 01:09:57'),
+(100449, 10103, '2018-12-10', 2, -7650.00, 0.00, 4900.00, '', '2018-12-10 01:23:30'),
+(100450, 10132, '2018-12-10', 3, -16050.00, 0.00, 0.00, '', '2018-12-10 04:47:11'),
+(100451, 10148, '2018-12-10', 1, 15000.00, 1050.00, 16050.00, '', '2018-12-10 04:47:39'),
+(100452, 10121, '2018-12-11', 2, -2500.00, 0.00, 9150.00, '', '2018-12-10 16:48:02'),
+(100453, 10121, '2018-12-11', 4, 0.00, 1050.00, 10200.00, '', '2018-12-10 16:48:43'),
+(100454, 10149, '2018-12-11', 1, 5000.00, 350.00, 5350.00, '', '2018-12-11 01:32:17'),
+(100455, 10126, '2018-12-11', 3, -9790.00, 0.00, 0.00, '', '2018-12-11 05:39:06'),
+(100456, 10150, '2018-12-11', 1, 15000.00, 1050.00, 16050.00, '', '2018-12-11 05:39:46');
 
 -- --------------------------------------------------------
 
@@ -1832,7 +2102,7 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `lastname`, `firstname`,
 (106, 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', '2018-02-04 02:31:33', 0, 0, 0, 0, 0, 0, 0, 1),
 (107, 'srmafel_inting', 'fsilgc', 'Inting', 'Ma. Felina ', 'Saban', '09232838367', 'srmafel_inting@yahoo.com', 'JS Francisco Village, Talomo , Davao City', '2018-02-06 16:19:07', 1, 0, 0, 0, 0, 0, 0, 1),
 (108, 'um_developer', 'jiktorres', 'TORRES', 'JIK', 'ABAS', '+639228031290', 'jikiboi03@gmail.com', 'Sasa, Davao City', '2018-02-07 14:06:29', 1, 0, 0, 0, 0, 0, 0, 0),
-(109, 'xanderford', 'xanderford', 'Ford', 'Xander', 'Marlou', '09989898988', 'xander@gmail.com', 'Brgy Barrio Patay, Davao City', '2018-03-12 23:23:04', 0, 0, 0, 0, 0, 0, 0, 0);
+(109, 'xanderford', 'xanderford', 'Ford', 'Xander', 'Marlou', '09989898988', 'xander@gmail.com', 'Brgy Barrio Patay, Davao City', '2018-03-12 23:23:04', 0, 0, 0, 0, 0, 0, 0, 1);
 
 --
 -- Indexes for dumped tables
@@ -1900,7 +2170,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `atm_banks`
 --
 ALTER TABLE `atm_banks`
-  MODIFY `atm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `atm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
 -- AUTO_INCREMENT for table `capital`
@@ -1912,37 +2182,37 @@ ALTER TABLE `capital`
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10035;
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10041;
 
 --
 -- AUTO_INCREMENT for table `companies`
 --
 ALTER TABLE `companies`
-  MODIFY `comp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `comp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT for table `loans`
 --
 ALTER TABLE `loans`
-  MODIFY `loan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10129;
+  MODIFY `loan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10151;
 
 --
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000966;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1001131;
 
 --
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `sched_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `sched_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100392;
+  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100457;
 
 --
 -- AUTO_INCREMENT for table `users`
