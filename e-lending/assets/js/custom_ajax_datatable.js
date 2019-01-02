@@ -93,11 +93,11 @@ $(document).ready(function()
 
                   if (sex == 'Male') 
                   {
-                    $node.css('background-color', '#ccccff');
+                    $node.css('background-color', '#ccb3ff');
                   }
                   else
                   {
-                    $node.css('background-color', '#ffcccc');
+                    $node.css('background-color', '#ffb3d9');
                   }
 
                   var status = data[11],
@@ -105,7 +105,17 @@ $(document).ready(function()
 
                   if (status == 'active') 
                   {
-                    $node.css('background-color', '#99ffff');
+
+                    function isOdd(num) { return num % 2;}
+                    
+                    if (isOdd(index) == 1) // to have different color when changed color is in sequence
+                    {
+                      $node.css('background-color', '#b3fffa');
+                    }
+                    else
+                    {
+                      $node.css('background-color', '#99ffff');
+                    }
                   }
                 },
                 "scrollX": true 
