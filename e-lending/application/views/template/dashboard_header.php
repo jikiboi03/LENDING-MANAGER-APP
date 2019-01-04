@@ -18,9 +18,9 @@
     <!--Animate.css [ OPTIONAL ]-->
     <link href="<?php echo base_url();?>assets/plugins/animate-css/animate.min.css" rel="stylesheet">
     <!--Morris.js [ OPTIONAL ]-->
-    <link href="<?php echo base_url();?>assets/plugins/morris-js/morris.min.css" rel="stylesheet">
+    <!-- <link href="<?php echo base_url();?>assets/plugins/morris-js/morris.min.css" rel="stylesheet"> -->
     <!--Switchery [ OPTIONAL ]-->
-    <link href="<?php echo base_url();?>assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+    <!-- <link href="<?php echo base_url();?>assets/plugins/switchery/switchery.min.css" rel="styleheet"> -->
     <!--Bootstrap Select [ OPTIONAL ]-->
     <link href="<?php echo base_url();?>assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
     <!--Demo script [ DEMONSTRATION ]-->
