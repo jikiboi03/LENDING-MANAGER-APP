@@ -660,8 +660,7 @@ function view_edit_user(id) // for customer table
             $('[name="current_username"]').val(data.username);
             $('[name="lastname"]').val(data.lastname);
             $('[name="firstname"]').val(data.firstname);
-            $('[name="middlename"]').val(data.middlename);
-            $('[name="current_name"]').val(data.lastname + data.firstname + data.middlename);
+            $('[name="current_name"]').val(data.lastname + data.firstname);
             $('[name="contact"]').val(data.contact);
             $('[name="email"]').val(data.email);
             $('[name="address"]').val(data.address);

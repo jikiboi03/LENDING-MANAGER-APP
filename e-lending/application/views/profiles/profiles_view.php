@@ -130,7 +130,7 @@
 
 
                         <div class="panel-heading">
-                            <h3 class="panel-title">Loans Infotmation Table</h3>    
+                            <h3 class="panel-title">Loans Information Table</h3>    
                         </div>
 
                         <div class="panel-body">

@@ -12,7 +12,8 @@ class Notifications_controller extends CI_Controller {
     // parameter page can be monthly, quarterly, deworming
     public function index($page)
     {
-        if($this->session->userdata('user_id') == '')
+        // check if logged in and admin
+        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == "0")
         {
           redirect('error500');
         }

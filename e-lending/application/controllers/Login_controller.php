@@ -41,33 +41,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					'username' => $row->username,
 					'lastname' => $row->lastname,
 					'firstname' => $row->firstname,
-					'administrator' => $row->administrator,
-					'cashier' => $row->cashier,
-					'inventory' => $row->inventory,
-					'supplier' => $row->supplier,
-					'customer' => $row->customer,
-					'user' => $row->user,
-					'report' => $row->report);
+					'administrator' => $row->administrator);
 
-					$this->session->set_userdata($new_array);
-				}
+					// set login log ------------------------------------------------------------------
+					$log_type = 'Login';
+					
+					if ($row->administrator == 1)
+					{
+						$this->session->set_userdata($new_array);
 
-				// set login log ------------------------------------------------------------------
-				$log_type = 'Login';
-				
-				if ($this->session->userdata('administrator') == 0)
-				{
-					$details = 'System user login as Staff';
-				}
-				else
-				{
-					$details = 'System user login as Administrator';	
-				}
-				// set log
-				$this->ajax_add_log($log_type, $details);
+						$details = 'System user login as Administrator';
 
-				// go to dashboard
-				redirect(base_url().'dashboard');
+						// set log
+						$this->ajax_add_log($log_type, $details);
+
+						// go to dashboard
+						redirect(base_url().'dashboard');
+					}
+					else
+					{
+						$details = 'Admin Access Login as Client Attempt';
+
+						// set log
+						$this->ajax_add_log($log_type, $details);
+
+						$this->session->set_flashdata('error', '<strong>Login Error!</strong><br />Invalid Username and Password');
+						redirect('/');
+					}
+
+					break;
+				}
 			}
 			else
 			{

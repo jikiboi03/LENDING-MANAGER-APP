@@ -47,7 +47,7 @@ class Users_controller extends CI_Controller {
 			// $row[] = $users->password;
             $row[] = $users->lastname;
             $row[] = $users->firstname;
-            $row[] = $users->middlename;
+            $row[] = $users->client_id;
 			// $row[] = $users->contact;
 			// $row[] = $users->email;
 			// $row[] = $users->address;
@@ -100,7 +100,6 @@ class Users_controller extends CI_Controller {
 		        'password' => $this->input->post('password'),
 		        'lastname' => $this->input->post('lastname'),
 		        'firstname' => $this->input->post('firstname'),
-		        'middlename' => $this->input->post('middlename'),
 		        'contact' => $this->input->post('contact'),
 		        'email' => $this->input->post('email'),
 		        'address' => $this->input->post('address'),
@@ -127,7 +126,6 @@ class Users_controller extends CI_Controller {
 				'password' => $this->input->post('password'),
 		        'lastname' => $this->input->post('lastname'),
 		        'firstname' => $this->input->post('firstname'),
-		        'middlename' => $this->input->post('middlename'),
 		        'contact' => $this->input->post('contact'),
 		        'email' => $this->input->post('email'),
 		        'address' => $this->input->post('address')	        
@@ -304,22 +302,15 @@ class Users_controller extends CI_Controller {
 			$data['error_string'][] = 'Last name is required';
 			$data['status'] = FALSE;
 		}
-
-		if($this->input->post('middlename') == '')
-		{
-			$data['inputerror'][] = 'middlename';
-			$data['error_string'][] = 'Middle name is required';
-			$data['status'] = FALSE;
-		}
 		// validation for duplicates
         else
         {
-            $new_name = $this->input->post('lastname') . $this->input->post('firstname') . $this->input->post('middlename');
+            $new_name = $this->input->post('lastname') . $this->input->post('firstname');
             // check if name has a new value or not
             if ($this->input->post('current_name') != $new_name)
             {
                 // validate if name already exist in the databaase table
-                $duplicates = $this->users->get_duplicates($this->input->post('lastname'), $this->input->post('firstname'), $this->input->post('middlename'));
+                $duplicates = $this->users->get_duplicates($this->input->post('lastname'), $this->input->post('firstname'));
 
                 if ($duplicates->num_rows() != 0)
                 {

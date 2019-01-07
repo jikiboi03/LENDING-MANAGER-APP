@@ -11,18 +11,19 @@ class Companies_controller extends CI_Controller {
 
    public function index()
    {
-      if($this->session->userdata('user_id') == '')
-      {
-        redirect('error500');
-      }
-      
-   	  $this->load->helper('url');							
-   													
-   	  $data['title'] = '<i class="fa fa-building"></i> &nbsp; Companies Information List';					
-      $this->load->view('template/dashboard_header',$data);
-      $this->load->view('companies/companies_view',$data);
-      $this->load->view('template/dashboard_navigation');
-      $this->load->view('template/dashboard_footer');
+        // check if logged in and admin
+        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == "0")
+        {
+          redirect('error500');
+        }
+
+          $this->load->helper('url');							
+        												
+          $data['title'] = '<i class="fa fa-building"></i> &nbsp; Companies Information List';					
+        $this->load->view('template/dashboard_header',$data);
+        $this->load->view('companies/companies_view',$data);
+        $this->load->view('template/dashboard_navigation');
+        $this->load->view('template/dashboard_footer');
 
    }
    

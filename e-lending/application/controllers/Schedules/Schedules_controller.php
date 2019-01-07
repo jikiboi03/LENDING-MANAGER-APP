@@ -9,20 +9,21 @@ class Schedules_controller extends CI_Controller {
         $this->load->model('Schedules/Schedules_model','schedules');
     }
 
-   public function index()						/** Note: ayaw ilisi ang sequence sa page load sa page **/
+   public function index()
    {
-      if($this->session->userdata('user_id') == '')
-      {
-        redirect('error500');
-      }
+        // check if logged in and admin
+        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == "0")
+        {
+          redirect('error500');
+        }
       
-   	  $this->load->helper('url');							
-   													
-   	  $data['title'] = "<i class='fa fa-clock-o'></i> &nbsp; Schedules Information List";					
-      $this->load->view('template/dashboard_header',$data);
-      $this->load->view('schedules/schedules_view',$data);   //Kani lang ang ilisi kung mag dungag mo ug Page
-      $this->load->view('template/dashboard_navigation');
-      $this->load->view('template/dashboard_footer');
+        $this->load->helper('url');							
+        											
+        $data['title'] = "<i class='fa fa-clock-o'></i> &nbsp; Schedules Information List";					
+        $this->load->view('template/dashboard_header',$data);
+        $this->load->view('schedules/schedules_view',$data);   //Kani lang ang ilisi kung mag dungag mo ug Page
+        $this->load->view('template/dashboard_navigation');
+        $this->load->view('template/dashboard_footer');
 
    }
    

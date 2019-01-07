@@ -49,7 +49,7 @@
                                         <th>Username</th>
                                         <th>Last Name</th>
                                         <th>First Name</th>
-                                        <th>Middle Name</th>
+                                        <th>Client ID</th>
                                         <th class="min-tablet">Registered</th>
                                         <th style="width:80px;">Action</th>
                                     </tr>
@@ -117,13 +117,6 @@
                                         <label class="control-label col-md-3">First Name :</label>
                                         <div class="col-md-9">
                                             <input name="firstname" placeholder="First Name" class="form-control" type="text">
-                                            <span class="help-block"></span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3">Middle Name :</label>
-                                        <div class="col-md-9">
-                                            <input name="middlename" placeholder="Middle Name" class="form-control" type="text">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
