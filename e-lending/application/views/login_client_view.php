@@ -33,7 +33,7 @@
 		<!--===================================================-->
 		<div class="cls-header cls-header-lg">
 			<div class="cls-brand">
-				<a class="box-inline" href="index.html">
+				<a class="box-inline" href="<?php base_url() ?>">
 					<!-- <img alt="Nifty Admin" src="img/logo.png" class="brand-icon"> -->
 					<span class="brand-title">e-Lending | <span class="text-thin"> Lending Manager App</span></span>
 				</a>
@@ -47,10 +47,10 @@
 				<div class="panel-body">
 					<img src="assets/img/jikiapps.png" style="width: 50%;">
 					<p class="pad-btm h3">Client Portal</p>
-					<p class="pad-btm h3">Enter your Surname and ATM Pin</p>
+					
 					<hr>
 					
-					<form id="login" action="<?php echo base_url();?>login_controller/login_validation" method="post" >
+					<form id="login" action="<?php echo base_url();?>login_client_controller/login_validation" method="post" >
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-addon"><i class="fa fa-user"></i></div>
@@ -69,6 +69,7 @@
 						<?php echo '<label class="text-danger">'.$this->session->flashdata("error").'</label>';?>
 						<div class="row">
 							<div class="col-xs-8 text-left checkbox">
+								<p class="h5">Enter your Surname and ATM Pin</p>
 							</div>
 							<div class="col-xs-4">
 								<div class="form-group text-right">

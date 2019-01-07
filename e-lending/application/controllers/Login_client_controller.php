@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-	class Login_client_controller extends CI_Controller{ 				/** Note: ayaw ilisi ang sequence sa page load sa page **/	
+	class Login_client_controller extends CI_Controller{
 		public function __construct()
 		{
 		    parent::__construct();
@@ -60,6 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 					else
 					{
+						$log_type = 'Report';
 						$details = 'Client Access Login as Admin Attempt';
 
 						// set log
@@ -74,6 +75,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 			else
 			{
+				$log_type = 'Report';
+				$details = 'Failed Client Access Login Attempt';
+
+				// set log
+				$this->ajax_add_log($log_type, $details);
+
 				$this->session->set_flashdata('error', '<strong>Login Error!</strong><br />Invalid Username and Password');
 				redirect('/');
 				

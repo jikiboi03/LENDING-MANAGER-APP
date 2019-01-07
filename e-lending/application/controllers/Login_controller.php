@@ -60,13 +60,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 					else
 					{
+						$log_type = 'Report';
 						$details = 'Admin Access Login as Client Attempt';
 
 						// set log
 						$this->ajax_add_log($log_type, $details);
 
 						$this->session->set_flashdata('error', '<strong>Login Error!</strong><br />Invalid Username and Password');
-						redirect('/');
+						redirect('/sudo');
 					}
 
 					break;
@@ -74,6 +75,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 			else
 			{
+				$log_type = 'Report';
+				$details = 'Failed Admin Access Login Attempt';
+
+				// set log
+				$this->ajax_add_log($log_type, $details);
+
 				$this->session->set_flashdata('error', '<strong>Login Error!</strong><br />Invalid Username and Password');
 				redirect('/');
 				

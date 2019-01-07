@@ -33,7 +33,7 @@
 		<!--===================================================-->
 		<div class="cls-header cls-header-lg">
 			<div class="cls-brand">
-				<a class="box-inline" href="index.html">
+				<a class="box-inline" href="<?php echo site_url('/') ?>">
 					<!-- <img alt="Nifty Admin" src="img/logo.png" class="brand-icon"> -->
 					<span class="brand-title">e-Lending | <span class="text-thin"> Lending Manager App</span></span>
 				</a>
