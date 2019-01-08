@@ -82,13 +82,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$this->ajax_add_log($log_type, $details);
 
 				$this->session->set_flashdata('error', '<strong>Login Error!</strong><br />Invalid Username and Password');
-				redirect('/');
+				redirect('/sudo');
 				
 			}
 		}
 		else{
 			$this->session->set_flashdata('error', '<strong>Login Error!</strong><br />Enter your username and Password');
-			redirect('/');//false
+			redirect('/sudo');//false
 		}
 			
 	   }

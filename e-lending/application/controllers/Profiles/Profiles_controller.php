@@ -26,10 +26,6 @@ class Profiles_controller extends CI_Controller {
 
         $data['client'] = $client_data;
 
-        // get companies and atm list for dropdown
-        $data['companies'] = $this->companies->get_companies();
-        $data['atm'] = $this->atm->get_atm();
-
         $data['loan_balance'] = $this->loans->get_client_total_balance($client_id);
 
         $this->load->helper('url');							

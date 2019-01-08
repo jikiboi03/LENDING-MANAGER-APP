@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Clients_controller extends CI_Controller {
+class Client_portal_controller extends CI_Controller {
 
     public function __construct()
     {
@@ -10,268 +10,372 @@ class Clients_controller extends CI_Controller {
         $this->load->model('Atm/Atm_model','atm');
         $this->load->model('Companies/Companies_model','companies');
         $this->load->model('Loans/Loans_model','loans');
+        $this->load->model('Transactions/Transactions_model','transactions');
+        
     }
 
-   public function index()
+   public function index($client_id)
    {
         // check if logged in and admin
-        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == "0")
+        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') != "0")
         {
           redirect('error500');
         }
-        
-        // get companies and atm list for dropdown
-        $data['companies'] = $this->companies->get_companies();
-        $data['atm'] = $this->atm->get_atm();
 
-        $this->load->helper('url');							
-        											
-        $data['title'] = '<i class="fa fa-users"></i> &nbsp; Clients Information List';					
+        $client_data = $this->clients->get_by_id($client_id);
+
+        $data['client'] = $client_data;
+
+        $data['loan_balance'] = $this->loans->get_client_total_balance($client_id);
+
+        $this->load->helper('url');                         
+                                                    
+        $data['title'] = 'Client Profile';                  
         $this->load->view('template/dashboard_header',$data);
-        $this->load->view('clients/clients_view',$data);
+        $this->load->view('profiles/profiles_view',$data);   //Kani lang ang ilisi kung mag dungag mo ug Page
         $this->load->view('template/dashboard_navigation');
         $this->load->view('template/dashboard_footer');
 
    }
    
-    public function ajax_list()
+    public function ajax_list($client_id)
     {
-        $list = $this->clients->get_datatables();
+        $list = $this->loans->get_active_loans_datatables($client_id);
         $data = array();
         $no = $_POST['start'];
-        foreach ($list as $clients) {
+        foreach ($list as $loans) {
             $no++;
             $row = array();
-            $row[] = 'C' . $clients->client_id;
-            $row[] = $clients->lname;
-            $row[] = $clients->fname;
-            $row[] = $clients->contact;
+            $row[] = 'L' . $loans->loan_id;
 
-            $row[] = $this->companies->get_company_name($clients->comp_id); // company name
-            $row[] = $this->atm->get_atm_name($clients->atm_id); // atm bank name
+            $row[] = number_format($loans->amount, 2, '.', ',');
+            $row[] = number_format($loans->interest, 2, '.', ',');   
+            $row[] = number_format($loans->total, 2, '.', ',');
 
-            $loan_balance = $this->loans->get_client_total_balance($clients->client_id);
+            $row[] = $loans->date_start;
+            $row[] = $loans->date_end;
 
-            $row[] = '<i>₱ ' . number_format($loan_balance, 2, '.', ',') . '</i>';      
-            $row[] = '<b>' . $clients->pin . '</b>';
+            // genereate loan status based on int. Loan can only be edited or deleted if it is new
+            if ($loans->status == 1)
+            {
+                $row[] = 'New';
 
-            // $row[] = $clients->job;
-            // $row[] = $clients->salary;
-            // $row[] = $clients->address;
-            // $row[] = $clients->remarks;
+                $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i> </a>
 
-            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_profile('."'".$clients->client_id."'".')"><i class="fa fa-eye"></i> </a>
-
-                    <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Edit" onclick="edit_client('."'".$clients->client_id."'".')"><i class="fa fa-pencil-square-o"></i></a>
+                    <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Edit" onclick="edit_loan('."'".$loans->loan_id."'".')"><i class="fa fa-pencil-square-o"></i> </a>
                       
-                      <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_client('."'".$clients->client_id."'".')"><i class="fa fa-trash"></i></a>';
-
-            $row[] = $clients->encoded;
-            $row[] = $clients->sex;
-
-            // validate if client has an ongoing loan transaction in loans_table
-            $active_loan = $this->loans->has_active_loan($clients->client_id);
-
-            if ($active_loan->num_rows() != 0)
-            {
-                $row[] = 'active'; // has active loan
+                      <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_loan('."'".$loans->loan_id."'".')"><i class="fa fa-trash"></i></a>';
             }
-            else
+            else if ($loans->status == 2) // buttons are disabled (date and remarks can only be edited)
             {
-                $row[] = 'inactive'; // has active loan
+                $row[] = 'Ongoing';
+
+                $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i> </a>
+
+                    <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Edit" onclick="edit_loan_date_remarks('."'".$loans->loan_id."'".')"><i class="fa fa-pencil-square-o"></i> </a>
+                      
+                      <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_loan('."'".$loans->loan_id."'".')" disabled><i class="fa fa-trash"></i></a>';
             }
+            else // buttons are disabled (date and remarks can only be edited)
+            {
+                $row[] = 'Cleared';
+
+                $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i> </a>
+
+                    <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Edit" onclick="edit_loan_date_remarks('."'".$loans->loan_id."'".')"><i class="fa fa-pencil-square-o"></i> </a>
+                      
+                      <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_loan('."'".$loans->loan_id."'".')" disabled><i class="fa fa-trash"></i></a>';
+            }
+            $row[] = number_format($loans->paid, 2, '.', ',');
+            $row[] = number_format($loans->balance, 2, '.', ',');
+            $row[] = number_format(($loans->paid + $loans->balance), 2, '.', ',');
+
+            $row[] = $loans->remarks;
+            $row[] = $loans->encoded;
  
             $data[] = $row;
         }
  
         $output = array(
                         "draw" => $_POST['draw'],
-                        "recordsTotal" => $this->clients->count_all(),
-                        "recordsFiltered" => $this->clients->count_filtered(),
+                        "recordsTotal" => $this->loans->count_active_loans_all($client_id),
+                        "recordsFiltered" => $this->loans->count_active_loans_filtered($client_id),
                         "data" => $data,
                 );
         //output to json format
         echo json_encode($output);
     }
-
-    public function ajax_edit($client_id)
-    {
-        $data = $this->clients->get_by_id($client_id);
-        echo json_encode($data);
-    }
  
+    // public function edit_cis_view($client_id)
+    // {
+    //     $data['child'] = $this->cis->get_by_id($client_id);
+
+    //     // get barangays list for dropdown
+    //     $data['barangays'] = $this->barangays->get_barangays();
+
+    //     $this->load->helper('url');                         
+                                                    
+    //     $data['title'] = 'Edit Child Information (CIS)';                   
+    //     $this->load->view('template/dashboard_header',$data);
+    //     $this->load->view('profiles/edit_cis_view',$data);
+    //     $this->load->view('template/dashboard_navigation');
+    //     $this->load->view('template/dashboard_footer');
+    // }
+
+    //========================================= client SECTION ==========================================================
+ 
+    // add client loan
     public function ajax_add()
     {
         $this->_validate();
         $data = array(
-                'lname' => $this->input->post('lname'),
-                'fname' => $this->input->post('fname'),
-                'contact' => $this->input->post('contact'),
-
-                'comp_id' => $this->input->post('comp_id'),
-                'atm_id' => $this->input->post('atm_id'),
-                'atm_type' => $this->input->post('atm_type'),
-                'pin' => $this->input->post('pin'),
-
-                'sex' => $this->input->post('sex'),
-
-                'job' => $this->input->post('job'),
-                'salary' => $this->input->post('salary'),
-            
-                'address' => $this->input->post('address'),
-                'remarks' => $this->input->post('remarks'),
-
-                // 'encoded' => $this->input->post('encoded'),
-                
-                'removed' => 0
+                'client_id' => $this->input->post('client_id'),
+                'amount' => $this->input->post('amount'),
+                'interest' => $this->input->post('interest'),
+                'total' => $this->input->post('total'),
+                'status' => 1,
+                'date_start' => $this->input->post('date_start'),
+                'date_end' => 'n/a',
+                'paid' => 0,
+                'balance' => $this->input->post('total'),
+                'remarks' => $this->input->post('remarks')
             );
-        $insert = $this->clients->save($data);
+        $insert = $this->loans->save($data);
+
+        // for transactions table record
+        $datatrans = array(
+                'loan_id' => $insert,
+                'date' => $this->input->post('date_start'),
+                'type' => 1,
+                'amount' => $this->input->post('amount'),
+                'interest' => $this->input->post('interest'),
+                'total' => $this->input->post('total'),
+                'remarks' => $this->input->post('remarks')
+            );
+        $inserttrans = $this->transactions->save($datatrans);
+
         echo json_encode(array("status" => TRUE));
+    }
+
+    public function ajax_edit($loan_id)
+    {
+        $data = $this->loans->get_by_id($loan_id);
+        echo json_encode($data);
     }
  
     public function ajax_update()
     {
         $this->_validate();
         $data = array(
-                'lname' => $this->input->post('lname'),
-                'fname' => $this->input->post('fname'),
-                'contact' => $this->input->post('contact'),
-
-                'comp_id' => $this->input->post('comp_id'),
-                'atm_id' => $this->input->post('atm_id'),
-                'atm_type' => $this->input->post('atm_type'),
-                'pin' => $this->input->post('pin'),
-
-                'sex' => $this->input->post('sex'),
-
-                'job' => $this->input->post('job'),
-                'salary' => $this->input->post('salary'),
-            
-                'address' => $this->input->post('address'),
+                'amount' => $this->input->post('amount'),
+                'interest' => $this->input->post('interest'),
+                'total' => $this->input->post('total'),
+                // 'status' => $this->input->post('status'),
+                'date_start' => $this->input->post('date_start'),
+                // 'date_end' => $this->input->post('date_end'),
+                'balance' => $this->input->post('total'),
                 'remarks' => $this->input->post('remarks')
             );
-        $this->clients->update(array('client_id' => $this->input->post('client_id')), $data);
-        echo json_encode(array("status" => TRUE));
-    }
+        $this->loans->update(array('loan_id' => $this->input->post('loan_id')), $data);
 
-    // delete a child
-    public function ajax_delete($client_id)
-    {
-        $data = array(
-                'removed' => '1'
+         // for transactions table record
+        $datatrans = array(
+                'date' => $this->input->post('date_start'),
+                'amount' => $this->input->post('amount'),
+                'interest' => $this->input->post('interest'),
+                'total' => $this->input->post('total'),
+                'remarks' => $this->input->post('remarks')
             );
-        $this->clients->update(array('client_id' => $client_id), $data);
+        $this->transactions->update(array('loan_id' => $this->input->post('loan_id')), $datatrans);
+
         echo json_encode(array("status" => TRUE));
     }
 
-    private function _validate() // not required: salary, remarks
+    public function ajax_update_date_remarks() // editing loan date/remarks only
+    {
+        $this->_validate_date();
+        $data = array(
+                
+                'date_start' => $this->input->post('date_start'),
+                'remarks' => $this->input->post('remarks')
+            );
+        $this->loans->update(array('loan_id' => $this->input->post('loan_id')), $data);
+
+         // for transactions table record
+        $datatrans = array(
+                'date' => $this->input->post('date_start'),
+                'remarks' => $this->input->post('remarks')
+            );
+        $this->transactions->update(array('loan_id' => $this->input->post('loan_id'), 'type' => 1), $datatrans);
+
+        echo json_encode(array("status" => TRUE));
+    }
+
+    // delete a loan
+    public function ajax_delete($loan_id)
+    {
+        $this->loans->delete_by_id($loan_id);
+
+        // delete transaction record using loan_id
+        $this->transactions->delete_by_id($loan_id);
+
+        echo json_encode(array("status" => TRUE));
+    }
+
+    //========================================= CLIENT SECTION =======================================================
+ 
+
+    public function do_upload() 
+    {
+         $config['upload_path']   = './uploads/pic1'; 
+         $config['allowed_types'] = 'jpg|jpeg'; 
+         $config['max_size']      = 2000; 
+         $config['max_width']     = 5000; 
+         $config['max_height']    = 5000;
+         $new_name = $this->input->post('client_id') . '.jpg';
+         $config['file_name'] = $new_name;
+         $config['overwrite'] = TRUE;
+
+         $this->load->library('upload', $config);
+            
+         if ( ! $this->upload->do_upload('userfile1')) // upload fail
+         {
+            $error = array('error' => $this->upload->display_errors()); 
+            $this->load->view('upload_form', $error);
+            // echo '<script type="text/javascript">alert("' . $error.toString() . '"); </script>';
+         }
+         else // upload success
+         { 
+            $data = array('upload_data' => $this->upload->data()); 
+            
+            $data = array(
+                'pic1' => $new_name
+            );
+            $this->clients->update(array('client_id' => $this->input->post('client_id')), $data);
+            redirect('/profiles-page/' . $this->input->post('client_id'));
+         } 
+    } 
+
+    public function do_upload_2() 
+    {
+         $config['upload_path']   = './uploads/pic2'; 
+         $config['allowed_types'] = 'jpg|jpeg'; 
+         $config['max_size']      = 2000; 
+         $config['max_width']     = 5000; 
+         $config['max_height']    = 5000;
+         $new_name = $this->input->post('client_id') . '.jpg';
+         $config['file_name'] = $new_name;
+         $config['overwrite'] = TRUE;
+
+         $this->load->library('upload', $config);
+            
+         if ( ! $this->upload->do_upload('userfile2')) // upload fail
+         {
+            $error = array('error' => $this->upload->display_errors()); 
+            $this->load->view('upload_form', $error);
+            // echo '<script type="text/javascript">alert("' . $error.toString() . '"); </script>';
+         }
+         else // upload success
+         { 
+            $data = array('upload_data' => $this->upload->data()); 
+            
+            $data = array(
+                'pic2' => $new_name
+            );
+            $this->clients->update(array('client_id' => $this->input->post('client_id')), $data);
+            redirect('/profiles-page/' . $this->input->post('client_id'));
+         } 
+    }
+
+    public function do_upload_3() 
+    {
+         $config['upload_path']   = './uploads/pic3'; 
+         $config['allowed_types'] = 'jpg|jpeg'; 
+         $config['max_size']      = 2000; 
+         $config['max_width']     = 5000; 
+         $config['max_height']    = 5000;
+         $new_name = $this->input->post('client_id') . '.jpg';
+         $config['file_name'] = $new_name;
+         $config['overwrite'] = TRUE;
+
+         $this->load->library('upload', $config);
+            
+         if ( ! $this->upload->do_upload('userfile3')) // upload fail
+         {
+            $error = array('error' => $this->upload->display_errors()); 
+            $this->load->view('upload_form', $error);
+            // echo '<script type="text/javascript">alert("' . $error.toString() . '"); </script>';
+         }
+         else // upload success
+         { 
+            $data = array('upload_data' => $this->upload->data()); 
+            
+            $data = array(
+                'pic3' => $new_name
+            );
+            $this->clients->update(array('client_id' => $this->input->post('client_id')), $data);
+            redirect('/profiles-page/' . $this->input->post('client_id'));
+         } 
+    }   
+    // graduate a child
+    // public function ajax_graduate($client_id)
+    // {
+    //     $data = array(
+    //             'graduated' => '1',
+    //             'date_graduated' => date("Y-m-d")
+    //         );
+    //     $this->cis->update(array('client_id' => $client_id), $data);
+    //     echo json_encode(array("status" => TRUE));
+    // }
+
+    private function _validate()
     {
         $data = array();
         $data['error_string'] = array();
         $data['inputerror'] = array();
         $data['status'] = TRUE;
 
-        if($this->input->post('lname') == '')
+        if($this->input->post('amount') == '')
         {
-            $data['inputerror'][] = 'lname';
-            $data['error_string'][] = 'Last name is required';
+            $data['inputerror'][] = 'amount';
+            $data['error_string'][] = 'Amount is required';
             $data['status'] = FALSE;
         }
 
-        if($this->input->post('fname') == '')
+        if($this->input->post('interest') == '')
         {
-            $data['inputerror'][] = 'fname';
-            $data['error_string'][] = 'First name is required';
-            $data['status'] = FALSE;
-        }
-        // validation for duplicates
-        else
-        {
-            $new_name = $this->input->post('lname') . $this->input->post('fname');
-            // check if name has a new value or not
-            if ($this->input->post('current_name') != $new_name)
-            {
-                // validate if name already exist in the databaase table
-                $duplicates = $this->clients->get_duplicates($this->input->post('lname'), $this->input->post('fname'));
-
-                if ($duplicates->num_rows() != 0)
-                {
-                    $data['inputerror'][] = 'lname';
-                    $data['error_string'][] = 'Client name (full name) is already registered';
-                    $data['status'] = FALSE;
-                }
-            }
-        }
-
-        if($this->input->post('contact') == '')
-        {
-            $data['inputerror'][] = 'contact';
-            $data['error_string'][] = 'Contact is required';
+            $data['inputerror'][] = 'interest';
+            $data['error_string'][] = 'Interest to the loan is required';
             $data['status'] = FALSE;
         }
 
-        if($this->input->post('comp_id') == '')
+        if($this->input->post('date_start') == '')
         {
-            $data['inputerror'][] = 'comp_id';
-            $data['error_string'][] = 'Company is required';
+            $data['inputerror'][] = 'date_start';
+            $data['error_string'][] = 'Date of loan is required';
             $data['status'] = FALSE;
-        }
+        }   
 
-        if($this->input->post('atm_id') == '')
+        if($data['status'] === FALSE)
         {
-            $data['inputerror'][] = 'atm_id';
-            $data['error_string'][] = 'ATM bank is required';
-            $data['status'] = FALSE;
+            echo json_encode($data);
+            exit();
         }
+    }
 
-        if($this->input->post('atm_type') == '')
+    private function _validate_date()
+    {
+        $data = array();
+        $data['error_string'] = array();
+        $data['inputerror'] = array();
+        $data['status'] = TRUE;
+
+        if($this->input->post('date_start') == '')
         {
-            $data['inputerror'][] = 'atm_type';
-            $data['error_string'][] = 'ATM type is required';
+            $data['inputerror'][] = 'date_start';
+            $data['error_string'][] = 'Date of loan is required';
             $data['status'] = FALSE;
-        }
-
-        if($this->input->post('pin') == '')
-        {
-            $data['inputerror'][] = 'pin';
-            $data['error_string'][] = 'ATM pin number is required';
-            $data['status'] = FALSE;
-        }
-
-        if($this->input->post('sex') == '')
-        {
-            $data['inputerror'][] = 'sex';
-            $data['error_string'][] = 'Gender is required';
-            $data['status'] = FALSE;
-        }
-
-        if($this->input->post('job') == '')
-        {
-            $data['inputerror'][] = 'job';
-            $data['error_string'][] = 'Job Information is required';
-            $data['status'] = FALSE;
-        }
-
-        // if($this->input->post('salary') == '')
-        // {
-        //     $data['inputerror'][] = 'salary';
-        //     $data['error_string'][] = 'Salary Information is required';
-        //     $data['status'] = FALSE;
-        // }
-
-        if($this->input->post('address') == '')
-        {
-            $data['inputerror'][] = 'address';
-            $data['error_string'][] = 'Address is required';
-            $data['status'] = FALSE;
-        }
-
-        // if($this->input->post('remarks') == '')
-        // {
-        //     $data['inputerror'][] = 'remarks';
-        //     $data['error_string'][] = 'Remarks is required';
-        //     $data['status'] = FALSE;
-        // }     
+        }   
 
         if($data['status'] === FALSE)
         {

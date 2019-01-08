@@ -75,6 +75,20 @@ class Loans_model extends CI_Model {
         return $query->result();
     }
 
+    function get_active_loans_datatables($client_id)
+    {        
+        $this->_get_datatables_query();
+        if($_POST['length'] != -1)
+        $this->db->limit($_POST['length'], $_POST['start']);
+
+        // get only records of the assigned client_id
+        $this->db->where('client_id', $client_id);
+        $this->db->where('status !=', 3);
+
+        $query = $this->db->get();
+        return $query->result();
+    }    
+
     // for statistics controller - top list table
     function get_datatables_top_list()
     {        
@@ -190,6 +204,29 @@ class Loans_model extends CI_Model {
 
         // get only records of the assigned client_id
         $this->db->where('client_id', $client_id);
+
+        return $this->db->count_all_results();
+    }
+
+    function count_active_loans_filtered($client_id)
+    {
+        $this->_get_datatables_query();
+
+        // get only records of the assigned client_id
+        $this->db->where('client_id', $client_id);
+        $this->db->where('status !=', 3);
+
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+ 
+    public function count_active_loans_all($client_id)
+    {
+        $this->db->from($this->table);
+
+        // get only records of the assigned client_id
+        $this->db->where('client_id', $client_id);
+        $this->db->where('status !=', 3);
 
         return $this->db->count_all_results();
     }
