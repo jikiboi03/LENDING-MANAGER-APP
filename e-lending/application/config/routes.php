@@ -17,6 +17,12 @@ $route['user-logout'] = 'Login_controller/logout';
 $route['sudo'] = 'Login_controller/index';
 
 
+//************************************** CLIENT PORTAL ROUTES
+//**************************************
+
+$route['client-portal-page/(:num)'] = 'Client_portal/Client_portal_controller/index/$1';
+
+
 //************************************** COMPANIES ROUTES
 //**************************************
 

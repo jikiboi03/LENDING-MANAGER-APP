@@ -41,7 +41,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					'username' => $row->username,
 					'lastname' => $row->lastname,
 					'firstname' => $row->firstname,
-					'administrator' => $row->administrator);
+					'administrator' => $row->administrator,
+					'client_id' => $row->client_id);
 
 					// set login log ------------------------------------------------------------------
 					$log_type = 'Login';
@@ -56,7 +57,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						$this->ajax_add_log($log_type, $details);
 
 						// go to dashboard
-						redirect(base_url().'dashboard');
+						redirect(base_url().'client-portal-page/'.$row->client_id);
 					}
 					else
 					{

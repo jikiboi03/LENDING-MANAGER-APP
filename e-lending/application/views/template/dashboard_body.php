@@ -185,7 +185,7 @@
             <div class="col-md-9">
             </div>
             <div class="col-md-3">
-                eLending - Lending Manager App v1.1 JikiApps Solutions / Jik Torres © 2018
+                eLending - Lending Manager App v1.2 JikiApps Solutions / Jik Torres © 2018
             </div>
             <!--===================================================-->
             <!--END CONTENT CONTAINER-->

@@ -210,6 +210,96 @@ $(document).ready(function()
                 "scrollX": true 
             });
     }
+    else if(tableID == "client-portal-loans-table")
+    {
+    //datatables
+
+            // get client_id
+            var client_id = $('[name="client_id"]').val();
+
+            table = $('#client-portal-loans-table').DataTable({ 
+         
+                "processing": true, //Feature control the processing indicator.
+                "serverSide": true, //Feature control DataTables' server-side processing mode.
+                "order": [], //Initial no order.
+                "ordering": false,
+                "searching": false,
+         
+                // Load data for the table's content from an Ajax source
+                "ajax": {
+                    "url": "../Client_portal/Client_portal_controller/ajax_list/" + client_id,
+                    "type": "POST",
+                },
+         
+                //Set column definition initialisation properties.
+                "columnDefs": [
+                { 
+                    "targets": [ -1 ], //last column
+                    "orderable": false, //set not orderable
+                },
+                {
+                      "targets": 1,
+                      "className": "text-right",
+                },
+                {
+                      "targets": 2,
+                      "className": "text-right",
+                },
+                {
+                      "targets": 3,
+                      "className": "text-right",
+                },
+                {
+                      "targets": 4,
+                      "className": "text-center",
+                },
+                {
+                      "targets": 5,
+                      "className": "text-center",
+                },
+                {
+                      "targets": 6,
+                      "className": "text-center",
+                },
+                {
+                      "targets": 7,
+                      "className": "text-center",
+                },
+                {
+                      "targets": 8,
+                      "className": "text-right",
+                },
+                {
+                      "targets": 9,
+                      "className": "text-right",
+                },
+                {
+                      "targets": 10,
+                      "className": "text-right",
+                }
+                ],
+
+                "rowCallback": function( row, data, index )
+                {
+                  var status = data[6],
+                      $node = this.api().row(row).nodes().to$();
+
+                  if (status == 'New') 
+                  {
+                    $node.css('background-color', '#99ff99');
+                  }
+                  else if (status == 'Ongoing') 
+                  {
+                    $node.css('background-color', '#ccff99');
+                  }
+                  else
+                  {
+                    $node.css('background-color', '#cccccc');
+                  }
+                },
+                "scrollX": true 
+            });
+    }
     else if(tableID == "transactions-table")
     {
     //datatables

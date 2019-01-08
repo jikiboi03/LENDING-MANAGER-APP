@@ -80,6 +80,11 @@
 						
 					</form>
 				</div>
+
+				<div class="col-md-12">
+					<br>
+				    eLending - Lending Manager App v1.2 JikiApps Solutions / Jik Torres © 2018
+				</div>
 			</div>
 
 		</div>
