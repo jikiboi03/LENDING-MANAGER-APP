@@ -697,6 +697,11 @@ function view_loan(client_id, loan_id)
      window.location.href='transactions-page/' + client_id + '/' + loan_id;
 }
 
+function view_cp_loan(client_id, loan_id)
+{
+     window.location.href='transactions-client-page/' + client_id + '/' + loan_id;
+}
+
 function edit_privileges(id) // for customer table
 {
     save_method = 'update-privileges';
@@ -1235,6 +1240,11 @@ function reload_table()
 function cancel_trans()
 {
     window.location.href='../../../profiles-page/' + $('[name="client_id"]').val();
+}
+
+function cancel_cp_trans()
+{
+    window.location.href='../../../client-portal-page/' + $('[name="client_id"]').val();
 }
 
 function save()

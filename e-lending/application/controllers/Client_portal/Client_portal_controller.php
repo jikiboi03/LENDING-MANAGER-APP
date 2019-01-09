@@ -16,7 +16,7 @@ class Client_portal_controller extends CI_Controller {
 
    public function index($client_id)
    {
-        // check if logged in and admin
+        // check if logged in and not admin
         if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') != "0" || $this->session->userdata('client_id') != $client_id)
         {
           redirect('error500');
@@ -60,22 +60,22 @@ class Client_portal_controller extends CI_Controller {
             {
                 $row[] = 'New';
 
-                $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i> </a>';
+                $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_cp_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i> View</a>';
             }
             else if ($loans->status == 2) // buttons are disabled (date and remarks can only be edited)
             {
                 $row[] = 'Ongoing';
 
-                $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i> </a>';
+                $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_cp_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i> View</a>';
             }
             else // buttons are disabled (date and remarks can only be edited)
             {
                 $row[] = 'Cleared';
 
-                $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i> </a>';
+                $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_cp_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i> View</a>';
             }
             $row[] = number_format($loans->paid, 2, '.', ',');
-            $row[] = number_format($loans->balance, 2, '.', ',');
+            $row[] = '<b>' . number_format($loans->balance, 2, '.', ',') . '</b>';
             $row[] = number_format(($loans->paid + $loans->balance), 2, '.', ',');
 
             $row[] = $loans->remarks;

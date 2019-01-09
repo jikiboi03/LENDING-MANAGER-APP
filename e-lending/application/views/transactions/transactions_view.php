@@ -83,11 +83,14 @@
                         </div>
 
                         <div class="panel-body">
-                            <button class="btn btn-success" onclick="add_payment()"><i class="fa fa-plus-square"></i> &nbsp;Add Payment</button>
-                            <button class="btn btn-info" onclick="add_interest()"><i class="fa fa-plus-square"></i> &nbsp;Add Interest</button>
-                            <button class="btn btn-warning" onclick="adjust_loan()"><i class="fa fa-plus-square"></i> &nbsp;Adjust Loan</button>
-                            <button class="btn btn-default" onclick="reload_table()"><i class="fa fa-refresh"></i> &nbsp;Reload</button>
-                            <br><br>
+                            <?php if ($loan->status != 3){ ?>
+                                <button class="btn btn-success" onclick="add_payment()"><i class="fa fa-plus-square"></i> &nbsp;Add Payment</button>
+                                <button class="btn btn-info" onclick="add_interest()"><i class="fa fa-plus-square"></i> &nbsp;Add Interest</button>
+                                <button class="btn btn-warning" onclick="adjust_loan()"><i class="fa fa-plus-square"></i> &nbsp;Adjust Loan</button>
+                                <button class="btn btn-default" onclick="reload_table()"><i class="fa fa-refresh"></i> &nbsp;Reload</button>
+                                <br><br>
+                            <?php } ?>
+
                             <table id="transactions-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>

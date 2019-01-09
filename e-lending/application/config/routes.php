@@ -22,6 +22,8 @@ $route['sudo'] = 'Login_controller/index';
 
 $route['client-portal-page/(:num)'] = 'Client_portal/Client_portal_controller/index/$1';
 
+$route['client-portal-page/transactions-client-page/(:num)/(:num)'] = '../Trans_cp/Trans_cp_controller/index/$1/$2';
+
 
 //************************************** COMPANIES ROUTES
 //**************************************

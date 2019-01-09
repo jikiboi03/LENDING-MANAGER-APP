@@ -32,7 +32,7 @@
                 <div id="page-content">
                     <!-- Basic Data Tables -->
                     <!--===================================================-->
-                    <div class="panel" style="height: 3000px;">
+                    <div class="panel" style="height: 800px;">
                         <div class="panel-heading">
                             <h3 class="panel-title"><b><?php echo $client->lname . ', ' . $client->fname ?></b></h3>
                         </div>
@@ -67,7 +67,7 @@
 
 
                         <div class="panel-heading">
-                            <h3 class="panel-title">Loans Infotmation Table</h3>    
+                            <h3 class="panel-title">Active Loans Information Table</h3>    
                         </div>
 
                         <div class="panel-body">
@@ -96,7 +96,7 @@
                             </table>
 
                             <!-- End Striped Table -->
-                            <span>Legend: [ I - Initial | &nbsp; <i style = "color: #99ff99;" class="fa fa-square"></i> - New &nbsp; | &nbsp; <i style = "color: #ccff99;" class="fa fa-square"></i> - Ongoing &nbsp; | &nbsp; <i style = "color: #cccccc;" class="fa fa-square"></i> - Cleared &nbsp; ]</span>
+                            <span>Legend: [ I - Initial | &nbsp; <i style = "color: #99ff99;" class="fa fa-square"></i> - New &nbsp; | &nbsp; <i style = "color: #ccff99;" class="fa fa-square"></i> - Ongoing &nbsp; ]</span>
 
                         </div>
 
