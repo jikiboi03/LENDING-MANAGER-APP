@@ -29,6 +29,8 @@
     <link href="<?php echo base_url();?>assets/plugins/datatables/media/css/dataTables.bootstrap.css" rel="stylesheet">
     <link href="<?php echo base_url();?>assets/plugins/datatables/extensions/Responsive/css/dataTables.responsive.css" rel="stylesheet">
     <link href="<?php echo base_url();?>assets/css/custom.css" rel="stylesheet">
+    <!-- Confirm JS for Custom Alert Boxes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     <!--SCRIPT-->
     <!--=================================================-->
     <!--Page Load Progress Bar [ OPTIONAL ]-->

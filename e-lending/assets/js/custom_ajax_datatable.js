@@ -11,6 +11,8 @@ $(document).ready(function()
             table = $('#companies-table').DataTable({ 
          
                 "processing": true, //Feature control the processing indicator.
+                "language": {
+                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
                 "serverSide": true, //Feature control DataTables' server-side processing mode.
                 "order": [], //Initial no order.
          
@@ -36,6 +38,8 @@ $(document).ready(function()
             table = $('#atm-table').DataTable({ 
          
                 "processing": true, //Feature control the processing indicator.
+                "language": {
+                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
                 "serverSide": true, //Feature control DataTables' server-side processing mode.
                 "order": [], //Initial no order.
          
@@ -61,6 +65,8 @@ $(document).ready(function()
             table = $('#clients-table').DataTable({ 
          
                 "processing": true, //Feature control the processing indicator.
+                "language": {
+                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
                 "serverSide": true, //Feature control DataTables' server-side processing mode.
                 "order": [], //Initial no order.
          
@@ -131,6 +137,8 @@ $(document).ready(function()
             table = $('#loans-table').DataTable({ 
          
                 "processing": true, //Feature control the processing indicator.
+                "language": {
+                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
                 "serverSide": true, //Feature control DataTables' server-side processing mode.
                 "order": [], //Initial no order.
                 "ordering": false,
@@ -220,6 +228,8 @@ $(document).ready(function()
             table = $('#client-portal-loans-table').DataTable({ 
          
                 "processing": true, //Feature control the processing indicator.
+                "language": {
+                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
                 "serverSide": true, //Feature control DataTables' server-side processing mode.
                 "order": [], //Initial no order.
                 "ordering": false,
@@ -310,6 +320,8 @@ $(document).ready(function()
             table = $('#transactions-table').DataTable({ 
          
                 "processing": true, //Feature control the processing indicator.
+                "language": {
+                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
                 "serverSide": true, //Feature control DataTables' server-side processing mode.
                 "order": [], //Initial no order.
                 "ordering": false,
@@ -380,6 +392,8 @@ $(document).ready(function()
             table = $('#capital-table').DataTable({ 
          
                 "processing": true, //Feature control the processing indicator.
+                "language": {
+                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
                 "serverSide": true, //Feature control DataTables' server-side processing mode.
                 "order": [], //Initial no order.
          
@@ -440,6 +454,8 @@ $(document).ready(function()
             table = $('#top-clients-list-table').DataTable({ 
          
                 "processing": true, //Feature control the processing indicator.
+                "language": {
+                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
                 "serverSide": true, //Feature control DataTables' server-side processing mode.
                 "order": [], //Initial no order.
                 "ordering": false,
@@ -506,6 +522,8 @@ $(document).ready(function()
             table = $('#logs-table').DataTable({ 
          
                 "processing": true, //Feature control the processing indicator.
+                "language": {
+                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
                 "serverSide": true, //Feature control DataTables' server-side processing mode.
                 "order": [], //Initial no order.
          
@@ -552,6 +570,8 @@ $(document).ready(function()
             table = $('#schedules-table').DataTable({ 
          
                 "processing": true, //Feature control the processing indicator.
+                "language": {
+                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
                 "serverSide": true, //Feature control DataTables' server-side processing mode.
                 "order": [], //Initial no order.
          
@@ -590,6 +610,8 @@ $(document).ready(function()
             table = $('#users-table').DataTable({ 
          
                 "processing": true, //Feature control the processing indicator.
+                "language": {
+                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
                 "serverSide": true, //Feature control DataTables' server-side processing mode.
                 "order": [], //Initial no order.
          
@@ -1691,183 +1713,242 @@ function set_system_log_three(log_type, details)
 
 function delete_client(id, name)
 {
-    if(confirm('Are you sure to delete this data?'))
-    {
-        // ajax delete data to database
-        $.ajax({
-            url : "Clients/Clients_controller/ajax_delete/"+id,
-            type: "POST",
-            dataType: "JSON",
-            success: function(data)
-            {
-                var log_type = 'Delete';
+    $.confirm({
+        title: 'Confirm Delete',
+        theme: 'modern',
+        type: 'red',
+        icon: 'fa fa-warning',
+        content: 'Are you sure to delete this data?',
+        buttons: {
+            confirm: function () {
+                $.ajax({
+                    url : "Clients/Clients_controller/ajax_delete/"+id,
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                        var log_type = 'Delete';
 
-                var details = 'Client deleted C' + id; 
+                        var details = 'Client deleted C' + id; 
 
-                set_system_log(log_type, details);
+                        set_system_log(log_type, details);
 
-                //if success reload ajax table
-                $('#modal_form').modal('hide');
-                reload_table();
+                        //if success reload ajax table
+                        $('#modal_form').modal('hide');
+                        reload_table();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        alert('Error deleting data');
+                    }
+                });
             },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error deleting data');
-            }
-        });
- 
-    }
+            cancel: function () {
+                // close
+            },
+        }
+    });
 }
 function delete_company(id, name)
 {
-    if(confirm('Are you sure to delete this data?'))
-    {
-        // ajax delete data to database
-        $.ajax({
-            url : "Companies/Companies_controller/ajax_delete/"+id,
-            type: "POST",
-            dataType: "JSON",
-            success: function(data)
-            {
-                var log_type = 'Delete';
+    $.confirm({
+        title: 'Confirm Delete',
+        theme: 'modern',
+        type: 'red',
+        icon: 'fa fa-warning',
+        content: 'Are you sure to delete this data?',
+        buttons: {
+            confirm: function () {
+                // ajax delete data to database
+                $.ajax({
+                    url : "Companies/Companies_controller/ajax_delete/"+id,
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                        var log_type = 'Delete';
 
-                var details = 'Company deleted J' + id 
-                + ': ' + name; 
+                        var details = 'Company deleted J' + id 
+                        + ': ' + name; 
 
-                set_system_log(log_type, details);
+                        set_system_log(log_type, details);
 
-                //if success reload ajax table
-                $('#modal_form').modal('hide');
-                reload_table();
+                        //if success reload ajax table
+                        $('#modal_form').modal('hide');
+                        reload_table();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        alert('Error deleting data');
+                    }
+                });
             },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error deleting data');
-            }
-        });
- 
-    }
+            cancel: function () {
+                // close
+            },
+        }
+    });
 }
 function delete_atm(id, name)
 {
-    if(confirm('Are you sure to delete this data?'))
-    {
-        // ajax delete data to database
-        $.ajax({
-            url : "Atm/Atm_controller/ajax_delete/"+id,
-            type: "POST",
-            dataType: "JSON",
-            success: function(data)
-            {
-                var log_type = 'Delete';
+    $.confirm({
+        title: 'Confirm Delete',
+        theme: 'modern',
+        type: 'red',
+        icon: 'fa fa-warning',
+        content: 'Are you sure to delete this data?',
+        buttons: {
+            confirm: function () {
+                // ajax delete data to database
+                $.ajax({
+                    url : "Atm/Atm_controller/ajax_delete/"+id,
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                        var log_type = 'Delete';
 
-                var details = 'ATM Bank deleted A' + id 
-                + ': ' + name; 
+                        var details = 'ATM Bank deleted A' + id 
+                        + ': ' + name; 
 
-                set_system_log(log_type, details);
+                        set_system_log(log_type, details);
 
-                //if success reload ajax table
-                $('#modal_form').modal('hide');
-                reload_table();
+                        //if success reload ajax table
+                        $('#modal_form').modal('hide');
+                        reload_table();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        alert('Error deleting data');
+                    }
+                });
             },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error deleting data');
-            }
-        });
- 
-    }
+            cancel: function () {
+                // close
+            },
+        }
+    });
 }
 function delete_loan(id)
 {
-    if(confirm('Are you sure to delete this data?'))
-    {
-        // ajax delete data to database
-        $.ajax({
-            url : "../Profiles/Profiles_controller/ajax_delete/"+id,
-            type: "POST",
-            dataType: "JSON",
-            success: function(data)
-            {
-                var log_type = 'Delete';
+    $.confirm({
+        title: 'Confirm Delete',
+        theme: 'modern',
+        type: 'red',
+        icon: 'fa fa-warning',
+        content: 'Are you sure to delete this data?',
+        buttons: {
+            confirm: function () {
+                // ajax delete data to database
+                $.ajax({
+                    url : "../Profiles/Profiles_controller/ajax_delete/"+id,
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                        var log_type = 'Delete';
 
-                var details = 'Loan deleted: L' + id + ' from client: ' + $('[name="client_name"]').val();
+                        var details = 'Loan deleted: L' + id + ' from client: ' + $('[name="client_name"]').val();
 
-                set_system_log_one(log_type, details);
+                        set_system_log_one(log_type, details);
 
-                //if success reload ajax table
-                $('#modal_form').modal('hide');
-                reload_table();
+                        //if success reload ajax table
+                        $('#modal_form').modal('hide');
+                        reload_table();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        alert('Error deleting data');
+                    } 
+
+                });
             },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error deleting data');
-            } 
-
-        });
- 
-    }
+            cancel: function () {
+                // close
+            },
+        }
+    });
 }
 
 function delete_schedule(id)
 {
-    if(confirm('Are you sure to delete this data?'))
-    {
-        // ajax delete data to database
-        $.ajax({
-            url : "Schedules/Schedules_controller/ajax_delete/"+id,
-            type: "POST",
-            dataType: "JSON",
-            success: function(data)
-            {
-                var log_type = 'Delete';
+    $.confirm({
+        title: 'Confirm Delete',
+        theme: 'modern',
+        type: 'red',
+        icon: 'fa fa-warning',
+        content: 'Are you sure to delete this data?',
+        buttons: {
+            confirm: function () {
+                // ajax delete data to database
+                $.ajax({
+                    url : "Schedules/Schedules_controller/ajax_delete/"+id,
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                        var log_type = 'Delete';
 
-                var details = 'Appointment schedule deleted';
+                        var details = 'Appointment schedule deleted';
 
-                set_system_log(log_type, details);
+                        set_system_log(log_type, details);
 
-                //if success reload ajax table
-                $('#modal_form').modal('hide');
-                reload_table();
+                        //if success reload ajax table
+                        $('#modal_form').modal('hide');
+                        reload_table();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        alert('Error deleting data');
+                    }
+                });
             },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error deleting data');
-            }
-        });
- 
-    }
+            cancel: function () {
+                // close
+            },
+        }
+    });
 }
 
 function delete_user(id)
 {
-    if(confirm('Are you sure to delete this data?'))
-    {
-        // ajax delete data to database
-        $.ajax({
-            url : "Users/Users_controller/ajax_delete/"+id,
-            type: "POST",
-            dataType: "JSON",
-            success: function(data)
-            {
-                var log_type = 'Delete';
+    $.confirm({
+        title: 'Confirm Delete',
+        theme: 'modern',
+        type: 'red',
+        icon: 'fa fa-warning',
+        content: 'Are you sure to delete this data?',
+        buttons: {
+            confirm: function () {
+                // ajax delete data to database
+                $.ajax({
+                    url : "Users/Users_controller/ajax_delete/"+id,
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                        var log_type = 'Delete';
 
-                var details = 'User record deleted'; 
+                        var details = 'User record deleted'; 
 
-                set_system_log(log_type, details);
+                        set_system_log(log_type, details);
 
-                //if success reload ajax table
-                $('#modal_form').modal('hide');
-                $('#modal_form_privileges').modal('hide');
-                reload_table();
+                        //if success reload ajax table
+                        $('#modal_form').modal('hide');
+                        $('#modal_form_privileges').modal('hide');
+                        reload_table();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        alert('Unable to delete one remaining administrator account');
+                    }
+                });
             },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Unable to delete one remaining administrator account');
-            }
-        });
-
-    }
+            cancel: function () {
+                // close
+            },
+        }
+    });
 }
 
 
