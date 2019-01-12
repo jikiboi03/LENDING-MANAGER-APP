@@ -5,7 +5,7 @@
                 <!--Page Title-->
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <div id="page-title">
-                    <h1 class="page-header text-overflow"><img src="assets/img/jikiapps.png" style="width: 10%; margin-top: 0%; margin-right: 1%;">e - L e n d i n g | Lending Manager App </h1>
+                    <h1 class="page-header text-overflow"><img src="assets/img/jikiapps.png" style="width: 10%; margin-top: 0%; margin-right: 1%;"> [ e-Lending ] Lending Manager App </h1>
 
 
                     <!--Searchbox-->
@@ -35,7 +35,7 @@
                 <div id="page-content" class="panel panel-light panel-colorful">
                 
                     <div class="panel-heading">
-                        <h3 class="panel-title">e-Lending Statistics / Charts</h3>
+                        <h3 class="panel-title"><i class='fa fa-line-chart'></i>&nbsp; e-Lending Statistics / Charts</h3>
                     </div>
                     <br>
                     <?php 
@@ -69,7 +69,7 @@
                     <!--===================================================-->
                     <div class="panel">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Top Clients - Total Loans Information Table</h3>
+                            <h3 class="panel-title"><i class='fa fa-trophy'></i>&nbsp; Top Clients - Total Loans Information Table</h3>
                         </div>
                         <div class="panel-body">
                             
@@ -93,7 +93,7 @@
                     <!--===================================================-->
                     <!-- End Striped Table -->
                     <span>Legend: [ &nbsp; <i style = "color: #ffff66;" class="fa fa-square"></i> - Has Current Balance &nbsp; | &nbsp; <i style = "color: #ffffff;" class="fa fa-square"></i> - No Current Balance &nbsp; ]</span>
-                    <hr style="background-color: #ccccff; height: 40px;">
+                    <br><br><br>
                 </div>
 
                         

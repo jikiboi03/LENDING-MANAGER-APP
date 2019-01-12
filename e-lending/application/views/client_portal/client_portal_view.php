@@ -17,6 +17,9 @@
                         </div>
                     </div> -->
                 </div>
+
+                <input type="hidden" id="schedules_today_str" value=<?php echo "None"; ?> name="schedules_today_str"/> 
+                <input type="hidden" id="near_due_date_str" value=<?php echo "None"; ?> name="near_due_date_str"/>    
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <!--End page title-->
 
@@ -75,7 +78,7 @@
                             <table id="client-portal-loans-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
-                                        <th style="width:60px;">Loan ID</th>
+                                        <th>Loan ID</th>
                                         <th>I.Amount</th>
                                         <th>I.Interest</th>
                                         <th>I.Total Due</th>

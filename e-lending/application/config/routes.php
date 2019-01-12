@@ -157,9 +157,13 @@ $route['notifications-page/notifications-severe-page'] = 'Notifications/Notifica
 //************************************** LOGS ROUTES
 //**************************************
 
-$route['logs-page'] = 'Logs/Logs_controller';
+$route['logs-page-access'] = 'Logs/Logs_controller/index/access';
 
-$route['showlist-logs'] = 'Logs/Logs_controller/ajax_list';
+$route['logs-page-ops'] = 'Logs/Logs_controller/index/ops';
+
+$route['showlist-logs-access'] = 'Logs/Logs_controller/ajax_list/access';
+
+$route['showlist-logs-ops'] = 'Logs/Logs_controller/ajax_list/ops';
 
 
 

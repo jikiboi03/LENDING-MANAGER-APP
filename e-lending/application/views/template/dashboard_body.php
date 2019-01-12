@@ -6,15 +6,10 @@
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <div id="page-title">
                     <h1 class="page-header text-overflow"><img src="assets/img/jikiapps.png" style="width: 10%; margin-top: 0%; margin-right: 1%;"> [ e-Lending ] Lending Manager App </h1>
+                    
+                    <input type="hidden" id="schedules_today_str" value=<?php echo "'" . $schedules_today_str . "'"; ?> name="schedules_today_str"/>
 
-                    <!-- For alert and notifications assets/js/demo/nifty-demo.js-->
-
-                    <input type="hidden" value=<?php echo "'" . $this->session->userdata('firstname').' '.$this->session->userdata('lastname') . "'"; ?> name="user_fullname"/>
-
-                    <input type="hidden" value=<?php echo "'" . date('l, F j, Y', strtotime(date('Y-m-d'))) . "'"; ?> name="current_date"/>
-
-
-                    <input type="hidden" id="schedules_today_str" value=<?php echo "'" . $schedules_today_str . "'"; ?> name="schedules_today_str"/>               
+                    <input type="hidden" id="near_due_date_str" value=<?php echo "'" . $near_due_date_str . "'"; ?> name="near_due_date_str"/>     
 
                     <!--Searchbox-->
                     <!-- <div class="searchbox">
@@ -39,7 +34,6 @@
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <!--End breadcrumb-->
                 <!--Page content-->
-                <hr>
 
                 <!--===================================================-->
                 <div id="page-content" style="background-color: white">

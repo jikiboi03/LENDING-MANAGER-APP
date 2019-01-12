@@ -30,7 +30,7 @@ class Transactions_controller extends CI_Controller {
 
         $this->load->helper('url');							
         											
-        $data['title'] = 'Loan Transactions History';					
+        $data['title'] = "<i class='fa fa-credit-card'></i>&nbsp; Loan Transactions History";					
         $this->load->view('template/dashboard_header',$data);
         $this->load->view('transactions/transactions_view',$data);   //Kani lang ang ilisi kung mag dungag mo ug Page
         $this->load->view('template/dashboard_navigation');

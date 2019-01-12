@@ -9,7 +9,7 @@ class Logs_controller extends CI_Controller {
         $this->load->model('Logs/Logs_model','logs');
     }
 
-    public function index()
+    public function index($type)
     {
         // check if logged in and admin
         if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == "0")
@@ -17,7 +17,9 @@ class Logs_controller extends CI_Controller {
           redirect('error500');
         }
 
-        $this->load->helper('url');							
+        $this->load->helper('url');
+
+        $data['type'] = $type;
         											
         $data['title'] = '<i class="fa fa-history"></i> &nbsp; System Logs Information Records';					
         $this->load->view('template/dashboard_header',$data);
@@ -27,34 +29,66 @@ class Logs_controller extends CI_Controller {
 
     }
    
-    public function ajax_list()
+    public function ajax_list($type)
     {
-        $list = $this->logs->get_datatables();
-        $data = array();
-        $no = $_POST['start'];
-        foreach ($list as $logs) {
-            $no++;
-            $row = array();
-            $row[] = 'L' . $logs->log_id;
+        if ($type == "access")
+        {
+            $list = $this->logs->get_access_datatables();
+            $data = array();
+            $no = $_POST['start'];
+            foreach ($list as $logs) {
+                $no++;
+                $row = array();
+                $row[] = 'L' . $logs->log_id;
+                
+                $row[] = $logs->log_type;
+                $row[] = str_replace("%20", " ", $logs->details);
+
+                $row[] = $logs->user_fullname;
+
+                $row[] = $logs->date_time;            
             
-            $row[] = $logs->log_type;
-            $row[] = str_replace("%20", " ", $logs->details);
-
-            $row[] = $logs->user_fullname;
-
-            $row[] = $logs->date_time;            
- 
-            $data[] = $row;
+                $data[] = $row;
+            }
+            
+            $output = array(
+                            "draw" => $_POST['draw'],
+                            "recordsTotal" => $this->logs->count_all_access(),
+                            "recordsFiltered" => $this->logs->count_filtered_access(),
+                            "data" => $data,
+                    );
+            //output to json format
+            echo json_encode($output);
         }
- 
-        $output = array(
-                        "draw" => $_POST['draw'],
-                        "recordsTotal" => $this->logs->count_all(),
-                        "recordsFiltered" => $this->logs->count_filtered(),
-                        "data" => $data,
-                );
-        //output to json format
-        echo json_encode($output);
+        else if ($type == "ops")
+        {
+            $list = $this->logs->get_ops_datatables();
+            $data = array();
+            $no = $_POST['start'];
+            foreach ($list as $logs) {
+                $no++;
+                $row = array();
+                $row[] = 'L' . $logs->log_id;
+                
+                $row[] = $logs->log_type;
+                $row[] = str_replace("%20", " ", $logs->details);
+
+                $row[] = $logs->user_fullname;
+
+                $row[] = $logs->date_time;            
+            
+                $data[] = $row;
+            }
+            
+            $output = array(
+                            "draw" => $_POST['draw'],
+                            "recordsTotal" => $this->logs->count_all_ops(),
+                            "recordsFiltered" => $this->logs->count_filtered_ops(),
+                            "data" => $data,
+                    );
+            //output to json format
+            echo json_encode($output);
+        }
     }
  
     public function ajax_add($log_type, $details)

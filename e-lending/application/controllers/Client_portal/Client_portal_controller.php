@@ -30,7 +30,7 @@ class Client_portal_controller extends CI_Controller {
 
         $this->load->helper('url');                         
                                                     
-        $data['title'] = 'Client Portal';                  
+        $data['title'] = "<i class='fa fa-id-card'></i>&nbsp; Client Portal";                  
         $this->load->view('template/dashboard_header',$data);
         $this->load->view('client_portal/client_portal_view',$data);
         $this->load->view('template/dashboard_navigation_client');

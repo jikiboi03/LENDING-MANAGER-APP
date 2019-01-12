@@ -14,9 +14,9 @@
                                 </a>
                             </li>
                             <li class="col-xs-4" data-content="Notification">
-                                <a id="demo-alert" class="shortcut-grid" href="#">
+                                <!-- <a id="demo-alert" class="shortcut-grid" href="#">
                                     <i class="fa fa-bullhorn"></i>
-                                </a>
+                                </a> -->
                             </li>
                             <li class="col-xs-4" data-content="Page Alerts">
                                 <a id="demo-page-alert" class="shortcut-grid" href="#">
@@ -300,7 +300,10 @@
                                     
                                         <!--Submenu-->
                                         <ul class="collapse">
-                                            <li><a href="<?php echo base_url();?>logs-page">Show List</a></li>
+                                            <li><a href="<?php echo base_url();?>logs-page-access">Access</a></li>
+                                        </ul>
+                                        <ul class="collapse">
+                                            <li><a href="<?php echo base_url();?>logs-page-ops">Operations</a></li>
                                         </ul>
                                     </li>
 
@@ -319,7 +322,7 @@
 
                                     <li class="active-link">
                                         <a href="<?php echo base_url();?>schedules-page">
-                                            <i class="fa fa-clock-o"></i>
+                                            <i class="fa fa-calendar"></i>
                                             <strong><span class="menu-title">Schedules</span></strong>
                                         </a>
                                     </li>
@@ -328,7 +331,7 @@
 
                                     <li>
                                         <a href="<?php echo base_url();?>schedules-page">
-                                            <i class="fa fa-clock-o"></i>
+                                            <i class="fa fa-calendar"></i>
                                             <span class="menu-title">Schedules</span>
                                         </a>
                                     </li>

@@ -519,6 +519,10 @@ $(document).ready(function()
 
     else if(tableID == "logs-table")
     {
+            var logs_type = $('[name="logs_type"]').val();
+
+            url = 'showlist-logs-' + logs_type;
+
             table = $('#logs-table').DataTable({ 
          
                 "processing": true, //Feature control the processing indicator.
@@ -529,7 +533,7 @@ $(document).ready(function()
          
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "showlist-logs",
+                    "url": url,
                     "type": "POST",
                 },
          
@@ -661,13 +665,20 @@ $('#modal_form_view').on('hidden.bs.modal', function(){
 
 function back_up_db()
 {
-    bootbox.confirm("BACKUP DATABASE?", function(result){
-
-      if (result == true)
-      {
-        window.location.href='database-backup.php';
-      }
-
+    $.confirm({
+        title: 'Confirm Backup',
+        theme: 'modern',
+        type: 'blue',
+        icon: 'fa fa-database',
+        content: 'Are you sure to backup the database?',
+        buttons: {
+            confirm: function () {
+                window.location.href='database-backup.php';
+            },
+            cancel: function () {
+                // close
+            },
+        }
     });
 }
 

@@ -446,42 +446,42 @@ $(document).ready(function () {
 	// pass value to session storage (saved while browser is open) 
 	// to become universal on all pages (notifications will work in other pages)
 
-	if (document.getElementById("no_monthly")) 
-	{
-		var no_monthly_init = $('[name="no_monthly"]').val();
-		sessionStorage.setItem("no_monthly_init", no_monthly_init);
-	}
+	// if (document.getElementById("no_monthly")) 
+	// {
+	// 	var no_monthly_init = $('[name="no_monthly"]').val();
+	// 	sessionStorage.setItem("no_monthly_init", no_monthly_init);
+	// }
 
-	var no_monthly = sessionStorage.getItem("no_monthly_init");
-
-
-
-	if (document.getElementById("no_quarterly")) 
-	{
-		var no_quarterly_init = $('[name="no_quarterly"]').val();
-		sessionStorage.setItem("no_quarterly_init", no_quarterly_init);
-	}
-
-	var no_quarterly = sessionStorage.getItem("no_quarterly_init");
+	// var no_monthly = sessionStorage.getItem("no_monthly_init");
 
 
 
-	if (document.getElementById("no_deworming")) 
-	{
-		var no_deworming_init = $('[name="no_deworming"]').val();
-		sessionStorage.setItem("no_deworming_init", no_deworming_init);
-	}
+	// if (document.getElementById("no_quarterly")) 
+	// {
+	// 	var no_quarterly_init = $('[name="no_quarterly"]').val();
+	// 	sessionStorage.setItem("no_quarterly_init", no_quarterly_init);
+	// }
 
-	var no_deworming = sessionStorage.getItem("no_deworming_init");
+	// var no_quarterly = sessionStorage.getItem("no_quarterly_init");
 
 
-	if (document.getElementById("birthdays")) 
-	{
-		var birthdays_init = $('[name="birthdays"]').val();
-		sessionStorage.setItem("birthdays_init", birthdays_init);
-	}
 
-	var birthdays = sessionStorage.getItem("birthdays_init");
+	// if (document.getElementById("no_deworming")) 
+	// {
+	// 	var no_deworming_init = $('[name="no_deworming"]').val();
+	// 	sessionStorage.setItem("no_deworming_init", no_deworming_init);
+	// }
+
+	// var no_deworming = sessionStorage.getItem("no_deworming_init");
+
+
+	// if (document.getElementById("birthdays")) 
+	// {
+	// 	var birthdays_init = $('[name="birthdays"]').val();
+	// 	sessionStorage.setItem("birthdays_init", birthdays_init);
+	// }
+
+	// var birthdays = sessionStorage.getItem("birthdays_init");
 
 
 	if (document.getElementById("schedules_today_str")) 
@@ -493,21 +493,30 @@ $(document).ready(function () {
 	var schedules_today_str = sessionStorage.getItem("schedules_today_str_init");
 
 
-	if (document.getElementById("current_month_bday")) 
+	if (document.getElementById("near_due_date_str")) 
 	{
-		var current_month_init = $('[name="current_month_bday"]').val();
-		sessionStorage.setItem("current_month_init", current_month_init);
+		var near_due_date_str_init = $('[name="near_due_date_str"]').val();
+		sessionStorage.setItem("near_due_date_str_init", near_due_date_str_init);
 	}
 
-	var current_month_bday = sessionStorage.getItem("current_month_init");
+	var near_due_date_str = sessionStorage.getItem("near_due_date_str_init");
 
-	if (document.getElementById("severe_status")) 
-	{
-		var severe_status_init = $('[name="severe_status"]').val();
-		sessionStorage.setItem("severe_status_init", severe_status_init);
-	}
 
-	var severe_status = sessionStorage.getItem("severe_status_init");
+	// if (document.getElementById("current_month_bday")) 
+	// {
+	// 	var current_month_init = $('[name="current_month_bday"]').val();
+	// 	sessionStorage.setItem("current_month_init", current_month_init);
+	// }
+
+	// var current_month_bday = sessionStorage.getItem("current_month_init");
+
+	// if (document.getElementById("severe_status")) 
+	// {
+	// 	var severe_status_init = $('[name="severe_status"]').val();
+	// 	sessionStorage.setItem("severe_status_init", severe_status_init);
+	// }
+
+	// var severe_status = sessionStorage.getItem("severe_status_init");
 
 
 
@@ -515,104 +524,48 @@ $(document).ready(function () {
 	// =================================================================
 	// Require Admin Core Javascript
 	// =================================================================
-	$('#demo-alert').on('click', function (ev) {
-		ev.preventDefault();
+	// $('#demo-alert').on('click', function (ev) {
+	// 	ev.preventDefault();
 
 
-		$.niftyNoty({
-				type: dataAlert[8].type,
-				icon: dataAlert[dataNumNoti].icon,
-				title: 'No previous month monthly checkup: ' + no_monthly,
-				message: base_link + monthly_link + message_link + 'Go to Monthly Checkup Notifications Page </u></span></a>',
-				container: 'floating',
-				timer: 10000
-			});
+	// 	$.niftyNoty({
+	// 			type: dataAlert[8].type,
+	// 			icon: dataAlert[dataNumNoti].icon,
+	// 			title: 'No previous month monthly checkup: ' + no_monthly,
+	// 			message: base_link + monthly_link + message_link + 'Go to Monthly Checkup Notifications Page </u></span></a>',
+	// 			container: 'floating',
+	// 			timer: 10000
+	// 		});
 
-		$.niftyNoty({
-				type: dataAlert[6].type,
-				icon: dataAlert[3].icon,
-				title: 'No previous quarter (HVI) quarterly: ' + no_quarterly,
-				message: base_link + quarterly_link + message_link + 'Go to HVI (Quarterly) Notifications Page </u></span></a>',
-				container: 'floating',
-				timer: 10000
-		});
+	// 	$.niftyNoty({
+	// 			type: dataAlert[6].type,
+	// 			icon: dataAlert[3].icon,
+	// 			title: 'No previous quarter (HVI) quarterly: ' + no_quarterly,
+	// 			message: base_link + quarterly_link + message_link + 'Go to HVI (Quarterly) Notifications Page </u></span></a>',
+	// 			container: 'floating',
+	// 			timer: 10000
+	// 	});
 
-		$.niftyNoty({
-				type: dataAlert[4].type,
-				icon: dataAlert[8].icon,
-				title: 'No previous semi-annual deworming: ' + no_deworming,
-				message: base_link + deworming_link + message_link + 'Go to Deworming Notifications Page </u></span></a>',
-				container: 'floating',
-				timer: 10000
-			});
+	// 	$.niftyNoty({
+	// 			type: dataAlert[4].type,
+	// 			icon: dataAlert[8].icon,
+	// 			title: 'No previous semi-annual deworming: ' + no_deworming,
+	// 			message: base_link + deworming_link + message_link + 'Go to Deworming Notifications Page </u></span></a>',
+	// 			container: 'floating',
+	// 			timer: 10000
+	// 		});
 
-		$.niftyNoty({
-				type: dataAlert[3].type,
-				icon: dataAlert[6].icon,
-				title: 'Children with severe nutritional status: ' + severe_status,
-				message: base_link + severe_link + message_link + 'Go to Severe Status Notifications Page </u></span></a>',
-				container: 'floating',
-				timer: 10000
-			});
+	// 	$.niftyNoty({
+	// 			type: dataAlert[3].type,
+	// 			icon: dataAlert[6].icon,
+	// 			title: 'Children with severe nutritional status: ' + severe_status,
+	// 			message: base_link + severe_link + message_link + 'Go to Severe Status Notifications Page </u></span></a>',
+	// 			container: 'floating',
+	// 			timer: 10000
+	// 		});
+	// });
 
-
-		// if (dataNumNoti == 0)
-		// {
-		// 	$.niftyNoty({
-		// 		type: dataAlert[8].type,
-		// 		icon: dataAlert[dataNumNoti].icon,
-		// 		title: 'No previous month monthly checkup: ' + no_monthly,
-		// 		message: base_link + monthly_link + message_link + 'Go to Monthly Checkup Notifications Page </u></span></a>',
-		// 		container: 'floating',
-		// 		timer: 5000
-		// 	});
-
-		// 	dataNumNoti = 1;
-		// } 
-		// else if (dataNumNoti == 1)
-		// {
-		// 	$.niftyNoty({
-		// 		type: dataAlert[6].type,
-		// 		icon: dataAlert[3].icon,
-		// 		title: 'No previous quarter (HVI) quarterly: ' + no_quarterly,
-		// 		message: base_link + quarterly_link + message_link + 'Go to HVI (Quarterly) Notifications Page </u></span></a>',
-		// 		container: 'floating',
-		// 		timer: 5000
-		// 	});
-
-		// 	dataNumNoti = 2;
-		// }
-		// else if (dataNumNoti == 2)
-		// {
-		// 	$.niftyNoty({
-		// 		type: dataAlert[4].type,
-		// 		icon: dataAlert[8].icon,
-		// 		title: 'No previous semi-annual deworming: ' + no_deworming,
-		// 		message: base_link + deworming_link + message_link + 'Go to Deworming Notifications Page </u></span></a>',
-		// 		container: 'floating',
-		// 		timer: 5000
-		// 	});
-
-		// 	dataNumNoti = 3;
-		// }
-		// else
-		// {
-		// 	$.niftyNoty({
-		// 		type: dataAlert[3].type,
-		// 		icon: dataAlert[6].icon,
-		// 		title: 'Children with severe nutritional status: ' + severe_status,
-		// 		message: base_link + severe_link + message_link + 'Go to Severe Status Notifications Page </u></span></a>',
-		// 		container: 'floating',
-		// 		timer: 5000
-		// 	});
-
-		// 	dataNumNoti = 0;
-		// }
-
-		
-	});
-
-	if (schedules_today_str != "None")
+	if (location.href.match(/([^\/]*)\/*$/)[1] == 'dashboard') 
 	{
 		var dataNum = 1,
 			timer = 32000;
@@ -623,14 +576,37 @@ $(document).ready(function () {
 			icon: dataAlert[dataNum].icon,
 			title: function () {
 				if (timer > 0) {
-					return 'Welcome ' + $('[name="user_fullname"]').val()
+					return 'Welcome ' + $('[name="user_fullname"]').val() + '    |    ' + $('[name="current_date"]').val();
 				}
 				return 'Sticky Alert Box'
 			}(),
-			message: '' + $('[name="current_date"]').val() + ' | '
-			 + ' Appointment schedules today: ' + schedules_today_str,
+			message: 'Appointments scheduled today: ' + schedules_today_str,
 			timer: timer
 		});
+
+		dataNumAlert = 1;
+	}
+
+	if (near_due_date_str != "None" && ((location.href.match(/([^\/]*)\/*$/)[1] == 'dashboard') || (location.href.match(/([^\/]*)\/*$/)[1] == 'clients-page')))
+	{
+		var dataNum = 5,
+			timer = 32000;
+
+		// Show random page alerts.
+		$.niftyNoty({
+			type: dataAlert[dataNum].type,
+			icon: dataAlert[dataNum].icon,
+			title: function () {
+				if (timer > 0) {
+					return 'Notifications'
+				}
+				return 'Notifications'
+			}(),
+			message: 'Near due date loans: ' + near_due_date_str,
+			timer: timer
+		});
+
+		dataNumAlert = 0;
 	}
 
 
@@ -654,12 +630,11 @@ $(document).ready(function () {
 				icon: dataAlert[dataNum].icon,
 				title: function () {
 					if (timer > 0) {
-						return 'Welcome ' + $('[name="user_fullname"]').val()
+						return 'Welcome ' + $('[name="user_fullname"]').val() + '    |    ' + $('[name="current_date"]').val();
 					}
 					return 'Sticky Alert Box'
 				}(),
-				message: '' + $('[name="current_date"]').val() + ' | '
-				 + ' Appointment schedules today: ' + schedules_today_str,
+				message: 'Appointments scheduled today: ' + schedules_today_str,
 				timer: timer
 			});
 
@@ -676,41 +651,38 @@ $(document).ready(function () {
 				icon: dataAlert[dataNum].icon,
 				title: function () {
 					if (timer > 0) {
-						return 'Notifications Update'
+						return 'Notifications'
 					}
-					return 'Notifications Update'
+					return 'Notifications'
 				}(),
-				message: 'No previous month monthly checkup: ' + no_monthly + ' | '
-				 + 'No previous quarter hvi (quarterly): '  + no_quarterly + ' | '
-				 + 'No previous semi-annual deworming: ' + no_deworming + ' | '
-				 + 'Children with severe nutritional status: ' + severe_status,
+				message: 'Near due date loans: ' + near_due_date_str,
 				timer: timer
 			});
 
-			dataNumAlert = 2;
+			dataNumAlert = 0;
 		}
-		else
-		{
-			// birthdays this month
-			var dataNum = 7,
-				timer = 36000;
+		// else
+		// {
+		// 	// birthdays this month
+		// 	var dataNum = 7,
+		// 		timer = 36000;
 
-			// Show random page alerts.
-			$.niftyNoty({
-				type: dataAlert[dataNum].type,
-				icon: dataAlert[dataNum].icon,
-				title: function () {
-					if (timer > 0) {
-						return 'Birthdays for this month of ' + current_month_bday
-					}
-					return 'Birthdays this month'
-				}(),
-				message: birthdays,
-				timer: timer
-			});
+		// 	// Show random page alerts.
+		// 	$.niftyNoty({
+		// 		type: dataAlert[dataNum].type,
+		// 		icon: dataAlert[dataNum].icon,
+		// 		title: function () {
+		// 			if (timer > 0) {
+		// 				return 'Birthdays for this month of ' + current_month_bday
+		// 			}
+		// 			return 'Birthdays this month'
+		// 		}(),
+		// 		message: birthdays,
+		// 		timer: timer
+		// 	});
 
-			dataNumAlert = 0;	
-		}
+		// 	dataNumAlert = 0;	
+		// }
 		
 	});
 

@@ -439,3 +439,8 @@ Detailed information and more samples can be found in the document.
         <!--===================================================-->
         <!--END NAVBAR-->
         <div class="boxed">
+
+        <!-- For alert and notifications assets/js/demo/nifty-demo.js-->
+        <input type="hidden" value=<?php echo "'" . $this->session->userdata('firstname').' '.$this->session->userdata('lastname') . "'"; ?> name="user_fullname"/>
+
+        <input type="hidden" value=<?php echo "'" . date('l, F j, Y', strtotime(date('Y-m-d'))) . "'"; ?> name="current_date"/>

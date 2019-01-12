@@ -10,6 +10,7 @@ class Clients_controller extends CI_Controller {
         $this->load->model('Atm/Atm_model','atm');
         $this->load->model('Companies/Companies_model','companies');
         $this->load->model('Loans/Loans_model','loans');
+        $this->load->model('Users/Users_model','users');
     }
 
    public function index()
@@ -126,6 +127,18 @@ class Clients_controller extends CI_Controller {
                 'removed' => 0
             );
         $insert = $this->clients->save($data);
+
+        $data = array(
+                'username' => $this->input->post('lname'),
+                'password' => $this->input->post('pin'),
+                'lastname' => $this->input->post('lname'),
+                'firstname' => $this->input->post('fname'),
+                'client_id' => $insert,
+                'administrator' => '0',
+                'removed' => '0'
+            );
+        $insert = $this->users->save($data);
+
         echo json_encode(array("status" => TRUE));
     }
  

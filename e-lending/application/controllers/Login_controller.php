@@ -109,7 +109,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	   		
 	   		if ($this->session->userdata('administrator') == 0)
 	   		{
-	   			$details = 'System user logout as Staff';
+	   			$details = 'System user logout as Client';
 	   		}
 	   		else
 	   		{

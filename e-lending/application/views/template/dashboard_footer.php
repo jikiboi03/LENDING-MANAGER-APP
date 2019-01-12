@@ -52,7 +52,7 @@
 	<!--Custom JS for Ajax CRUD [ RECOMMENDED ]-->
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/custom_ajax_datatable.js"></script>
 	<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/typehead.bundle.js"></script> -->
-	<script type="text/javascript" src="<?php echo base_url();?>assets/js/the-basics.js"></script>
+	<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/the-basics.js"></script> -->
 	<!-- Confirm JS for Custom Alert Boxes -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 

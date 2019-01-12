@@ -30,7 +30,7 @@ class Profiles_controller extends CI_Controller {
 
         $this->load->helper('url');							
         											
-        $data['title'] = 'Client Profile';					
+        $data['title'] = "<i class='fa fa-id-card'></i>&nbsp; Client Profile";					
         $this->load->view('template/dashboard_header',$data);
         $this->load->view('profiles/profiles_view',$data);   //Kani lang ang ilisi kung mag dungag mo ug Page
         $this->load->view('template/dashboard_navigation');

@@ -120,8 +120,7 @@ class Loans_model extends CI_Model {
 
     // check for new or ongoing loan transaction
     function has_active_loan($client_id)
-    {
-        
+    {    
         $this->db->from($this->table);
         $this->db->where('client_id',$client_id);
         $this->db->where('status !=', 3); // status is not cleared
@@ -129,6 +128,17 @@ class Loans_model extends CI_Model {
         $query = $this->db->get();
 
         return $query;
+    }
+
+    // get all new or ongoing loan transactions
+    function get_active_loans()
+    {   
+        $this->db->from($this->table);
+        $this->db->where('status !=', 3); // status is not cleared
+
+        $query = $this->db->get();
+
+        return $query->result();
     }
 
     // check for total loan balance

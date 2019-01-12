@@ -20,6 +20,8 @@
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <!--End page title-->
 
+                <input type="hidden" id="logs_type" value=<?php echo $type; ?> name="logs_type"/>
+
                 <!--Breadcrumb-->
                 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                 <ol class="breadcrumb">
@@ -59,7 +61,11 @@
                     </div>
                     <!--===================================================-->
                     <!-- End Striped Table -->
-                    <span>Legend: [ &nbsp; <i style = "color: #99ff99;" class="fa fa-square"></i> - Add &nbsp; | &nbsp; <i style = "color: #99ffff;" class="fa fa-square"></i> - Update &nbsp; | &nbsp; <i style = "color: #ffcc99;" class="fa fa-square"></i> - Delete &nbsp; | &nbsp; <i style = "color: #ffffff;" class="fa fa-square"></i> - Login &nbsp; | &nbsp; <i style = "color: #cccccc;" class="fa fa-square"></i> - Logout | &nbsp; <i style = "color: #ccff99;" class="fa fa-square"></i> - Report &nbsp; ]</span>
+                    <?php if ($type == "access") { ?>
+                        <span>Legend: [ &nbsp; <i style = "color: #ffffff;" class="fa fa-square"></i> - Login &nbsp; | &nbsp; <i style = "color: #cccccc;" class="fa fa-square"></i> - Logout | &nbsp; <i style = "color: #ccff99;" class="fa fa-square"></i> - Report &nbsp; ]</span>
+                    <?php } else { ?> 
+                        <span>Legend: [ &nbsp; <i style = "color: #99ff99;" class="fa fa-square"></i> - Add &nbsp; | &nbsp; <i style = "color: #99ffff;" class="fa fa-square"></i> - Update &nbsp; | &nbsp; <i style = "color: #ffcc99;" class="fa fa-square"></i> - Delete &nbsp; ]</span> 
+                    <?php } ?>    
                 </div>
                 <!--===================================================-->
                 <!--End page content-->

@@ -38,16 +38,25 @@ class Users_controller extends CI_Controller {
 
 			// check if the user is admin
 			if ($users->administrator == 0){
-				$row[] = 'Staff';
+				$row[] = 'User';
 			}else{
 				$row[] = 'Administrator';
 			}
 
-			$row[] = $users->username;
+			$row[] = '<b>' . $users->username . '</b>';
 			// $row[] = $users->password;
             $row[] = $users->lastname;
             $row[] = $users->firstname;
-            $row[] = $users->client_id;
+
+            if ($users->client_id == "")
+            {
+            	$row[] = 'n/a';
+            }
+            else
+            {
+            	$row[] = 'C' . $users->client_id;
+            }
+            
 			// $row[] = $users->contact;
 			// $row[] = $users->email;
 			// $row[] = $users->address;
@@ -64,12 +73,24 @@ class Users_controller extends CI_Controller {
 			}
 			else
 			{
-				//add html for action
-				$row[] = ' <a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View / Edit" onclick="view_edit_user('."'".$users->user_id."'".')"><i class="fa fa-eye"></i></a>
+				if ($users->client_id == "")
+            	{
+            		//add html for action
+            		$row[] = ' <a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View / Edit" onclick="view_edit_user('."'".$users->user_id."'".')"><i class="fa fa-eye"></i></a>
 
-							<a class="btn btn-sm btn-success" href="javascript:void(0)" title="Privileges" onclick="edit_privileges('."'".$users->user_id."'".')"><i class="fa fa-unlock-alt"></i></a>
-							
-					  		<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_user('."'".$users->user_id."'".')"><i class="fa fa-trash-o"></i></a>';
+            					<a class="btn btn-sm btn-success" href="javascript:void(0)" title="Privileges" onclick="edit_privileges('."'".$users->user_id."'".')"><i class="fa fa-unlock-alt"></i></a>
+            					
+            			  		<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_user('."'".$users->user_id."'".')"><i class="fa fa-trash-o"></i></a>';
+				}
+				else
+				{
+					//add html for action
+					$row[] = ' <a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View / Edit" onclick="view_edit_user('."'".$users->user_id."'".')"><i class="fa fa-eye"></i></a>
+
+								<a class="btn btn-sm btn-success" href="javascript:void(0)" title="Privileges" onclick="edit_privileges('."'".$users->user_id."'".')" disabled><i class="fa fa-unlock-alt"></i></a>
+								
+						  		<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_user('."'".$users->user_id."'".')"><i class="fa fa-trash-o"></i></a>';
+				}
 			}
 		
 			$data[] = $row;
@@ -103,14 +124,7 @@ class Users_controller extends CI_Controller {
 		        'contact' => $this->input->post('contact'),
 		        'email' => $this->input->post('email'),
 		        'address' => $this->input->post('address'),
-		        'date_registered' => date("Y-m-d H:i:s"),
 		        'administrator' => '0',
-				'cashier' => '0',
-				'inventory' => '0',
-				'supplier' => '0',
-				'customer' =>'0',
-				'user' => '0',
-				'report' => '0',
 				'removed' => '0'
 			);
 		$insert = $this->users->save($data);
