@@ -1,3 +1,13 @@
+            <!-- <script src="<?php echo base_url();?>assets/plugins/highcharts/code/highcharts.js">
+            </script> -->
+            <link rel="stylesheet" href="https://code.highcharts.com/css/highcharts.css">
+            <script src="https://code.highcharts.com/js/highcharts.js"></script>
+            <!-- <script src="<?php echo base_url();?>assets/plugins/highcharts/code/highcharts-3d.js">
+            </script>
+            <script src="<?php echo base_url();?>assets/plugins/highcharts/code/highcharts-more.js">
+            </script> -->
+            <!-- <script src="<?php echo base_url();?>assets/plugins/highcharts/code/modules/exporting.js">
+            </script> -->
             <!--CONTENT CONTAINER-->
             <!--===================================================-->
             <div id="content-container">
@@ -42,9 +52,9 @@
                         if ($prev_prev_year_total != 0)
                         {
                     ?>
-                            <div id="container-interests-prev-prev" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+                            <div id="container-interests-prev-prev" style="min-width: 80%; height: 400px; margin: 0 auto"></div>
 
-                            <hr style="background-color: #ccccff; height: 5px;">
+                            <hr style="background-color: lightgray; height: 5px;">
                     <?php 
                         }
                     ?>        
@@ -53,16 +63,16 @@
                         if ($prev_year_total != 0)
                         {
                     ?>
-                            <div id="container-interests-prev" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+                            <div id="container-interests-prev" style="min-width: 80%; height: 400px; margin: 0 auto"></div>
 
-                            <hr style="background-color: #ccccff; height: 5px;">
+                            <hr style="background-color: lightgray; height: 5px;">
                     <?php 
                         }
                     ?>
 
-                    <div id="container-interests" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+                    <div id="container-interests" style="min-width: 80%; height: 400px; margin: 0 auto"></div>
 
-                    <hr style="background-color: #ccccff; height: 40px;">
+                    <hr style="background-color: lightgray; height: 40px;">
                     
 
                     <!-- Basic Data Tables -->

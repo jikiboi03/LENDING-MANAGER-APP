@@ -1,7 +1,9 @@
 <?php
 
+$tables_allowed = array('atm_banks', 'capital', 'clients', 'companies', 'loans', 'logs', 'schedules', 'transactions'); 
+
 // by https://github.com/tazotodua/useful-php-scripts //
-EXPORT_DATABASE('localhost','jiktorres','jiktorres','e_lending',['atm_banks', 'capital'], $backup_name=false);
+EXPORT_DATABASE('localhost','jiktorres','jiktorres','e_lending',$tables_allowed, $backup_name=false);
 
 function EXPORT_DATABASE($host,$user,$pass,$name,$tables=false, $backup_name=false)
 { 

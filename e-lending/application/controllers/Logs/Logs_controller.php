@@ -20,8 +20,16 @@ class Logs_controller extends CI_Controller {
         $this->load->helper('url');
 
         $data['type'] = $type;
-        											
-        $data['title'] = '<i class="fa fa-history"></i> &nbsp; System Logs Information Records';					
+        
+        if ($type == 'access')
+        {
+            $data['title'] = '<i class="fa fa-history"></i> &nbsp; System Logs - Access';
+        }
+        else if ($type == 'ops')
+        {
+            $data['title'] = '<i class="fa fa-history"></i> &nbsp; System Logs - Operations';
+        }
+        
         $this->load->view('template/dashboard_header',$data);
         $this->load->view('logs/logs_view',$data);
         $this->load->view('template/dashboard_navigation');

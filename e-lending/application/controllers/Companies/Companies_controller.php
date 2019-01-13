@@ -19,7 +19,7 @@ class Companies_controller extends CI_Controller {
 
           $this->load->helper('url');							
         												
-          $data['title'] = '<i class="fa fa-building"></i> &nbsp; Companies Information List';					
+          $data['title'] = '<i class="fa fa-building"></i> &nbsp; Companies';					
         $this->load->view('template/dashboard_header',$data);
         $this->load->view('companies/companies_view',$data);
         $this->load->view('template/dashboard_navigation');

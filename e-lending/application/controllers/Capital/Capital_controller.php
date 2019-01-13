@@ -57,7 +57,7 @@ class Capital_controller extends CI_Controller {
       $data['total_deductions'] = $total_deductions;
 
                                                     
-      $data['title'] = '<i class="fa fa-money"></i> &nbsp; Lending Capital Information';                    
+      $data['title'] = '<i class="fa fa-money"></i> &nbsp; Lending Capital';                    
       $this->load->view('template/dashboard_header',$data);
       $this->load->view('capital/capital_view',$data);   //Kani lang ang ilisi kung mag dungag mo ug Page
       $this->load->view('template/dashboard_navigation');

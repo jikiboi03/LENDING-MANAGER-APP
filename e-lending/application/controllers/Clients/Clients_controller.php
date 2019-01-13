@@ -27,7 +27,7 @@ class Clients_controller extends CI_Controller {
 
         $this->load->helper('url');							
         											
-        $data['title'] = '<i class="fa fa-users"></i> &nbsp; Clients Information List';					
+        $data['title'] = '<i class="fa fa-users"></i> &nbsp; Clients';					
         $this->load->view('template/dashboard_header',$data);
         $this->load->view('clients/clients_view',$data);
         $this->load->view('template/dashboard_navigation');
@@ -61,7 +61,7 @@ class Clients_controller extends CI_Controller {
             // $row[] = $clients->address;
             // $row[] = $clients->remarks;
 
-            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_profile('."'".$clients->client_id."'".')"><i class="fa fa-eye"></i> </a>
+            $row[] = '<a class="btn btn-sm btn-primary" href="' . base_url("profiles-page/" . $clients->client_id) . '" title="View"><i class="fa fa-eye"></i> </a>
 
                     <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Edit" onclick="edit_client('."'".$clients->client_id."'".')"><i class="fa fa-pencil-square-o"></i></a>
                       

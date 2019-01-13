@@ -82,15 +82,15 @@ $(document).ready(function () {
 
 
 	// Transition selectbox
-	transitionVal.selectpicker().on('change', function (e) {
-		var optionSelected = $("option:selected", this);
-		var valueSelected = this.value;
+	// transitionVal.selectpicker().on('change', function (e) {
+	// 	var optionSelected = $("option:selected", this);
+	// 	var valueSelected = this.value;
 
-		if (valueSelected) {
-			nifty.container.removeClass(effectList).addClass(valueSelected);
-			setCookie('settings-animation', valueSelected);
-		}
-	});
+	// 	if (valueSelected) {
+	// 		nifty.container.removeClass(effectList).addClass(valueSelected);
+	// 		setCookie('settings-animation', valueSelected);
+	// 	}
+	// });
 
 
 
@@ -156,12 +156,12 @@ $(document).ready(function () {
 
 	// Offcanvas Navigation
 	// =================================================================
-	navOffcanvasSB.selectpicker().on('change', function () {
-		setCookie('settings-nav-collapsed', false)
-		setCookie('settings-nav-offcanvas', this.value);
-		demoSetBody.removeClass('open');
-		location.reload(true);
-	}).selectpicker('val', $.cookie('settings-nav-offcanvas'));
+	// navOffcanvasSB.selectpicker().on('change', function () {
+	// 	setCookie('settings-nav-collapsed', false)
+	// 	setCookie('settings-nav-offcanvas', this.value);
+	// 	demoSetBody.removeClass('open');
+	// 	location.reload(true);
+	// }).selectpicker('val', $.cookie('settings-nav-offcanvas'));
 
 
 

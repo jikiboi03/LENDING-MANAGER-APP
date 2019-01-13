@@ -19,7 +19,7 @@ class Schedules_controller extends CI_Controller {
       
         $this->load->helper('url');							
         											
-        $data['title'] = "<i class='fa fa-calendar'></i> &nbsp; Schedules Information List";					
+        $data['title'] = "<i class='fa fa-calendar'></i> &nbsp; Schedules";					
         $this->load->view('template/dashboard_header',$data);
         $this->load->view('schedules/schedules_view',$data);   //Kani lang ang ilisi kung mag dungag mo ug Page
         $this->load->view('template/dashboard_navigation');

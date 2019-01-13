@@ -57,7 +57,7 @@
                         </div>   
                         </div>
                         <br><br><br><br>
-                        <hr style="background-color: #ccccff; height: 2px;">
+                        <hr style="background-color: lightgray; height: 2px;">
 
 
 
@@ -97,7 +97,7 @@
                             <span>Legend: [ &nbsp; <i style = "color: #99cccc;" class="fa fa-square"></i> - Capital Addition &nbsp; | &nbsp; <i style = "color: #ffcc99;" class="fa fa-square"></i> - Capital Deduction &nbsp; ]</span>
 
                             <br>
-                            <hr style="background-color: #ccccff; height: 2px;">
+                            <hr style="background-color: lightgray; height: 2px;">
 
                             <label class="control-label col-md-3">Total Capital Additions (+ amount values): <h4 style="color: green;">₱ <?php echo number_format($total_additions, 2, '.', ','); ?></h4></label>
                             

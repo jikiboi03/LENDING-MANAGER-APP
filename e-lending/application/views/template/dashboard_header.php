@@ -10,19 +10,21 @@
     <!--Open Sans Font [ OPTIONAL ] -->
     <!-- <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin" rel="stylesheet"> -->
     <!--Bootstrap Stylesheet [ REQUIRED ]-->
-    <link href="<?php echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="<?php echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <!--Nifty Stylesheet [ REQUIRED ]-->
     <link href="<?php echo base_url();?>assets/css/nifty.min.css" rel="stylesheet">
     <!--Font Awesome [ OPTIONAL ]-->
-    <link href="<?php echo base_url();?>assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- <link href="<?php echo base_url();?>assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--Animate.css [ OPTIONAL ]-->
-    <link href="<?php echo base_url();?>assets/plugins/animate-css/animate.min.css" rel="stylesheet">
+    <!-- <link href="<?php echo base_url();?>assets/plugins/animate-css/animate.min.css" rel="stylesheet"> -->
     <!--Morris.js [ OPTIONAL ]-->
     <!-- <link href="<?php echo base_url();?>assets/plugins/morris-js/morris.min.css" rel="stylesheet"> -->
     <!--Switchery [ OPTIONAL ]-->
     <!-- <link href="<?php echo base_url();?>assets/plugins/switchery/switchery.min.css" rel="styleheet"> -->
     <!--Bootstrap Select [ OPTIONAL ]-->
-    <link href="<?php echo base_url();?>assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+    <!-- <link href="<?php echo base_url();?>assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet"> -->
     <!--Demo script [ DEMONSTRATION ]-->
     <link href="<?php echo base_url();?>assets/css/demo/nifty-demo.min.css" rel="stylesheet">
     <!--Bootstrap Table [ OPTIONAL ]-->
@@ -34,17 +36,10 @@
     <!--SCRIPT-->
     <!--=================================================-->
     <!--Page Load Progress Bar [ OPTIONAL ]-->
-    <link href="<?php echo base_url();?>assets/plugins/pace/pace.min.css" rel="stylesheet">
-    <script src="<?php echo base_url();?>assets/plugins/pace/pace.min.js">
-    </script>
-
-    <script src="<?php echo base_url();?>assets/plugins/highcharts/code/highcharts.js">
-    </script>
-    <script src="<?php echo base_url();?>assets/plugins/highcharts/code/highcharts-3d.js">
-    </script>
-    <script src="<?php echo base_url();?>assets/plugins/highcharts/code/highcharts-more.js">
-    </script>
-    <script src="<?php echo base_url();?>assets/plugins/highcharts/code/modules/exporting.js">
+    <!-- <link href="<?php echo base_url();?>assets/plugins/pace/pace.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/black/pace-theme-minimal.min.css">
+    <!-- <script src="<?php echo base_url();?>assets/plugins/pace/pace.min.js"> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
     </script>
     <!--
 REQUIRED

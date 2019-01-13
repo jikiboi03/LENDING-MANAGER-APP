@@ -133,8 +133,11 @@ class Loans_model extends CI_Model {
     // get all new or ongoing loan transactions
     function get_active_loans()
     {   
+        $today = date('Y-m-d');
+        $past_five_days = date('Y-m-d', strtotime($today. ' - 5 days'));
         $this->db->from($this->table);
         $this->db->where('status !=', 3); // status is not cleared
+        $this->db->where('date_start <=', $past_five_days); // date start is not today
 
         $query = $this->db->get();
 

@@ -40,86 +40,77 @@
                             <h3 class="panel-title"><b><?php echo $client->lname . ', ' . $client->fname ?></b></h3>
                         </div>
                         <br>
+                        <div class="col-md-12" style="margin-left: -3%;">
+                            <div class="col-md-3" style="padding-right: 5%;">
+                                <div class="col-md-12">
+                                <!-- check for pic1 if empty. assign default images if empty base on sex -->
+                                <?php if ($client->pic1 == ''){ ?>
+                                    
+                                    <?php if ($client->sex == 'Male'){ ?>
+                                        <img id="image1" src="../uploads/pic1/male.png" style="width:100%; margin-left:20px;">
+                                    <?php } else { ?>
+                                        <img id="image1" src="../uploads/pic1/female.png" style="width:100%; margin-left:20px;">
+                                    <?php } ?>
 
-                        <div style="float:left;">
+                                <?php } else { ?>
+                                    <img id="image1" src=<?php echo "'" . "../uploads/pic1/" . $client->pic1 . "'"; ?>  style="width:200px; max-height: 275px; margin-left:20px;">
+                                <?php } ?>
 
-                        <!-- check for pic1 if empty. assign default images if empty base on sex -->
-                        <?php if ($client->pic1 == ''){ ?>
+                                <?php echo form_open_multipart('Profiles/Profiles_controller/do_upload');?> 
+                                  <form action = "" method = "">
+                                    <input type="hidden" value=<?php echo "'" . $client->client_id . "'"; ?> name="client_id"/> 
+                                     <br />  
+                                     <input type = "file" name = "userfile1" id="userfile1" size = "20" style = "padding-left: 20px;"/> 
+                                     <br />
+                                     
+                                     <input type = "submit" value = "Upload Image" class="btn btn-success col-md-12" style = "margin-left: 20px;"/>
+                                  </form>
 
-                            <?php if ($client->sex == 'Male'){ ?>
-                                <img id="image1" src="../uploads/pic1/male.png" style="width:200px; max-height: 275px; margin-left:20px;">
-                            <?php } else { ?>
-                                <img id="image1" src="../uploads/pic1/female.png" style="width:200px; max-height: 275px; margin-left:20px;">
-                            <?php } ?>
+                                </div>  
+                            </div>
 
-                        <?php } else { ?>
-                            <img id="image1" src=<?php echo "'" . "../uploads/pic1/" . $client->pic1 . "'"; ?>  style="width:200px; max-height: 275px; margin-left:20px;">
-                        <?php } ?>
+                            <div class="form-body col-md-9">
+                                <div class="form-group">
+                                    <div class="form-body col-md-12"><br><br></div>                 
+                                    <label class="control-label col-md-3">Client ID: <h4><?php echo ' C' . $client->client_id ?></h4></label>
+                                    <label class="control-label col-md-3">Gender: <h4><?php echo $client->sex ?></h4></label>
+                                    <label class="control-label col-md-3">Registered: <h4><?php echo $client->encoded ?></h4></label>
+
+                                    <label class="control-label col-md-3">Contact: <h4><?php echo $client->contact ?></h4></label>
+                                    <div class="col-md-12"><hr></div>
+                                    <label class="control-label col-md-12">Address: <h4><?php echo $client->address ?></h4></label>
+                                    
+                                </div>   
+                            </div>
+                        </div>
+                        <div class="form-body col-md-12"><hr></div>
+
+                        <div class="form-body col-md-12">
+                            <div class="form-group">
+                                
+                                <label class="control-label col-md-3">Company: <h4><?php echo $this->companies->get_company_name($client->comp_id) ?></h4></label>
+                                <label class="control-label col-md-3">Job: <h4><?php echo $client->job ?></h4></label>
+
+                                <label class="control-label col-md-3">Salary: <h4>₱ <?php echo number_format($client->salary, 2, '.', ','); ?></h4></label>
+                                <label class="control-label col-md-3">Remarks: <h4><?php echo $client->remarks ?></h4></label>
+
+                            </div>
+                        </div>
+                        <div class="form-body col-md-12"><hr></div>
                         
-                        <?php echo form_open_multipart('Profiles/Profiles_controller/do_upload');?> 
-                          <form action = "" method = "">
-                            <input type="hidden" value=<?php echo "'" . $client->client_id . "'"; ?> name="client_id"/> 
-                             <br />  
-                             <input type = "file" name = "userfile1" id="userfile1" size = "20" style = "padding-left: 20px;"/> 
-                             <br />
-                             
-                             <input type = "submit" value = "Upload" class="btn btn-success" style = "width:200px; margin-left: 20px;"/>
-                          </form>
+                        <div class="form-body col-md-12">
+                            <div class="form-group">
+                                
+                                <label class="control-label col-md-3">ATM Bank: <h4><?php echo $this->atm->get_atm_name($client->atm_id) ?></h4></label>
+                                <label class="control-label col-md-3">ATM Type: <h4><?php echo $client->atm_type ?></h4></label>
+
+                                <label class="control-label col-md-3">ATM Pin: <h4><?php echo $client->pin ?></h4></label>
+
+                                <label class="control-label col-md-3">Total Balance: <h4> ₱ <?php echo number_format($loan_balance, 2, '.', ',') ?></h4></label>
+
+                            </div>
                         </div>
-
-                        <div class="form-body">
-                        <div class="form-group">
-                                              
-                            <label class="control-label col-md-3">Client ID: <h4><?php echo ' C' . $client->client_id ?></h4></label>
-                            <label class="control-label col-md-3">Gender: <h4><?php echo $client->sex ?></h4></label>
-                            <label class="control-label col-md-3">Registered: <h4><?php echo $client->encoded ?></h4></label>
-
-                            <label class="control-label col-md-3">Contact: <h4><?php echo $client->contact ?></h4></label>
-                            <label class="control-label col-md-3">Address: <h4><?php echo $client->address ?></h4></label>
-                            
-                            
-                            
-                        </div>   
-                        </div>
-
-
-                        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-                        <hr>
-                        <div class="form-body">
-                        <div class="form-group">
-                            
-                            <label class="control-label col-md-3">Company: <h4><?php echo $this->companies->get_company_name($client->comp_id) ?></h4></label>
-                            <label class="control-label col-md-3">Job: <h4><?php echo $client->job ?></h4></label>
-
-                            <label class="control-label col-md-3">Salary: <h4>₱ <?php echo number_format($client->salary, 2, '.', ','); ?></h4></label>
-                            <label class="control-label col-md-3">Remarks: <h4><?php echo $client->remarks ?></h4></label>
-
-                        </div>
-                        </div>
-                        
-
-                        <br><br><br><br>
-                    
-                        <hr style="background-color: #ccccff; height: 30px;">
-                        
-                        <div class="form-body">
-                        <div class="form-group">
-                            
-                            <label class="control-label col-md-3">ATM Bank: <h4><?php echo $this->atm->get_atm_name($client->atm_id) ?></h4></label>
-                            <label class="control-label col-md-3">ATM Type: <h4><?php echo $client->atm_type ?></h4></label>
-
-                            <label class="control-label col-md-3">ATM Pin: <h4><?php echo $client->pin ?></h4></label>
-
-                            <label class="control-label col-md-3">Total Balance: <h4> ₱ <?php echo number_format($loan_balance, 2, '.', ',') ?></h4></label>
-
-                        </div>
-                        </div>
-
-                        <br><br><br><br>
-
-
-
-                        <hr style="background-color: #ccccff; height: 30px;">
+                        <div class="form-body col-md-12"><hr style="background-color: lightgray; height: 4px;"></div>
 
 
 
@@ -127,91 +118,95 @@
 <!-- ============================================================ LOAN HISTORY ==================================== -->
                         
 
+                        <div class="panel col-md-12">
 
+                            <div class="panel-heading">
+                                <h4 class="panel-title">Loans Information Table</h4>    
+                            </div>
 
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Loans Information Table</h3>    
-                        </div>
+                            <div class="panel-body">
+                                <button class="btn btn-success" onclick="add_loan()"><i class="fa fa-plus-square"></i> &nbsp;Add New Loan</button>
+                                <button class="btn btn-default" onclick="reload_table()"><i class="fa fa-refresh"></i> &nbsp;Reload</button>
+                                <br><br>
+                                <table id="loans-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:60px;">Loan ID</th>
+                                            <th>I.Amount</th>
+                                            <th>I.Interest</th>
+                                            <th>I.Total Due</th>
+                                            <th>Date Start</th>
+                                            <th>Date End</th>
+                                            <th>Status</th>
+                                            <th style="width:90px;">Action</th>
+                                            <th>Total Paid</th>
+                                            <th>Balance</th>
+                                            <th>Total Loan</th>
+                                            <th>Remarks</th>
+                                            <th>Encoded</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
 
-                        <div class="panel-body">
-                            <button class="btn btn-success" onclick="add_loan()"><i class="fa fa-plus-square"></i> &nbsp;Add New Loan</button>
-                            <button class="btn btn-default" onclick="reload_table()"><i class="fa fa-refresh"></i> &nbsp;Reload</button>
-                            <br><br>
-                            <table id="loans-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th style="width:60px;">Loan ID</th>
-                                        <th>I.Amount</th>
-                                        <th>I.Interest</th>
-                                        <th>I.Total Due</th>
-                                        <th>Date Start</th>
-                                        <th>Date End</th>
-                                        <th>Status</th>
-                                        <th style="width:90px;">Action</th>
-                                        <th>Total Paid</th>
-                                        <th>Balance</th>
-                                        <th>Total Loan</th>
-                                        <th>Remarks</th>
-                                        <th>Encoded</th>
-                                        
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                                <!-- End Striped Table -->
+                                <span>Legend: [ &nbsp; <i style = "color: #99ff99;" class="fa fa-square"></i> - New &nbsp; | &nbsp; <i style = "color: #ccff99;" class="fa fa-square"></i> - Ongoing &nbsp; | &nbsp; <i style = "color: #cccccc;" class="fa fa-square"></i> - Cleared &nbsp; ]</span>
 
-                            <!-- End Striped Table -->
-                            <span>Legend: [ &nbsp; <i style = "color: #99ff99;" class="fa fa-square"></i> - New &nbsp; | &nbsp; <i style = "color: #ccff99;" class="fa fa-square"></i> - Ongoing &nbsp; | &nbsp; <i style = "color: #cccccc;" class="fa fa-square"></i> - Cleared &nbsp; ]</span>
-
+                            </div>
                         </div>
                         
                         
 <!-- ============================================================ IMAGES ============================================ -->
                        
-                        <hr style="background-color: #cccccc; height: 3px;">
-                        <h4 style="margin-left: 3%">Images</h4>
-                        <hr>
+                        <div class="panel col-md-12">
 
-                        <div style="float:left;">
-                            <!-- check for pic1 if empty. assign default images if empty base on sex -->
-                            <?php if ($client->pic2 == ''){ ?>
-                                <img id="image2" src="../uploads/pic2/none.jpg" style="width:280px; max-height: 400px; margin-left:20px;">
-                            <?php } else { ?>
-                                <img id="image2" src=<?php echo "'" . "../uploads/pic2/" . $client->pic2 . "'"; ?>  style="width:280px; max-height: 400px; margin-left:20px;">
-                            <?php } ?>
-                            
-                            <?php echo form_open_multipart('Profiles/Profiles_controller/do_upload_2');?> 
-                              <form action = "" method = "">
-                                <input type="hidden" value=<?php echo "'" . $client->client_id . "'"; ?> name="client_id"/> 
-                                 <br />  
-                                 <input type = "file" name = "userfile2" id="userfile2" size = "20" style = "padding-left: 20px;"/> 
-                                 <br />
-                                 
-                                 <input type = "submit" value = "Upload" class="btn btn-success" style = "width:280px; margin-left: 20px;"/>
-                              </form>
+                            <div class="panel-heading">
+                                <h4 class="panel-title">Images</h4>    
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="col-md-4">
+                                    <!-- check for pic1 if empty. assign default images if empty base on sex -->
+                                    <?php if ($client->pic2 == ''){ ?>
+                                        <img id="image2" src="../uploads/pic2/none.jpg" style="width:280px; max-height: 400px; margin-left:20px;">
+                                    <?php } else { ?>
+                                        <img id="image2" src=<?php echo "'" . "../uploads/pic2/" . $client->pic2 . "'"; ?>  style="width:280px; max-height: 400px; margin-left:20px;">
+                                    <?php } ?>
+                                    
+                                    <?php echo form_open_multipart('Profiles/Profiles_controller/do_upload_2');?> 
+                                      <form action = "" method = "">
+                                        <input type="hidden" value=<?php echo "'" . $client->client_id . "'"; ?> name="client_id"/> 
+                                         <br />  
+                                         <input type = "file" name = "userfile2" id="userfile2" size = "20" style = "padding-left: 20px;"/> 
+                                         <br />
+                                         
+                                         <input type = "submit" value = "Upload" class="btn btn-success" style = "width:280px; margin-left: 20px;"/>
+                                      </form>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <!-- check for pic1 if empty. assign default images if empty base on sex -->
+                                    <?php if ($client->pic3 == ''){ ?>
+                                        <img id="image3" src="../uploads/pic3/none.jpg" style="width:280px; max-height: 400px; margin-left:20px;">
+                                    <?php } else { ?>
+                                        <img id="image3" src=<?php echo "'" . "../uploads/pic3/" . $client->pic3 . "'"; ?>  style="width:280px; max-height: 400px; margin-left:20px;">
+                                    <?php } ?>
+                                    
+                                    <?php echo form_open_multipart('Profiles/Profiles_controller/do_upload_3');?> 
+                                      <form action = "" method = "">
+                                        <input type="hidden" value=<?php echo "'" . $client->client_id . "'"; ?> name="client_id"/> 
+                                         <br />  
+                                         <input type = "file" name = "userfile3" id="userfile3" size = "20" style = "padding-left: 20px;"/> 
+                                         <br />
+                                         
+                                         <input type = "submit" value = "Upload" class="btn btn-success" style = "width:280px; margin-left: 20px;"/>
+                                      </form>
+                                </div>
+                                  
+                            </div>
                         </div>
-
-
-                        <div style="float:left;">
-                            <!-- check for pic1 if empty. assign default images if empty base on sex -->
-                            <?php if ($client->pic3 == ''){ ?>
-                                <img id="image3" src="../uploads/pic3/none.jpg" style="width:280px; max-height: 400px; margin-left:20px;">
-                            <?php } else { ?>
-                                <img id="image3" src=<?php echo "'" . "../uploads/pic3/" . $client->pic3 . "'"; ?>  style="width:280px; max-height: 400px; margin-left:20px;">
-                            <?php } ?>
-                            
-                            <?php echo form_open_multipart('Profiles/Profiles_controller/do_upload_3');?> 
-                              <form action = "" method = "">
-                                <input type="hidden" value=<?php echo "'" . $client->client_id . "'"; ?> name="client_id"/> 
-                                 <br />  
-                                 <input type = "file" name = "userfile3" id="userfile3" size = "20" style = "padding-left: 20px;"/> 
-                                 <br />
-                                 
-                                 <input type = "submit" value = "Upload" class="btn btn-success" style = "width:280px; margin-left: 20px;"/>
-                              </form>
-                        </div>
-
-
 
                     </div>
                     <!--===================================================-->

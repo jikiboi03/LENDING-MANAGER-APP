@@ -22,9 +22,11 @@
 	<!--JAVASCRIPT-->
 	<!--=================================================-->
 	<!--jQuery [ REQUIRED ]-->
-	<script src="<?php echo base_url();?>assets/js/jquery-2.1.4.min.js"></script>
+	<!-- <script src="<?php echo base_url();?>assets/js/jquery-2.1.4.min.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<!--BootstrapJS [ RECOMMENDED ]-->
-	<script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
+	<!-- <script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script> -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 	<!--Fast Click [ OPTIONAL ]-->
 	<!-- <script src="<?php echo base_url();?>assets/plugins/fast-click/fastclick.min.js"></script> -->
 	<!--Nifty Admin [ RECOMMENDED ]-->
@@ -36,7 +38,7 @@
 	<!--Switchery [ OPTIONAL ]-->
 	<!-- <script src="<?php echo base_url();?>assets/plugins/switchery/switchery.min.js"></script> -->
 	<!--Bootstrap Select [ OPTIONAL ]-->
-	<script src="<?php echo base_url();?>assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+	<!-- <script src="<?php echo base_url();?>assets/plugins/bootstrap-select/bootstrap-select.min.js"></script> -->
 	<!--Demo script [ DEMONSTRATION ]-->
 	<script src="<?php echo base_url();?>assets/js/demo/nifty-demo.js"></script>
 	<!--DataTables Sample [ SAMPLE ]-->
@@ -46,9 +48,9 @@
 	<script src="<?php echo base_url();?>assets/plugins/datatables/media/js/dataTables.bootstrap.js"></script>
 	<script src="<?php echo base_url();?>assets/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
 	<!--Bootbox Modals [ OPTIONAL ]-->
-	<script src="<?php echo base_url();?>assets/plugins/bootbox/bootbox.min.js"></script>
+	<!-- <script src="<?php echo base_url();?>assets/plugins/bootbox/bootbox.min.js"></script> -->
 	<!--Modals [ SAMPLE ]-->
-	<script src="<?php echo base_url();?>assets/js/demo/ui-modals.js"></script>
+	<!-- <script src="<?php echo base_url();?>assets/js/demo/ui-modals.js"></script> -->
 	<!--Custom JS for Ajax CRUD [ RECOMMENDED ]-->
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/custom_ajax_datatable.js"></script>
 	<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/typehead.bundle.js"></script> -->

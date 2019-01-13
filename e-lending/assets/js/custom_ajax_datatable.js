@@ -67,6 +67,7 @@ $(document).ready(function()
                 "processing": true, //Feature control the processing indicator.
                 "language": {
                             processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
+                "pageLength": 15,
                 "serverSide": true, //Feature control DataTables' server-side processing mode.
                 "order": [], //Initial no order.
          
@@ -330,6 +331,81 @@ $(document).ready(function()
                 // Load data for the table's content from an Ajax source
                 "ajax": {
                     "url": "../../../Transactions/Transactions_controller/ajax_list/" + loan_id,
+                    "type": "POST",
+                },
+         
+                //Set column definition initialisation properties.
+                "columnDefs": [
+                { 
+                    "targets": [ -1 ], //last column
+                    "orderable": false, //set not orderable
+                },
+                {
+                      "targets": 3,
+                      "className": "text-right",
+                },
+                {
+                      "targets": 4,
+                      "className": "text-right",
+                },
+                {
+                      "targets": 5,
+                      "className": "text-right",
+                },
+                {
+                      "targets": 7,
+                      "className": "text-center",
+                }
+                ],
+
+                "rowCallback": function( row, data, index ) {
+                  var type = data[2],
+                      $node = this.api().row(row).nodes().to$();
+
+                  // set color based on log type
+                  if (type == 'Trans. Start') {
+                     $node.css('background-color', '#99ff99');
+                  }
+                  else if (type == 'Paid Partial') {
+                     $node.css('background-color', '#ccff99');
+                  }
+                  else if (type == 'Paid Full') {
+                     $node.css('background-color', '#cccccc');
+                  }
+                  else if (type == 'Add Interest') {
+                     $node.css('background-color', '#99ffff');
+                  }
+                  else if (type == 'Add Amount') {
+                     $node.css('background-color', '#99cccc');
+                  }
+                  else if (type == 'Discount Amount') {
+                     $node.css('background-color', '#ffcc99');
+                  }
+                },    
+
+                "scrollX": true 
+            });
+    }
+    else if(tableID == "client-portal-transactions-table")
+    {
+    //datatables
+
+            // get loan_id
+            var loan_id = $('[name="loan_id"]').val();
+
+            table = $('#client-portal-transactions-table').DataTable({ 
+         
+                "processing": true, //Feature control the processing indicator.
+                "language": {
+                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
+                "serverSide": true, //Feature control DataTables' server-side processing mode.
+                "order": [], //Initial no order.
+                "ordering": false,
+                "searching": false,
+         
+                // Load data for the table's content from an Ajax source
+                "ajax": {
+                    "url": "../../../Trans_cp/Trans_cp_controller/ajax_list/" + loan_id,
                     "type": "POST",
                 },
          
