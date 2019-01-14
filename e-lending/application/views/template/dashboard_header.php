@@ -7,8 +7,10 @@
     </title>
     <!--STYLESHEET-->
     <!--=================================================-->
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="<?php echo base_url();?>assets/img/favicon.ico">
     <!--Open Sans Font [ OPTIONAL ] -->
-    <!-- <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet">
     <!--Bootstrap Stylesheet [ REQUIRED ]-->
     <!-- <link href="<?php echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -77,7 +79,7 @@ Detailed information and more samples can be found in the document.
               <a href="<?php echo base_url();?>dashboard" class="navbar-brand">
                 <img src="<?php echo base_url();?>assets/img/logo.png" alt="ANC - DPS" class="brand-icon">
                 <div class="brand-title">
-                  <span class="brand-text" style="margin-left: 12px;">e - L e n d i n g
+                  <span class="brand-text" style="margin-left: 12px;">[ e - Lending ]
                   </span>
 
                 </div>
