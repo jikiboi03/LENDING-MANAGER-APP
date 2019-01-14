@@ -29,7 +29,7 @@ class Trans_cp_controller extends CI_Controller {
 
         $this->load->helper('url');							
         											
-        $data['title'] = "<i class='fa fa-credit-card'></i>&nbsp; Loan Transactions History";
+        $data['title'] = "<i class='fa fa-credit-card'></i>&nbsp; Loan Details";
         $this->load->view('template/dashboard_header',$data);
         $this->load->view('trans_cp/trans_cp_view',$data);
         $this->load->view('template/dashboard_navigation_client');

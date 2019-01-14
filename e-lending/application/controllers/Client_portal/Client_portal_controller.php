@@ -46,40 +46,65 @@ class Client_portal_controller extends CI_Controller {
         foreach ($list as $loans) {
             $no++;
             $row = array();
-            $row[] = 'L' . $loans->loan_id;
+            // $row[] = 'L' . $loans->loan_id;
 
-            $row[] = number_format($loans->amount, 2, '.', ',');
-            $row[] = number_format($loans->interest, 2, '.', ',');   
-            $row[] = number_format($loans->total, 2, '.', ',');
+            // $row[] = number_format($loans->amount, 2, '.', ',');
+            // $row[] = number_format($loans->interest, 2, '.', ',');   
+            // $row[] = number_format($loans->total, 2, '.', ',');
 
-            $row[] = $loans->date_start;
-            $row[] = $loans->date_end;
+            // $row[] = $loans->date_start;
+            // $row[] = $loans->date_end;
+
+            $loan_id = 'L' . $loans->loan_id;
+            $i_amount = number_format($loans->amount, 2, '.', ',');
+            $i_interest = number_format($loans->interest, 2, '.', ',');
+            $i_total = number_format($loans->total, 2, '.', ',');
+
+            $date_start = $loans->date_start;
+            $date_end = $loans->date_end;
+
+            $paid = number_format($loans->paid, 2, '.', ',');
+            $balance = number_format($loans->balance, 2, '.', ',');
+            $total_loan = number_format(($loans->paid + $loans->balance), 2, '.', ',');
+
+            $remarks = $loans->remarks;
+            $encoded = $loans->encoded;
+                        
+            $loan_str_1 = $date_start . '<br>' .
+                        '<span style="float:left;">I.Amount</span><span style="float:right;">' . $i_amount . '</span>' . '<br>' .
+                        '<span style="float:left;">I.Interest</span><span style="float:right;">+ <u>' . $i_interest . '</u></span>' . 
+                        '<br>' .
+                        '<span style="float:left;">I.Total</span><span style="float:right;">' . $i_total . '</span>' . '<br>' .
+                        '<span style="float:left;">Current</span><span style="float:right;">' . $total_loan . '</span>' . '<br>' .
+                        '<br>' .
+                        '<span style="float:left;">Total Paid</span><span style="float:right;">- <u>' . $paid . '</u></span>' . '<br>' .
+                        '<span style="float:left;">Balance</span><span style="float:right;">' . $balance . '</span>' . '<br>' .
+                        '<br>' .
+                        '<a style="width: 100%;" class="btn btn-dark" width="100%" href="javascript:void(0)" title="View Detail" onclick="view_cp_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i>&nbsp; View Loan Details</a></span>';
+
+            $row[] = $loan_str_1;
+            $row[] = $remarks;
+
 
             // genereate loan status based on int. Loan can only be edited or deleted if it is new
             if ($loans->status == 1)
             {
                 $row[] = 'New';
-
-                $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_cp_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i> View</a>';
             }
             else if ($loans->status == 2) // buttons are disabled (date and remarks can only be edited)
             {
                 $row[] = 'Ongoing';
-
-                $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_cp_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i> View</a>';
             }
             else // buttons are disabled (date and remarks can only be edited)
             {
                 $row[] = 'Cleared';
-
-                $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_cp_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i> View</a>';
             }
-            $row[] = number_format($loans->paid, 2, '.', ',');
-            $row[] = '<b>' . number_format($loans->balance, 2, '.', ',') . '</b>';
-            $row[] = number_format(($loans->paid + $loans->balance), 2, '.', ',');
+            // $row[] = number_format($loans->paid, 2, '.', ',');
+            // $row[] = '<b>' . number_format($loans->balance, 2, '.', ',') . '</b>';
+            // $row[] = number_format(($loans->paid + $loans->balance), 2, '.', ',');
 
-            $row[] = $loans->remarks;
-            $row[] = $loans->encoded;
+            // $row[] = $loans->remarks;
+            // $row[] = $loans->encoded;
  
             $data[] = $row;
         }

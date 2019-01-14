@@ -235,6 +235,7 @@ $(document).ready(function()
                 "order": [], //Initial no order.
                 "ordering": false,
                 "searching": false,
+                "bPaginate": false,
          
                 // Load data for the table's content from an Ajax source
                 "ajax": {
@@ -249,50 +250,46 @@ $(document).ready(function()
                     "orderable": false, //set not orderable
                 },
                 {
-                      "targets": 1,
-                      "className": "text-right",
-                },
-                {
                       "targets": 2,
-                      "className": "text-right",
+                      "visible": false,
                 },
-                {
-                      "targets": 3,
-                      "className": "text-right",
-                },
-                {
-                      "targets": 4,
-                      "className": "text-center",
-                },
-                {
-                      "targets": 5,
-                      "className": "text-center",
-                },
-                {
-                      "targets": 6,
-                      "className": "text-center",
-                },
-                {
-                      "targets": 7,
-                      "className": "text-center",
-                },
-                {
-                      "targets": 8,
-                      "className": "text-right",
-                },
-                {
-                      "targets": 9,
-                      "className": "text-right",
-                },
-                {
-                      "targets": 10,
-                      "className": "text-right",
-                }
+                // {
+                //       "targets": 3,
+                //       "className": "text-right",
+                // },
+                // {
+                //       "targets": 4,
+                //       "className": "text-center",
+                // },
+                // {
+                //       "targets": 5,
+                //       "className": "text-center",
+                // },
+                // {
+                //       "targets": 6,
+                //       "className": "text-center",
+                // },
+                // {
+                //       "targets": 7,
+                //       "className": "text-center",
+                // },
+                // {
+                //       "targets": 8,
+                //       "className": "text-right",
+                // },
+                // {
+                //       "targets": 9,
+                //       "className": "text-right",
+                // },
+                // {
+                //       "targets": 10,
+                //       "className": "text-right",
+                // }
                 ],
 
                 "rowCallback": function( row, data, index )
                 {
-                  var status = data[6],
+                  var status = data[2],
                       $node = this.api().row(row).nodes().to$();
 
                   if (status == 'New') 
@@ -402,6 +399,7 @@ $(document).ready(function()
                 "order": [], //Initial no order.
                 "ordering": false,
                 "searching": false,
+                "bPaginate": false,
          
                 // Load data for the table's content from an Ajax source
                 "ajax": {
