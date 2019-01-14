@@ -50,7 +50,7 @@
 
                                     <div align="right" class="col-md-3">
                                         
-                                        <button type="button" class="btn btn-danger"  onclick="cancel_cp_trans()"><i class="fa fa-times"></i> &nbsp;Back to Portal</button>
+                                        <button type="button" class="btn btn-dark"  onclick="cancel_cp_trans()"><i class="fa fa-sign-out"></i> &nbsp;Back to Portal</button>
                                     </div>
                                     <div class="col-md-12"><hr></div>             
 

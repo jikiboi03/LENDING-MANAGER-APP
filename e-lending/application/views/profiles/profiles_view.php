@@ -40,7 +40,7 @@
                             <h3 class="panel-title"><b><?php echo $client->lname . ', ' . $client->fname ?></b></h3>
                         </div>
                         <br>
-                        <div class="col-md-12" style="margin-left: -3%;">
+                        <div class="col-md-12">
                             <div class="col-md-3" style="padding-right: 5%;">
                                 <div class="col-md-12">
                                 <!-- check for pic1 if empty. assign default images if empty base on sex -->
