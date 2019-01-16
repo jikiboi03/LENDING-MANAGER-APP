@@ -324,6 +324,7 @@ $(document).ready(function()
                 "order": [], //Initial no order.
                 "ordering": false,
                 "searching": false,
+                "bPaginate": false,
          
                 // Load data for the table's content from an Ajax source
                 "ajax": {
