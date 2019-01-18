@@ -42,6 +42,7 @@
                 <!--End breadcrumb-->
                 <!--Page content-->
                 <!--===================================================-->
+                <div id="page-content">
                 <div id="page-content" class="panel panel-light panel-colorful">
                 
                     <div class="panel-heading">
@@ -187,7 +188,7 @@
                 <!--===================================================-->
                 <!--End page content-->
 
-
+            </div>
             </div>
             <!--===================================================-->
             <!--END CONTENT CONTAINER-->
