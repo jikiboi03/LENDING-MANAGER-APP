@@ -324,6 +324,7 @@ $(document).ready(function()
                 "order": [], //Initial no order.
                 "ordering": false,
                 "searching": false,
+                "bPaginate": false,
          
                 // Load data for the table's content from an Ajax source
                 "ajax": {
@@ -2036,7 +2037,51 @@ function delete_user(id)
     });
 }
 
+function delete_interest(id, interest_amt)
+{
+    $.confirm({
+        title: 'Confirm Delete',
+        theme: 'modern',
+        type: 'red',
+        icon: 'fa fa-warning',
+        content: 'Are you sure to delete this data?',
+        buttons: {
+            confirm: function () {
 
+                var loan_id = $('[name="loan_id"]').val();
+                // ajax delete data to database
+                $.ajax({
+                    url : "../../../Transactions/Transactions_controller/ajax_delete/"+id+"/"+interest_amt+"/"+loan_id,
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                        var log_type = 'Delete';
+
+                        var details = 'Loan interest deleted from client: ' + $('[name="client_name"]').val();
+
+                        set_system_log_three(log_type, details);
+
+                        //if success reload ajax table
+                        $('#modal_form').modal('hide');
+                        reload_table();
+
+                        // refresh transaction page
+                        window.location.href='../' +  $('[name="client_id"]').val() + '/' + loan_id;
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        alert('Error deleting data');
+                    } 
+
+                });
+            },
+            cancel: function () {
+                // close
+            },
+        }
+    });
+}
 
 
 // set typeahead value

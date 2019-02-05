@@ -81,6 +81,14 @@ class Transactions_model extends CI_Model {
         return $data;
     }
 
+    // check for client total transaction interests
+    function get_client_total_loan_interests($client_id)
+    {
+        $query = $this->db->query("SELECT SUM(interest) AS interest FROM transactions WHERE loan_id IN (SELECT loan_id FROM loans WHERE client_id = " . $client_id . ");");
+
+        return $query->row()->interest;
+    }
+
     // get number of children registered by month
     // public function get_monthly_registrations($month, $year)
     // {
@@ -183,4 +191,11 @@ class Transactions_model extends CI_Model {
         $this->db->where('loan_id', $loan_id);
         $this->db->delete($this->table);
     }
+
+    // delete transactions data
+    public function delete_by_trans_id($trans_id)
+    {
+        $this->db->where('trans_id', $trans_id);
+        $this->db->delete($this->table);
+    }    
 }

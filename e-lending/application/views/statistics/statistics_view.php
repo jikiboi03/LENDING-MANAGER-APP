@@ -91,6 +91,7 @@
                                         <th>Total Loans *</th>
                                         <th>Total Paid</th>
                                         <th>Total Balance</th>
+                                        <th>Total Interest</th>
                                         <th style="width:10px;">Action</th>
                                         
                                     </tr>

@@ -40,6 +40,7 @@ class Transactions_controller extends CI_Controller {
    
     public function ajax_list($loan_id)
     {
+        $count = 1;
         $list = $this->transactions->get_datatables($loan_id);
         $data = array();
         $no = $_POST['start'];
@@ -88,6 +89,10 @@ class Transactions_controller extends CI_Controller {
             {
                 $row[] = '<a class="btn btn-sm btn-info" href="javascript:void(0)" title="Edit" onclick="edit_trans_date_remarks('."'".$transactions->trans_id."'".')" disabled><i class="fa fa-pencil-square-o"></i></a>';
             }
+            else if ($transactions->type == 4 && $count == sizeof($list))
+            {
+                $row[] = '<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_interest('."'".$transactions->trans_id."'".', '."'".$transactions->interest."'".')"><i class="fa fa-trash"></i></a>';
+            }
             else
             {
                 $row[] = '<a class="btn btn-sm btn-info" href="javascript:void(0)" title="Edit" onclick="edit_trans_date_remarks('."'".$transactions->trans_id."'".')"><i class="fa fa-pencil-square-o"></i></a>';
@@ -96,6 +101,8 @@ class Transactions_controller extends CI_Controller {
             $row[] = $transactions->encoded;
  
             $data[] = $row;
+
+            $count++;
         }
  
         $output = array(
@@ -271,6 +278,17 @@ class Transactions_controller extends CI_Controller {
                 'date_end' => $date_end,
             );
         $this->loans->update(array('loan_id' => $loan_id), $dataloans);
+
+        echo json_encode(array("status" => TRUE));
+    }
+
+    // delete interest
+    public function ajax_delete($trans_id, $interest_amt, $loan_id)
+    {
+        // delete transaction record using trans_id
+        $this->transactions->delete_by_trans_id($trans_id);
+
+        $this->loans->deduct_balance($loan_id, $interest_amt);
 
         echo json_encode(array("status" => TRUE));
     }

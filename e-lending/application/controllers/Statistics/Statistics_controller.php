@@ -173,6 +173,8 @@ class Statistics_controller extends CI_Controller {
             $row[] = number_format($loans->paid, 2, '.', ',');
             $row[] = number_format($loans->balance, 2, '.', ',');
 
+            $row[] = number_format($this->transactions->get_client_total_loan_interests($loans->client_id), 2, '.', ',');
+
             $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_profile('."'".$loans->client_id."'".')"><i class="fa fa-eye"></i> </a>';
  
             $data[] = $row;

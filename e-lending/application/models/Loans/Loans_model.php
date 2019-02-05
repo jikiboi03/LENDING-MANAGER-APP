@@ -296,4 +296,11 @@ class Loans_model extends CI_Model {
         $this->db->where('loan_id', $loan_id);
         $this->db->delete($this->table);
     }
+
+    public function deduct_balance($loan_id, $interest_amt)
+    {
+        $this->db->set('balance', 'balance-' . $interest_amt, false);
+        $this->db->where('loan_id' , $loan_id);
+        $this->db->update($this->table);
+    }
 }
