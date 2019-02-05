@@ -111,10 +111,7 @@ $(document).ready(function()
                       $node = this.api().row(row).nodes().to$();
 
                   if (status == 'active') 
-                  {
-
-                    function isOdd(num) { return num % 2;}
-                    
+                  { 
                     if (isOdd(index) == 1) // to have different color when changed color is in sequence
                     {
                       $node.css('background-color', '#b3fffa');
@@ -512,10 +509,24 @@ $(document).ready(function()
 
                   // set color based on log type
                   if (amount >= 0) {
-                     $node.css('background-color', '#99cccc');
+                      if (isOdd(index) == 1) // to have different color when changed color is in sequence
+                      {
+                        $node.css('background-color', '#99cccc');
+                      }
+                      else
+                      {
+                        $node.css('background-color', '#aad5d5');
+                      }
                   }
                   else {
-                     $node.css('background-color', '#ffcc99');
+                      if (isOdd(index) == 1) // to have different color when changed color is in sequence
+                      {
+                        $node.css('background-color', '#ffcc99');
+                      }
+                      else
+                      {
+                        $node.css('background-color', '#ffbf80');
+                      }
                   }
                 },    
 
@@ -573,7 +584,6 @@ $(document).ready(function()
                   // set color based on log type
                   if (has_balance != 0) {
                     //  $node.css('background-color', '#ffff66');
-                    function isOdd(num) { return num % 2;}
                     
                     if (isOdd(index) == 1) // to have different color when changed color is in sequence
                     {
@@ -727,6 +737,7 @@ $(document).ready(function()
          
 });
 
+function isOdd(num) { return num % 2;}
 
 // ------------------------------------------------- 
 

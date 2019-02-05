@@ -1,12 +1,9 @@
 		<!-- FOOTER -->
 		<!--===================================================-->
 		<footer id="footer">
-			<!-- Visible when footer positions are static -->
-			<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-
-			<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-			<!-- Remove the class name "show-fixed" and "hide-fixed" to make the content always appears. -->
-			<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+			<div class="col-md-4 pull-right">
+				<span style="align-content: right;">eLending - Lending Manager App v1.2 JikiApps Solutions / Jik Torres © 2018</span>
+			</div>
 
 		</footer>
 		<!--===================================================-->

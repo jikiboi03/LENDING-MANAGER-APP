@@ -99,18 +99,14 @@
                         </div>
                     </div>
 
-                    </div>
+                </div>
                     <!--===================================================-->
                     
-                </div>
+            </div>
                 <!--===================================================-->
                 <!--End page content-->
-            </div>
             <!--===================================================-->
             <!--END CONTENT CONTAINER-->
 
-            <div class="col-md-9">
-            </div>
-            <div class="col-md-3">
-                eLending - Lending Manager App v1.2 JikiApps Solutions / Jik Torres © 2018
+            <div class="col-md-12"><hr>
             </div>

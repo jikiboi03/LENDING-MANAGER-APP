@@ -138,6 +138,7 @@ class Loans_model extends CI_Model {
         $this->db->from($this->table);
         $this->db->where('status !=', 3); // status is not cleared
         $this->db->where('date_start <=', $past_five_days); // date start is not today
+        $this->db->order_by("SUBSTRING(date_start, 8)");
 
         $query = $this->db->get();
 

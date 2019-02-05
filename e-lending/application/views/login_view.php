@@ -6,6 +6,8 @@
 	<title>Login page | e-Lending (Lending Manager App)</title>
 	<!--STYLESHEET-->
 	<!--=================================================-->
+	<!-- favicon -->
+    <link rel="icon" type="image/png" href="<?php echo base_url();?>assets/img/favicon.ico">
 	<!--Open Sans Font [ OPTIONAL ] -->
  	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin" rel="stylesheet">
 	<!--Bootstrap Stylesheet [ REQUIRED ]-->
