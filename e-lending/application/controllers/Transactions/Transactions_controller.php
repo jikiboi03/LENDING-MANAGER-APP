@@ -93,6 +93,10 @@ class Transactions_controller extends CI_Controller {
             {
                 $row[] = '<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_interest('."'".$transactions->trans_id."'".', '."'".$transactions->interest."'".')"><i class="fa fa-trash"></i></a>';
             }
+            else if (($transactions->type == 2 || $transactions->type == 3) && $count == sizeof($list))
+            {
+                $row[] = '<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_payment('."'".$transactions->trans_id."'".', '."'".$transactions->amount."'".')"><i class="fa fa-trash"></i></a>';
+            }
             else
             {
                 $row[] = '<a class="btn btn-sm btn-info" href="javascript:void(0)" title="Edit" onclick="edit_trans_date_remarks('."'".$transactions->trans_id."'".')"><i class="fa fa-pencil-square-o"></i></a>';
@@ -289,6 +293,21 @@ class Transactions_controller extends CI_Controller {
         $this->transactions->delete_by_trans_id($trans_id);
 
         $this->loans->deduct_balance($loan_id, $interest_amt);
+
+        echo json_encode(array("status" => TRUE));
+    }
+
+    // delete payment
+    public function ajax_delete_pay($trans_id, $pay_amt, $loan_id)
+    {
+        // delete transaction record using trans_id
+        $this->transactions->delete_by_trans_id($trans_id);
+
+        $this->loans->add_balance($loan_id, $pay_amt);
+
+        $this->loans->deduct_paid($loan_id, $pay_amt);
+
+        $this->loans->change_status($loan_id, 2); // change status to ONGOING
 
         echo json_encode(array("status" => TRUE));
     }

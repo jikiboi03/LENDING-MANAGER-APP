@@ -304,4 +304,39 @@ class Loans_model extends CI_Model {
         $this->db->where('loan_id' , $loan_id);
         $this->db->update($this->table);
     }
+
+    public function add_balance($loan_id, $pay_amt)
+    {
+        $this->db->set('balance', 'balance+' . ($pay_amt * -1), false);
+        $this->db->where('loan_id' , $loan_id);
+        $this->db->update($this->table);
+    }
+
+    public function deduct_paid($loan_id, $pay_amt)
+    {
+        $this->db->set('paid', 'paid-' . ($pay_amt * -1), false);
+        $this->db->where('loan_id' , $loan_id);
+        $this->db->update($this->table);
+    }
+
+    public function change_status($loan_id, $status)
+    {
+        $this->db->set('status', $status);
+        $this->db->where('loan_id' , $loan_id);
+        $this->db->update($this->table);
+    }
+
+    public function update_loan_balance($loan_id, $balance)
+    {
+        $this->db->set('balance', $balance);
+        $this->db->where('loan_id' , $loan_id);
+        $this->db->update($this->table);
+    }
+
+    public function update_loan_paid($loan_id, $paid)
+    {
+        $this->db->set('paid', $paid);
+        $this->db->where('loan_id' , $loan_id);
+        $this->db->update($this->table);
+    }
 }

@@ -89,27 +89,6 @@ class Transactions_model extends CI_Model {
         return $query->row()->interest;
     }
 
-    // get number of children registered by month
-    // public function get_monthly_registrations($month, $year)
-    // {
-    //     $this->db->select('COUNT(child_id) AS child_count');    
-        
-    //     $this->db->from($this->table);
-
-    //     $date_from = $year . '-' . $month . '-01';
-    //     $date_to = $year . '-' . $month . '-31';
-
-    //     $this->db->where('date_registered >=', $date_from);
-    //     $this->db->where('date_registered <=', $date_to);
-    //     $this->db->where('removed', '0');
-        
-    //     $query = $this->db->get();
-
-    //     $data['child_count'] = $query->row()->child_count;
-
-    //     return $data;
-    // }
-
     // get monthly loan interests by month
     public function get_monthly_loan_interests($month, $year)
     {
@@ -197,5 +176,33 @@ class Transactions_model extends CI_Model {
     {
         $this->db->where('trans_id', $trans_id);
         $this->db->delete($this->table);
-    }    
+    }
+
+    // get the total amount of last row in a loan
+    public function get_last_trans_total($loan_id)
+    {
+        $this->db->order_by('trans_id', 'DESC');
+        $this->db->limit(1);
+
+        $this->db->from($this->table);
+        $this->db->where('loan_id',$loan_id);
+
+        $query = $this->db->get();
+
+        return $query->row()->total;
+    }
+
+    public function get_total_paid($loan_id)
+    {
+        $this->db->select('SUM(amount) AS amount');    
+        
+        $this->db->from($this->table);
+
+        $this->db->where('loan_id', $loan_id);
+        $this->db->where_in('type', 2, 3);
+        
+        $query = $this->db->get();
+
+        return ($query->row()->amount * -1);
+    }
 }

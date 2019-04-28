@@ -317,16 +317,20 @@ class Profiles_controller extends CI_Controller {
             redirect('/profiles-page/' . $this->input->post('client_id'));
          } 
     }   
-    // graduate a child
-    // public function ajax_graduate($client_id)
-    // {
-    //     $data = array(
-    //             'graduated' => '1',
-    //             'date_graduated' => date("Y-m-d")
-    //         );
-    //     $this->cis->update(array('client_id' => $client_id), $data);
-    //     echo json_encode(array("status" => TRUE));
-    // }
+    
+    // update total paid and current balance
+    public function ajax_update_bal_paid($loan_id)
+    {
+        $last_total = $this->transactions->get_last_trans_total($loan_id);
+
+        $total_paid = $this->transactions->get_total_paid($loan_id);
+
+        $this->loans->update_loan_balance($loan_id, $last_total);
+
+        $this->loans->update_loan_paid($loan_id, $total_paid);
+
+        echo json_encode(array("status" => TRUE));
+    }
 
     private function _validate()
     {

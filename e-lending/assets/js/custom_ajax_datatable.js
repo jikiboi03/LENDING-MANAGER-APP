@@ -2094,6 +2094,52 @@ function delete_interest(id, interest_amt)
     });
 }
 
+function delete_payment(id, amount)
+{
+    $.confirm({
+        title: 'Confirm Delete',
+        theme: 'modern',
+        type: 'red',
+        icon: 'fa fa-warning',
+        content: 'Are you sure to delete this data?',
+        buttons: {
+            confirm: function () {
+
+                var loan_id = $('[name="loan_id"]').val();
+                // ajax delete data to database
+                $.ajax({
+                    url : "../../../Transactions/Transactions_controller/ajax_delete_pay/"+id+"/"+amount+"/"+loan_id,
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                        var log_type = 'Delete';
+
+                        var details = 'Loan interest deleted from client: ' + $('[name="client_name"]').val();
+
+                        set_system_log_three(log_type, details);
+
+                        //if success reload ajax table
+                        $('#modal_form').modal('hide');
+                        reload_table();
+
+                        // refresh transaction page
+                        window.location.href='../' +  $('[name="client_id"]').val() + '/' + loan_id;
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        alert('Error deleting data');
+                    } 
+
+                });
+            },
+            cancel: function () {
+                // close
+            },
+        }
+    });
+}
+
 
 // set typeahead value
 // function set_typeahead_item(item)
@@ -2281,6 +2327,28 @@ $("#amount_capital").change(function()
 
    $('[name="total"]').val(total); 
 });
+
+
+// ========================================================= FIX CALCULATION BUTTON ===================================================
+
+function fix_bal_paid_calculation()
+{
+   var loan_id = $('[name="loan_id"]').val();
+
+   $.ajax({
+       url : "../../../Profiles/Profiles_controller/ajax_update_bal_paid/" + loan_id,
+       type: "POST",
+       dataType: "JSON",
+       success: function(data)
+       {
+          location.reload();
+       },
+       error: function (jqXHR, textStatus, errorThrown)
+       {
+          alert('Error get data from ajax');
+       }
+   });
+}
 
 
 // ========================================================= REPORTS SECTION ==========================================================

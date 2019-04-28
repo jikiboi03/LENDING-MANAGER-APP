@@ -80,6 +80,7 @@
                                 <button class="btn btn-info" onclick="add_interest()"><i class="fa fa-plus-square"></i> &nbsp;Add Interest</button>
                                 <button class="btn btn-warning" onclick="adjust_loan()"><i class="fa fa-plus-square"></i> &nbsp;Adjust Loan</button>
                                 <button class="btn btn-default" onclick="reload_table()"><i class="fa fa-refresh"></i> &nbsp;Reload</button>
+                                <button class="btn btn-primary" onclick="fix_bal_paid_calculation()"><i class="fa fa-wrench"></i> &nbsp;Fix</button>
                                 <br><br>
                             <?php } ?>
 
