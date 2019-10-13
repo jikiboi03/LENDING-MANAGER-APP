@@ -3,6 +3,10 @@ var table;
 var text;
 var tableID = $("table").attr('id');
 
+$("#form_add_loan").submit(function( event ) { // -------------------------------- EXPIREMENTAL FUNCTION (Fixes dismissed modal when add_cash_input buttons are clicked)
+  event.preventDefault();
+});
+
 $(document).ready(function() 
 {
     if(tableID == "companies-table")
@@ -933,7 +937,7 @@ function add_loan() // ---> calling for the Add Modal form
     save_method = 'add-loan';
     text = 'Add New Loan';
     
-    $('#form')[0].reset(); // reset form on modals
+    $('#form_add_loan')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
     $('.help-block').empty(); // clear error string
     $('#modal_form').modal('show'); // show bootstrap modal
@@ -1374,6 +1378,10 @@ function save()
 
     $('#btnSave').text('Saving...'); //change button text
     $('#btnSave').attr('disabled',true); //set button disable 
+
+    $('.btnSave').text('Saving...'); //change button text
+    $('.btnSave').attr('disabled',true); //set button disable 
+
     var url;
  
     // initialize form for both add and update as default 
@@ -1405,6 +1413,7 @@ function save()
     }
     else if(save_method == 'add-loan') 
     {
+        $form = '#form_add_loan';
         url = "../Profiles/Profiles_controller/ajax_add";
     }
     else if(save_method == 'update-loan') 
@@ -1641,6 +1650,8 @@ function save()
                     details = 'New loan added to: C' + $('[name="client_id"]').val() + ': ' + $('[name="client_name"]').val();
 
                     set_system_log_one(log_type, details);
+
+                    window.location.reload();
                 }
                 else if(save_method == 'update-loan') 
                 {
@@ -1696,15 +1707,20 @@ function save()
             }
             $('#btnSave').text('Save'); //change button text
             $('#btnSave').attr('disabled',false); //set button enable 
- 
- 
+
+            // fixed for not disabling sace button 10-12-19
+            $('.btnSave').text('Save'); //change button text
+            $('.btnSave').attr('disabled',false); //set button enable 
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
             alert('Error adding / update data');
             $('#btnSave').text('Save'); //change button text
             $('#btnSave').attr('disabled',false); //set button enable 
- 
+
+            // fixed for not disabling sace button 10-12-19
+            $('.btnSave').text('Save'); //change button text
+            $('.btnSave').attr('disabled',false); //set button enable 
         }
     });
 }
@@ -2140,39 +2156,30 @@ function delete_payment(id, amount)
     });
 }
 
+// added cash input buttons feature 10-12-19
+function add_cash_input(cash_input)
+{
+    var current_cash = 0;
 
-// set typeahead value
-// function set_typeahead_item(item)
-// {
-//     $('#srch-term').typeahead('val', item);
-// }
-
-
-// function firstFunction(receipt_window)
-// {
-//   var d = $.Deferred();
-//   // some very time consuming asynchronous code...
-//   setTimeout(function() 
-//   {
-//     // open new window
-//     receipt_window.location.href = 'receipt';
-
-//     d.resolve();
-//   }, 1000);
-//   return d.promise();
-// }
-
-// function secondFunction()
-// {
-//   var d = $.Deferred();
-//   setTimeout(function() {
+    if ($('[name="amount"]').val() != "")
+    {
+      current_cash = parseFloat($('[name="amount"]').val());
+    }
     
-//     location.reload();
-    
-//     d.resolve();
-//   }, 1000);
-//   return d.promise();
-// }
+    var new_cash = (current_cash + cash_input);
+
+    $('[name="amount"]').val(new_cash);
+
+    update_total_value();
+}
+
+function clear_cash_input()
+{
+    $('[name="amount"]').val("0");
+    $('[name="interest"]').val(interest);
+    $('[name="percentage"]').val(0).prop('selected', true);
+    update_total_value();
+}
 
 // ========================================================= LOAN FORM KEY LISTENER ===================================================
 
@@ -2348,170 +2355,6 @@ function fix_bal_paid_calculation()
           alert('Error get data from ajax');
        }
    });
-}
-
-
-// ========================================================= REPORTS SECTION ==========================================================
-
-// enable / disable generate CIS reports button
-$("#report_type").change(function()
-{
-   var report_type = $('[name="report_type"]').val();
-
-   if (report_type == "null")
-   {
-       document.getElementById("generate_report").disabled = true;
-   }
-   else
-   {
-       document.getElementById("generate_report").disabled = false;
-   } 
-});
-
-// enable / disable generate Monthly reports button
-$("#report_type_monthly").change(function()
-{
-   var report_type_monthly = $('[name="report_type_monthly"]').val();
-   var month_selection = $('[name="month_selection"]').val();
-   var year_selection = $('[name="year_selection"]').val();
-
-   if (report_type_monthly == "null" || month_selection == "null" || year_selection == "null")
-   {
-       document.getElementById("generate_report_monthly").disabled = true;
-   }
-   else
-   {
-       document.getElementById("generate_report_monthly").disabled = false;
-   } 
-});
-
-// enable / disable generate CIS reports button
-$("#report_type_child").change(function()
-{
-   var report_type_child = $('[name="report_type_child"]').val();
-
-   if (report_type_child == "null")
-   {
-       document.getElementById("generate_report_child").disabled = true;
-   }
-   else
-   {
-       document.getElementById("generate_report_child").disabled = false;
-   } 
-});
-
-// enable / disable generate Monthly reports button
-$("#month_selection").change(function()
-{
-   var report_type_monthly = $('[name="report_type_monthly"]').val();
-   var month_selection = $('[name="month_selection"]').val();
-   var year_selection = $('[name="year_selection"]').val();
-
-   if (report_type_monthly == "null" || month_selection == "null" || year_selection == "null")
-   {
-       document.getElementById("generate_report_monthly").disabled = true;
-   }
-   else
-   {
-       document.getElementById("generate_report_monthly").disabled = false;
-   }
-});
-
-// enable / disable generate Monthly reports button
-$("#year_selection").change(function()
-{
-   var report_type_monthly = $('[name="report_type_monthly"]').val();
-   var month_selection = $('[name="month_selection"]').val();
-   var year_selection = $('[name="year_selection"]').val();
-
-   if (report_type_monthly == "null" || month_selection == "null" || year_selection == "null")
-   {
-       document.getElementById("generate_report_monthly").disabled = true;
-   }
-   else
-   {
-       document.getElementById("generate_report_monthly").disabled = false;
-   }
-});
-
-// set / generate report based on selected type - CIS
-function set_report()
-{
-
-    // fetch report type value
-    var report_type = $('[name="report_type"]').val();
-
-    // setting report logs
-    var log_type = 'Report';
-
-    if (report_type == "cis-active-male")
-    {
-        var details = 'CIS Active - Male Report generated'; 
-        window.open("cis-report-active-male");
-    }
-    else if (report_type == "cis-active-female")
-    {
-        var details = 'CIS Active - Female Report generated'; 
-        window.open("cis-report-active-female");
-    }
-    else if (report_type == "cis-graduated-male")
-    {
-        var details = 'CIS Graduated - Male Report generated'; 
-        window.open("cis-report-graduated-male");
-    }
-    else if (report_type == "cis-graduated-female")
-    {
-        var details = 'CIS Graduated - Female Report generated';
-        window.open("cis-report-graduated-female");
-    }
-    else
-    {
-        // window.open("inventory-report/print-report-borrow");   
-    }
-
-    set_system_log(log_type, details);
-}
-
-// set / generate report based on selected type - Monthly Checkup
-function set_report_monthly()
-{
-
-    // fetch report type value
-    var report_type_monthly = $('[name="report_type_monthly"]').val();
-    var month_selection = $('[name="month_selection"]').val();
-    var year_selection = $('[name="year_selection"]').val();
-
-    // setting report logs
-    var log_type = 'Report';
-
-    if (report_type_monthly == "monthly-male")
-    {
-        var details = 'Monthly Monitoring - Male Report generated'; 
-        window.open("monthly-report-male/" + month_selection + "/" + year_selection);
-    }
-    else if (report_type_monthly == "monthly-female")
-    {
-        var details = 'Monthly Monitoring - Female Report generated'; 
-        window.open("monthly-report-female/" + month_selection + "/" + year_selection);
-    }
-
-    set_system_log(log_type, details);
-}
-
-// set / generate report based on selected type - Monthly Checkup
-function set_report_child()
-{
-
-    // fetch report type value
-    var report_type_child = $('[name="report_type_child"]').val();
-
-    // setting report logs
-    var log_type = 'Report';
-
-    var details = 'Child Profile Report generated: C' + report_type_child; 
-    window.open("child-report/" + report_type_child);
-
-    set_system_log(log_type, details);
 }
 
 

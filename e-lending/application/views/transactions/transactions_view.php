@@ -242,7 +242,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="btnSave" onclick="save()" class="btn btn-primary"><i class="fa fa-floppy-o"></i> &nbsp;Save</button>
+                            <button type="button" id="btnSave" onclick="save()" class="btnSave btn btn-primary"><i class="fa fa-floppy-o"></i> &nbsp;Save</button>
 
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> &nbsp;Cancel</button>
                         </div>
@@ -304,7 +304,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="btnSave" onclick="save()" class="btn btn-primary"><i class="fa fa-floppy-o"></i> &nbsp;Save</button>
+                            <button type="button" id="btnSave" onclick="save()" class="btnSave btn btn-primary"><i class="fa fa-floppy-o"></i> &nbsp;Save</button>
 
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> &nbsp;Cancel</button>
                         </div>
@@ -350,7 +350,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="btnSave" onclick="save()" class="btn btn-primary"><i class="fa fa-floppy-o"></i> &nbsp;Save</button>
+                            <button type="button" id="btnSave" onclick="save()" class="btnSave btn btn-primary"><i class="fa fa-floppy-o"></i> &nbsp;Save</button>
 
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> &nbsp;Cancel</button>
                         </div>

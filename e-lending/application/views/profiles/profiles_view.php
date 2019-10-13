@@ -227,60 +227,85 @@
                             <h3 class="modal-title">Loan Form</h3>
                         </div>
                         <div class="modal-body form">
-                            <form action="#" id="form" class="form-horizontal">
+                            <form action="#" id="form_add_loan" class="form-horizontal">
 
                                 <input type="hidden" value="" name="loan_id"/>
                                 <input type="hidden" value=<?php echo "'" . $client->client_id . "'"; ?> name="client_id"/>
                                 <input type="hidden" value=<?php echo "'" . $client->lname . ', ' . $client->fname . "'"; ?> name="client_name"/> 
 
                                 <div class="form-body">
+
+                                    <div id="cash_buttons">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-1"></label>
+                                            <button class="btn btn-default col-md-2" id="cash_1" onclick="add_cash_input(1)">1</button>
+                                            <button class="btn btn-info col-md-2" id="cash_5" onclick="add_cash_input(5)">5</button>
+                                            <button class="btn btn-default col-md-2" id="cash_10" onclick="add_cash_input(10)">10</button>
+                                            <button class="btn btn-info col-md-2" id="cash_20" onclick="add_cash_input(20)">20</button>
+                                            <button class="btn btn-default col-md-2" id="cash_50" onclick="add_cash_input(50)">50</button>
+                                            <label class="control-label col-md-1"></label>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-1"></label>
+                                            <button class="btn btn-default col-md-2" id="cash_100" onclick="add_cash_input(100)">100</button>
+                                            <button class="btn btn-info col-md-2" id="cash_200" onclick="add_cash_input(200)">200</button>
+                                            <button class="btn btn-default col-md-2" id="cash_500" onclick="add_cash_input(500)">500</button>
+                                            <button class="btn btn-info col-md-2" id="cash_1000" onclick="add_cash_input(1000)">1,000</button>
+                                            <button class="btn btn-default col-md-2" id="cash_1000" onclick="add_cash_input(2000)">2,000</button>
+                                            <label class="control-label col-md-1"></label>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-1"></label>
+                                            <button class="btn btn-default col-md-2" id="cash_100" onclick="add_cash_input(5000)">5,000</button>
+                                            <button class="btn btn-info col-md-2" id="cash_500" onclick="add_cash_input(10000)">10,000</button>
+                                            <label class="control-label col-md-1"></label>
+                                            <button class="btn btn-warning col-md-5" id="cash_clear" onclick="clear_cash_input()">CLEAR</button>
+                                            <label class="control-label col-md-1"></label>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Loan Amount :</label>
+                                        <label class="control-label col-md-2">Amount :</label>
                                         <div class="col-md-9">
                                             <input id="amount" name="amount" placeholder="Loan Amount" class="form-control" type="number">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
-
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Int. Percentage :</label>
-                                        <div class="col-md-9">
+                                        <label class="control-label col-md-2">Interest :</label>
+                                        <div class="col-md-5">
+                                            <input id="interest" name="interest" placeholder="Interest" class="form-control" type="number">
+                                            <span class="help-block"></span>
+                                        </div>
+                                        <div class="col-md-4">
                                             <select id="percentage" name="percentage" class="form-control" style="background-color: lightblue;">
-                                                <option value="0">Custom Amount</option>
+                                                <option value="0">Custom amount</option>
                                                 <option value=".05">5 %</option>
                                                 <option value=".07">7 %</option>
                                                 <option value=".10">10 %</option>
                                             </select>
-                                            <span class="help-block"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3">Interest :</label>
-                                        <div class="col-md-9">
-                                            <input id="interest" name="interest" placeholder="Interest" class="form-control" type="number">
-                                            <span class="help-block"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Total Due :</label>
+                                        <label class="control-label col-md-2">Total due :</label>
                                         <div class="col-md-9">
                                             <input id="total" name="total" placeholder="Total Due" class="form-control" type="number" readonly>
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Date Start :</label>
+                                        <label class="control-label col-md-2">Date :</label>
                                         <div class="col-md-9">
                                             <input name="date_start" placeholder="Date Start" class="form-control" type="date">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Loan Remarks :</label>
+                                        <label class="control-label col-md-2">Remarks :</label>
                                         <div class="col-md-9">
                                             <textarea name="remarks" placeholder="Loan Remarks" class="form-control"></textarea>
-                                            <span class="help-block"></span>
                                         </div>
                                     </div>
 
@@ -315,14 +340,14 @@
 
                                 <div class="form-body">
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Date Start :</label>
+                                        <label class="control-label col-md-2">Date Start :</label>
                                         <div class="col-md-9">
                                             <input name="date_start" placeholder="Date Start" class="form-control" type="date">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Loan Remarks :</label>
+                                        <label class="control-label col-md-2">Loan Remarks :</label>
                                         <div class="col-md-9">
                                             <textarea name="remarks" placeholder="Loan Remarks" class="form-control"></textarea>
                                             <span class="help-block"></span>
