@@ -120,7 +120,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h3 class="modal-title">Add Payment Transaction Form</h3>
+                            <span class="badge badge-success"><h3 class="modal-title">Add payment</h3></span>
                         </div>
                         <div class="modal-body form">
                             <form action="#" id="form_add_payment" class="form-horizontal">
@@ -131,8 +131,39 @@
 
                                 <div class="form-body">
 
+                                    <div id="cash_buttons">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-1"></label>
+                                            <button class="btn btn-default col-md-2" id="cash_1" onclick="add_cash_input_payment(1)">1</button>
+                                            <button class="btn btn-info col-md-2" id="cash_5" onclick="add_cash_input_payment(5)">5</button>
+                                            <button class="btn btn-default col-md-2" id="cash_10" onclick="add_cash_input_payment(10)">10</button>
+                                            <button class="btn btn-info col-md-2" id="cash_20" onclick="add_cash_input_payment(20)">20</button>
+                                            <button class="btn btn-default col-md-2" id="cash_50" onclick="add_cash_input_payment(50)">50</button>
+                                            <label class="control-label col-md-1"></label>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-1"></label>
+                                            <button class="btn btn-default col-md-2" id="cash_100" onclick="add_cash_input_payment(100)">100</button>
+                                            <button class="btn btn-info col-md-2" id="cash_200" onclick="add_cash_input_payment(200)">200</button>
+                                            <button class="btn btn-default col-md-2" id="cash_500" onclick="add_cash_input_payment(500)">500</button>
+                                            <button class="btn btn-info col-md-2" id="cash_1000" onclick="add_cash_input_payment(1000)">1,000</button>
+                                            <button class="btn btn-default col-md-2" id="cash_1000" onclick="add_cash_input_payment(2000)">2,000</button>
+                                            <label class="control-label col-md-1"></label>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-1"></label>
+                                            <button class="btn btn-default col-md-2" id="cash_100" onclick="add_cash_input_payment(5000)">5,000</button>
+                                            <button class="btn btn-info col-md-2" id="cash_500" onclick="add_cash_input_payment(10000)">10,000</button>
+                                            <label class="control-label col-md-1"></label>
+                                            <button class="btn btn-warning col-md-5" id="cash_clear" onclick="clear_cash_input_payment()">CLEAR</button>
+                                            <label class="control-label col-md-1"></label>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Payment Amount :</label>
+                                        <label class="control-label col-md-3">Amount :</label>
                                         <div class="col-md-9">
                                             <input id="amount_payment" name="amount" placeholder="Payment Amount" class="form-control" type="number">
                                             <span class="help-block"></span>
@@ -140,7 +171,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Transaction Date :</label>
+                                        <label class="control-label col-md-3">Date :</label>
                                         <div class="col-md-9">
                                             <input name="date" placeholder="Transaction Date" class="form-control" type="date">
                                             <span class="help-block"></span>
@@ -148,17 +179,12 @@
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Total Balance :</label>
-                                        <div class="col-md-9">
-                                            <input id="total" name="total" placeholder="Total Balance" class="form-control" type="number" readonly>
-                                            <span class="help-block"></span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3">Trans. Remarks :</label>
-                                        <div class="col-md-9">
+                                        <label class="control-label col-md-3">Remarks :</label>
+                                        <div class="col-md-5">
                                             <textarea name="remarks" placeholder="Transaction Remarks" class="form-control"></textarea>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input id="total" name="total" placeholder="Total Balance" class="form-control" type="number" style="color: green; font-size: 20px;" readonly>
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -182,7 +208,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h3 class="modal-title">Add Interest Transaction Form</h3>
+                            <span class="badge badge-info"><h3 class="modal-title">Add interest</h3></span>
                         </div>
                         <div class="modal-body form">
                             <form action="#" id="form_add_interest" class="form-horizontal">
@@ -193,51 +219,71 @@
 
                                 <div class="form-body">
 
+                                    <div id="cash_buttons">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-1"></label>
+                                            <button class="btn btn-default col-md-2" id="cash_1" onclick="add_cash_input_interest(1)">1</button>
+                                            <button class="btn btn-info col-md-2" id="cash_5" onclick="add_cash_input_interest(5)">5</button>
+                                            <button class="btn btn-default col-md-2" id="cash_10" onclick="add_cash_input_interest(10)">10</button>
+                                            <button class="btn btn-info col-md-2" id="cash_20" onclick="add_cash_input_interest(20)">20</button>
+                                            <button class="btn btn-default col-md-2" id="cash_50" onclick="add_cash_input_interest(50)">50</button>
+                                            <label class="control-label col-md-1"></label>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-1"></label>
+                                            <button class="btn btn-default col-md-2" id="cash_100" onclick="add_cash_input_interest(100)">100</button>
+                                            <button class="btn btn-info col-md-2" id="cash_200" onclick="add_cash_input_interest(200)">200</button>
+                                            <button class="btn btn-default col-md-2" id="cash_500" onclick="add_cash_input_interest(500)">500</button>
+                                            <button class="btn btn-info col-md-2" id="cash_1000" onclick="add_cash_input_interest(1000)">1,000</button>
+                                            <button class="btn btn-default col-md-2" id="cash_1000" onclick="add_cash_input_interest(2000)">2,000</button>
+                                            <label class="control-label col-md-1"></label>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-1"></label>
+                                            <button class="btn btn-default col-md-2" id="cash_100" onclick="add_cash_input_interest(5000)">5,000</button>
+                                            <button class="btn btn-info col-md-2" id="cash_500" onclick="add_cash_input_interest(10000)">10,000</button>
+                                            <label class="control-label col-md-1"></label>
+                                            <button class="btn btn-warning col-md-5" id="cash_clear" onclick="clear_cash_input_interest()">CLEAR</button>
+                                            <label class="control-label col-md-1"></label>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Int. Percentage :</label>
-                                        <div class="col-md-9">
+                                        <label class="control-label col-md-3">Interest amt :</label>
+                                        <div class="col-md-4">
+                                            <input id="interest_amount" name="interest" placeholder="Interest Amount" class="form-control" type="number">
+                                            <span class="help-block"></span>
+                                        </div>
+                                        <div class="col-md-5">
                                             <select id="percentage_trans" name="percentage" class="form-control" style="background-color: lightblue;">
                                                 <option value="0">Custom Amount</option>
                                                 <option value=".05">5 %</option>
                                                 <option value=".07">7 %</option>
+                                                <option value=".08">8 %</option>
+                                                <option value=".09">9 %</option>
                                                 <option value=".10">10 %</option>
                                             </select>
-                                            <span class="help-block"></span>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Interest Amount :</label>
-                                        <div class="col-md-9">
-                                            <input id="interest_amount" name="interest" placeholder="Interest Amount" class="form-control" type="number">
-                                            <span class="help-block"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3">Transaction Date :</label>
+                                        <label class="control-label col-md-3">Date :</label>
                                         <div class="col-md-9">
                                             <input name="date" placeholder="Transaction Date" class="form-control" type="date">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
-                                    
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Total Balance :</label>
-                                        <div class="col-md-9">
-                                            <input id="total" name="total" placeholder="Total Balance" class="form-control" type="number" readonly>
-                                            <span class="help-block"></span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3">Trans. Remarks :</label>
-                                        <div class="col-md-9">
+                                        <label class="control-label col-md-3">Remarks :</label>
+                                        <div class="col-md-5">
                                             <textarea name="remarks" placeholder="Transaction Remarks" class="form-control"></textarea>
-                                            <span class="help-block"></span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input id="total" name="total" placeholder="Total Balance" class="form-control" type="number" style="color: green; font-size: 20px;" readonly>
                                         </div>
                                     </div>
-
                                 </div>
                             </form>
                         </div>
@@ -257,7 +303,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h3 class="modal-title">Add Payment Transaction Form</h3>
+                            <span class="badge badge-warning"><h3 class="modal-title">Adjust loan</h3></span>
                         </div>
                         <div class="modal-body form">
                             <form action="#" id="form_adjust_loan" class="form-horizontal">

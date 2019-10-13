@@ -7,6 +7,15 @@ $("#form_add_loan").submit(function( event ) { // ------------------------------
   event.preventDefault();
 });
 
+$("#form_add_interest").submit(function( event ) { // -------------------------------- EXPIREMENTAL FUNCTION (Fixes dismissed modal when add_cash_input buttons are clicked)
+  event.preventDefault();
+});
+
+$("#form_add_payment").submit(function( event ) { // -------------------------------- EXPIREMENTAL FUNCTION (Fixes dismissed modal when add_cash_input buttons are clicked)
+  event.preventDefault();
+});
+
+
 $(document).ready(function() 
 {
     if(tableID == "companies-table")
@@ -947,7 +956,7 @@ function add_loan() // ---> calling for the Add Modal form
 function add_payment() // ---> calling for the Add Modal form
 {
     save_method = 'add-payment';
-    text = 'Add Payment';
+    text = 'Add payment';
     
     $('#form_add_payment')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
@@ -960,7 +969,7 @@ function add_payment() // ---> calling for the Add Modal form
 function add_interest() // ---> calling for the Add Modal form
 {
     save_method = 'add-interest';
-    text = 'Add Interest';
+    text = 'Add interest';
     
     $('#form_add_interest')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
@@ -973,7 +982,7 @@ function add_interest() // ---> calling for the Add Modal form
 function adjust_loan() // ---> calling for the Add Modal form
 {
     save_method = 'adjust-loan';
-    text = 'Adjust Loan';
+    text = 'Adjust loan';
     
     $('#form_adjust_loan')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
@@ -2169,6 +2178,7 @@ function add_cash_input(cash_input)
     var new_cash = (current_cash + cash_input);
 
     $('[name="amount"]').val(new_cash);
+    $('[name="percentage"]').val(0).prop('selected', true);
 
     update_total_value();
 }
@@ -2176,9 +2186,57 @@ function add_cash_input(cash_input)
 function clear_cash_input()
 {
     $('[name="amount"]').val("0");
-    $('[name="interest"]').val(interest);
+    $('[name="interest"]').val("0");
     $('[name="percentage"]').val(0).prop('selected', true);
     update_total_value();
+}
+
+// added cash input buttons feature 10-12-19
+function add_cash_input_interest(cash_input)
+{
+    var current_cash = 0;
+
+    if ($('[name="interest"]').val() != "")
+    {
+      current_cash = parseFloat($('[name="interest"]').val());
+    }
+    
+    var new_cash = (current_cash + cash_input);
+
+    $('[name="interest"]').val(new_cash);
+    $('[name="percentage"]').val(0).prop('selected', true);
+
+    update_total_value_trans();
+}
+
+function clear_cash_input_interest()
+{
+    $('[name="interest"]').val("0");
+    $('[name="percentage"]').val(0).prop('selected', true);
+    update_total_value_trans();
+}
+
+// added cash input buttons feature 10-12-19
+function add_cash_input_payment(cash_input)
+{
+    var current_cash = 0;
+
+    if ($('[name="amount"]').val() != "")
+    {
+      current_cash = parseFloat($('[name="amount"]').val());
+    }
+    
+    var new_cash = (current_cash + cash_input);
+
+    $('[name="amount"]').val(new_cash);
+
+    update_total_value_trans_payment();
+}
+
+function clear_cash_input_payment()
+{
+    $('[name="amount"]').val("0");
+    update_total_value_trans_payment();
 }
 
 // ========================================================= LOAN FORM KEY LISTENER ===================================================
@@ -2241,7 +2299,7 @@ function update_total_value()
 
    var total = (amount + interest).toFixed(2);
 
-   $('[name="total"]').val(total);
+   $('[name="total"]').val(total.toLocaleString());
 }
 
 // ========================================================= TRANSACTION FORM KEY LISTENER ===================================================
@@ -2313,7 +2371,20 @@ function update_total_value_trans()
    }
 
    var total = (total_balance + interest).toFixed(2);
+   $('[name="total"]').val(total);
+}
 
+function update_total_value_trans_payment()
+{
+   var amount = parseFloat($('[name="amount"]').val());
+   var total_balance = parseFloat($('[name="total_balance"]').val());
+    
+   if ($('[name="amount"]').val() == '') 
+   {
+      amount = 0;  
+   }
+
+   var total = (total_balance - amount).toFixed(2);
    $('[name="total"]').val(total);
 }
 

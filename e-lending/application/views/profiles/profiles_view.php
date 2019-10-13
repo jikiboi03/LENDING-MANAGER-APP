@@ -267,45 +267,43 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-2">Amount :</label>
+                                        <label class="control-label col-md-3">Amount :</label>
                                         <div class="col-md-9">
                                             <input id="amount" name="amount" placeholder="Loan Amount" class="form-control" type="number">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-2">Interest :</label>
-                                        <div class="col-md-5">
+                                        <label class="control-label col-md-3">Interest :</label>
+                                        <div class="col-md-4">
                                             <input id="interest" name="interest" placeholder="Interest" class="form-control" type="number">
                                             <span class="help-block"></span>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-5">
                                             <select id="percentage" name="percentage" class="form-control" style="background-color: lightblue;">
                                                 <option value="0">Custom amount</option>
                                                 <option value=".05">5 %</option>
                                                 <option value=".07">7 %</option>
+                                                <option value=".08">8 %</option>
+                                                <option value=".09">9 %</option>
                                                 <option value=".10">10 %</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-2">Total due :</label>
-                                        <div class="col-md-9">
-                                            <input id="total" name="total" placeholder="Total Due" class="form-control" type="number" readonly>
-                                            <span class="help-block"></span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-2">Date :</label>
+                                        <label class="control-label col-md-3">Date :</label>
                                         <div class="col-md-9">
                                             <input name="date_start" placeholder="Date Start" class="form-control" type="date">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-2">Remarks :</label>
-                                        <div class="col-md-9">
+                                        <label class="control-label col-md-3">Remarks :</label>
+                                        <div class="col-md-5">
                                             <textarea name="remarks" placeholder="Loan Remarks" class="form-control"></textarea>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input id="total" name="total" placeholder="Total Due" class="form-control" type="number" style="color: green; font-size: 20px;" readonly>
                                         </div>
                                     </div>
 
@@ -340,14 +338,14 @@
 
                                 <div class="form-body">
                                     <div class="form-group">
-                                        <label class="control-label col-md-2">Date Start :</label>
+                                        <label class="control-label col-md-3">Date Start :</label>
                                         <div class="col-md-9">
                                             <input name="date_start" placeholder="Date Start" class="form-control" type="date">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-2">Loan Remarks :</label>
+                                        <label class="control-label col-md-3">Loan Remarks :</label>
                                         <div class="col-md-9">
                                             <textarea name="remarks" placeholder="Loan Remarks" class="form-control"></textarea>
                                             <span class="help-block"></span>
