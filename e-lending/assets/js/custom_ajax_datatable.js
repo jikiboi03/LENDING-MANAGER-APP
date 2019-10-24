@@ -2496,127 +2496,66 @@ if (document.getElementById("container-interests"))
 }
 
 // check if div exist (execute if in dashboard page only) // chart for registration count
-if (document.getElementById("container-interests-prev")) 
-{
-    // fetch registrations data
-    var prev_year = $('[name="prev_year"]').val();
-
-    var prev_jan = parseFloat($('[name="prev_jan"]').val());
-    var prev_feb = parseFloat($('[name="prev_feb"]').val());
-    var prev_mar = parseFloat($('[name="prev_mar"]').val());
-    var prev_apr = parseFloat($('[name="prev_apr"]').val());
-
-    var prev_may = parseFloat($('[name="prev_may"]').val());
-    var prev_jun = parseFloat($('[name="prev_jun"]').val());
-    var prev_jul = parseFloat($('[name="prev_jul"]').val());
-    var prev_aug = parseFloat($('[name="prev_aug"]').val());
-
-    var prev_sep = parseFloat($('[name="prev_sep"]').val());
-    var prev_oct = parseFloat($('[name="prev_oct"]').val());
-    var prev_nov = parseFloat($('[name="prev_nov"]').val());
-    var prev_dec = parseFloat($('[name="prev_dec"]').val());
-
-    var prev_year_total = $('[name="prev_year_total"]').val();
-
-        Highcharts.chart('container-interests-prev', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Monthly Total Loan Interests / Net Profit for Year ( ' + prev_year + ' ): ₱ ' + prev_year_total
-        },
-        subtitle: {
-            text: 'January to December ' + prev_year
-        },
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        },
-        yAxis: {
+const years_count = $('[name="years_count"]').val();
+for (i = 0; i < years_count; i++) {
+    if (document.getElementById("container-interests-prev" + i)) {
+        // fetch registrations data
+        const prev_year = $('[name="prev_year' + i + '"]').val();
+    
+        const prev_jan = parseFloat($('[name="prev_jan' + i + '"]').val());
+        const prev_feb = parseFloat($('[name="prev_feb' + i + '"]').val());
+        const prev_mar = parseFloat($('[name="prev_mar' + i + '"]').val());
+        const prev_apr = parseFloat($('[name="prev_apr' + i + '"]').val());
+    
+        const prev_may = parseFloat($('[name="prev_may' + i + '"]').val());
+        const prev_jun = parseFloat($('[name="prev_jun' + i + '"]').val());
+        const prev_jul = parseFloat($('[name="prev_jul' + i + '"]').val());
+        const prev_aug = parseFloat($('[name="prev_aug' + i + '"]').val());
+    
+        const prev_sep = parseFloat($('[name="prev_sep' + i + '"]').val());
+        const prev_oct = parseFloat($('[name="prev_oct' + i + '"]').val());
+        const prev_nov = parseFloat($('[name="prev_nov' + i + '"]').val());
+        const prev_dec = parseFloat($('[name="prev_dec' + i + '"]').val());
+    
+        const prev_year_total = $('[name="prev_year_total' + i + '"]').val();
+    
+            Highcharts.chart('container-interests-prev' + i, {
+            chart: {
+                type: 'line'
+            },
             title: {
-                text: 'Interest Values in Php Amount'
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true,
-                    formatter: function () {
-                            return Highcharts.numberFormat(this.y,2);
-                        }    
-                },
-                enableMouseTracking: true,
-                tooltip: {
-                    pointFormat: '<b style="color:#66cccc;">●</b> {series.name}: <b>₱ {point.y}.00</b>'
+                text: 'Monthly Total Loan Interests / Net Profit for Year ( ' + prev_year + ' ): ₱ ' + prev_year_total
+            },
+            subtitle: {
+                text: 'January to December ' + prev_year
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                title: {
+                    text: 'Interest Values in Php Amount'
                 }
-            }
-        },
-        series: [{
-            name: 'Monthly Total Interest',
-            data: [prev_jan, prev_feb, prev_mar, prev_apr, prev_may, prev_jun, 
-            prev_jul, prev_aug, prev_sep, prev_oct, prev_nov, prev_dec]
-        }]
-    });
-}
-
-// check if div exist (execute if in dashboard page only) // chart for registration count
-if (document.getElementById("container-interests-prev-prev")) 
-{
-    // fetch registrations data
-    var prev_prev_year = $('[name="prev_prev_year"]').val();
-
-    var prev_prev_jan = parseFloat($('[name="prev_prev_jan"]').val());
-    var prev_prev_feb = parseFloat($('[name="prev_prev_feb"]').val());
-    var prev_prev_mar = parseFloat($('[name="prev_prev_mar"]').val());
-    var prev_prev_apr = parseFloat($('[name="prev_prev_apr"]').val());
-
-    var prev_prev_may = parseFloat($('[name="prev_prev_may"]').val());
-    var prev_prev_jun = parseFloat($('[name="prev_prev_jun"]').val());
-    var prev_prev_jul = parseFloat($('[name="prev_prev_jul"]').val());
-    var prev_prev_aug = parseFloat($('[name="prev_prev_aug"]').val());
-
-    var prev_prev_sep = parseFloat($('[name="prev_prev_sep"]').val());
-    var prev_prev_oct = parseFloat($('[name="prev_prev_oct"]').val());
-    var prev_prev_nov = parseFloat($('[name="prev_prev_nov"]').val());
-    var prev_prev_dec = parseFloat($('[name="prev_prev_dec"]').val());
-
-    var prev_prev_year_total = $('[name="prev_prev_year_total"]').val();
-
-        Highcharts.chart('container-interests-prev-prev', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Monthly Total Loan Interests / Net Profit for Year ( ' + prev_prev_year + ' ): ₱ ' + prev_prev_year_total
-        },
-        subtitle: {
-            text: 'January to December ' + prev_prev_year
-        },
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        },
-        yAxis: {
-            title: {
-                text: 'Interest Values in Php Amount'
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true,
-                    formatter: function () {
-                            return Highcharts.numberFormat(this.y,2);
-                        }    
-                },
-                enableMouseTracking: true,
-                tooltip: {
-                    pointFormat: '<b style="color:#66cccc;">●</b> {series.name}: <b>₱ {point.y}.00</b>'
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function () {
+                                return Highcharts.numberFormat(this.y,2);
+                            }    
+                    },
+                    enableMouseTracking: true,
+                    tooltip: {
+                        pointFormat: '<b style="color:#66cccc;">●</b> {series.name}: <b>₱ {point.y}.00</b>'
+                    }
                 }
-            }
-        },
-        series: [{
-            name: 'Monthly Total Interest',
-            data: [prev_prev_jan, prev_prev_feb, prev_prev_mar, prev_prev_apr, prev_prev_may, prev_prev_jun, 
-            prev_prev_jul, prev_prev_aug, prev_prev_sep, prev_prev_oct, prev_prev_nov, prev_prev_dec]
-        }]
-    });
+            },
+            series: [{
+                name: 'Monthly Total Interest',
+                data: [prev_jan, prev_feb, prev_mar, prev_apr, prev_may, prev_jun, 
+                prev_jul, prev_aug, prev_sep, prev_oct, prev_nov, prev_dec]
+            }]
+        });
+    }
 }
