@@ -54,7 +54,7 @@ class Clients_controller extends CI_Controller {
             $loan_balance = $this->loans->get_client_total_balance($clients->client_id);
 
             $row[] = '<i>₱ ' . number_format($loan_balance, 2, '.', ',') . '</i>';      
-            $row[] = '<b>' . $clients->pin . '</b>';
+            $row[] = '<u><b>' . $clients->pin . '</b></u>';
 
             // $row[] = $clients->job;
             // $row[] = $clients->salary;

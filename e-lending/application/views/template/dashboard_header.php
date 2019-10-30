@@ -11,6 +11,9 @@
     <link rel="icon" type="image/png" href="<?php echo base_url();?>assets/img/favicon.ico">
     <!--Open Sans Font [ OPTIONAL ] -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet"> -->
     <!--Bootstrap Stylesheet [ REQUIRED ]-->
     <!-- <link href="<?php echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
