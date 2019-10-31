@@ -26,3 +26,15 @@ Fixes
 1. Remove last added interest
 2. Remove last added payment
 3. Fix button for calculations in balance and paid
+
+----- 1.2.2 -----
+
+Features
+1. On-screen amount button keys
+2. Gradient background color display on dashboard tablets
+3. Previous years selection in statistics line chart
+4. Form UI/UX improvements
+
+Fixes
+1. Add Interest - disables save button when clicked
+2. Add Loan - refreshes page when new loan is added
