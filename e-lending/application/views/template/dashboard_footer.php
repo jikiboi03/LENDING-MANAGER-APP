@@ -2,7 +2,7 @@
 		<!--===================================================-->
 		<footer id="footer">
 			<div class="col-md-4 pull-right">
-				<span style="align-content: right;">eLending - Lending Manager App v1.2 JikiApps Solutions / Jik Torres © 2018</span>
+				<span style="align-content: right;">eLending - Lending Manager App v1.2.2 (10-31-19) JikiApps Solutions / Jik Torres © 2018</span>
 			</div>
 
 		</footer>
