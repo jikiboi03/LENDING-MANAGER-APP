@@ -2239,6 +2239,21 @@ function clear_cash_input_payment()
     update_total_value_trans_payment();
 }
 
+// added cash input buttons feature 10-12-19
+function full_cash_input_payment()
+{
+    var total_balance = 0;
+
+    if ($('[name="total_balance"]').val() != "")
+    {
+      total_balance = parseFloat($('[name="total_balance"]').val());
+    }
+
+    $('[name="amount"]').val(total_balance);
+
+    update_total_value_trans_payment();
+}
+
 // ========================================================= LOAN FORM KEY LISTENER ===================================================
 
 // generate total amount

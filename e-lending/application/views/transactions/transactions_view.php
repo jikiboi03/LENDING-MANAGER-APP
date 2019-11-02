@@ -164,10 +164,11 @@
 
                                     <div class="form-group">
                                         <label class="control-label col-md-3">Amount :</label>
-                                        <div class="col-md-9">
+                                        <div class="col-md-6">
                                             <input id="amount_payment" name="amount" placeholder="Payment Amount" class="form-control" type="number">
                                             <span class="help-block"></span>
                                         </div>
+                                        <button class="btn btn-success col-md-2" id="exact_amt" onclick="full_cash_input_payment()">FULL AMT.</button>
                                     </div>
 
                                     <div class="form-group">
