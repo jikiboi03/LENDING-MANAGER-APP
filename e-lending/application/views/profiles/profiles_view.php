@@ -237,32 +237,32 @@
 
                                     <div id="cash_buttons">
                                         <div class="form-group">
-                                            <label class="control-label col-md-1"></label>
-                                            <button class="btn btn-default col-md-2" id="cash_1" onclick="add_cash_input(1)">1</button>
-                                            <button class="btn btn-info col-md-2" id="cash_5" onclick="add_cash_input(5)">5</button>
-                                            <button class="btn btn-default col-md-2" id="cash_10" onclick="add_cash_input(10)">10</button>
-                                            <button class="btn btn-info col-md-2" id="cash_20" onclick="add_cash_input(20)">20</button>
-                                            <button class="btn btn-default col-md-2" id="cash_50" onclick="add_cash_input(50)">50</button>
-                                            <label class="control-label col-md-1"></label>
+                                            <label class="control-label col-xs-1 col-sm-1 col-md-1"></label>
+                                            <button class="btn btn-default col-xs-2 col-sm-2 col-md-2" id="cash_1" onclick="add_cash_input(1)">1</button>
+                                            <button class="btn btn-info col-xs-2 col-sm-2 col-md-2" id="cash_5" onclick="add_cash_input(5)">5</button>
+                                            <button class="btn btn-default col-xs-2 col-sm-2 col-md-2" id="cash_10" onclick="add_cash_input(10)">10</button>
+                                            <button class="btn btn-info col-xs-2 col-sm-2 col-md-2" id="cash_20" onclick="add_cash_input(20)">20</button>
+                                            <button class="btn btn-default col-xs-2 col-sm-2 col-md-2" id="cash_50" onclick="add_cash_input(50)">50</button>
+                                            <label class="control-label col-xs-1 col-sm-1 col-md-1"></label>
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="control-label col-md-1"></label>
-                                            <button class="btn btn-default col-md-2" id="cash_100" onclick="add_cash_input(100)">100</button>
-                                            <button class="btn btn-info col-md-2" id="cash_200" onclick="add_cash_input(200)">200</button>
-                                            <button class="btn btn-default col-md-2" id="cash_500" onclick="add_cash_input(500)">500</button>
-                                            <button class="btn btn-info col-md-2" id="cash_1000" onclick="add_cash_input(1000)">1,000</button>
-                                            <button class="btn btn-default col-md-2" id="cash_1000" onclick="add_cash_input(2000)">2,000</button>
-                                            <label class="control-label col-md-1"></label>
+                                            <label class="control-label col-xs-1 col-sm-1 col-md-1"></label>
+                                            <button class="btn btn-default col-xs-2 col-sm-2 col-md-2" id="cash_100" onclick="add_cash_input(100)">100</button>
+                                            <button class="btn btn-info col-xs-2 col-sm-2 col-md-2" id="cash_200" onclick="add_cash_input(200)">200</button>
+                                            <button class="btn btn-default col-xs-2 col-sm-2 col-md-2" id="cash_500" onclick="add_cash_input(500)">500</button>
+                                            <button class="btn btn-info col-xs-2 col-sm-2 col-md-2" id="cash_1000" onclick="add_cash_input(1000)">1,000</button>
+                                            <button class="btn btn-default col-xs-2 col-sm-2 col-md-2" id="cash_1000" onclick="add_cash_input(2000)">2,000</button>
+                                            <label class="control-label col-xs-1 col-sm-1 col-md-1"></label>
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="control-label col-md-1"></label>
-                                            <button class="btn btn-default col-md-2" id="cash_100" onclick="add_cash_input(5000)">5,000</button>
-                                            <button class="btn btn-info col-md-2" id="cash_500" onclick="add_cash_input(10000)">10,000</button>
-                                            <label class="control-label col-md-1"></label>
-                                            <button class="btn btn-warning col-md-5" id="cash_clear" onclick="clear_cash_input()">CLEAR</button>
-                                            <label class="control-label col-md-1"></label>
+                                            <label class="control-label col-xs-1 col-sm-1 col-md-1"></label>
+                                            <button class="btn btn-default col-xs-2 col-sm-2 col-md-2" id="cash_100" onclick="add_cash_input(5000)">5,000</button>
+                                            <button class="btn btn-info col-xs-2 col-sm-2 col-md-2" id="cash_500" onclick="add_cash_input(10000)">10,000</button>
+                                            <label class="control-label col-xs-1 col-sm-1 col-md-1"></label>
+                                            <button class="btn btn-warning col-xs-5 col-sm-5 col-md-5" id="cash_clear" onclick="clear_cash_input()">CLEAR</button>
+                                            <label class="control-label col-xs-1 col-sm-1 col-md-1"></label>
                                         </div>
                                     </div>
 
