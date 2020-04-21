@@ -38,3 +38,15 @@ Features
 Fixes
 1. Add Interest - disables save button when clicked
 2. Add Loan - refreshes page when new loan is added
+
+----- 1.2.3 -----
+
+Features
+1. Applied Neumorphism in UI
+2. Datatables cdn version update 
+3. Fontawesome cdn version update
+4. Bootstrap cdn version update
+5. UI uniformity in every pages
+
+Fixes
+1. Fixed non functioning button in loans table
