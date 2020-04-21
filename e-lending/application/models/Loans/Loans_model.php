@@ -98,8 +98,8 @@ class Loans_model extends CI_Model {
 
         $this->db->select('client_id, SUM(paid) AS paid, SUM(balance) AS balance, SUM(paid + balance) AS total_loans', FALSE);
         
-        $this->db->group_by("client_id");
-        $this->db->order_by("total_loans", "DESC");
+        $this->db->group_by('client_id');
+        $this->db->order_by('total_loans', 'DESC');
 
         $query = $this->db->get();
         return $query->result();
@@ -138,7 +138,7 @@ class Loans_model extends CI_Model {
         $this->db->from($this->table);
         $this->db->where('status !=', 3); // status is not cleared
         $this->db->where('date_start <=', $past_five_days); // date start is not today
-        $this->db->order_by("SUBSTRING(date_start, 8)");
+        $this->db->order_by('SUBSTRING(date_start, 8)');
 
         $query = $this->db->get();
 
@@ -251,8 +251,8 @@ class Loans_model extends CI_Model {
 
         $this->db->select('client_id, SUM(paid) AS paid, SUM(balance) AS balance, SUM(paid + balance) AS total_loans', FALSE);
         
-        $this->db->group_by("client_id");
-        $this->db->order_by("total_loans", "DESC");
+        $this->db->group_by('client_id');
+        $this->db->order_by('total_loans', 'DESC');
 
         $query = $this->db->get();
         return $query->num_rows();
@@ -264,8 +264,8 @@ class Loans_model extends CI_Model {
 
         $this->db->select('client_id, SUM(paid) AS paid, SUM(balance) AS balance, SUM(paid + balance) AS total_loans', FALSE);
         
-        $this->db->group_by("client_id");
-        $this->db->order_by("total_loans", "DESC");
+        $this->db->group_by('client_id');
+        $this->db->order_by('total_loans', 'DESC');
 
         return $this->db->count_all_results();
     }

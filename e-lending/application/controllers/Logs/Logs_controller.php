@@ -12,7 +12,7 @@ class Logs_controller extends CI_Controller {
     public function index($type)
     {
         // check if logged in and admin
-        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == "0")
+        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == '0')
         {
           redirect('error500');
         }
@@ -23,11 +23,11 @@ class Logs_controller extends CI_Controller {
         
         if ($type == 'access')
         {
-            $data['title'] = '<i class="fa fa-history"></i> &nbsp; System Logs - Access';
+            $data['title'] = '<i class="fas fa-laptop"></i> &nbsp; System Logs - Access';
         }
         else if ($type == 'ops')
         {
-            $data['title'] = '<i class="fa fa-history"></i> &nbsp; System Logs - Operations';
+            $data['title'] = '<i class="fas fa-laptop"></i> &nbsp; System Logs - Operations';
         }
         
         $this->load->view('template/dashboard_header',$data);
@@ -39,7 +39,7 @@ class Logs_controller extends CI_Controller {
    
     public function ajax_list($type)
     {
-        if ($type == "access")
+        if ($type == 'access')
         {
             $list = $this->logs->get_access_datatables();
             $data = array();
@@ -50,7 +50,7 @@ class Logs_controller extends CI_Controller {
                 $row[] = 'L' . $logs->log_id;
                 
                 $row[] = $logs->log_type;
-                $row[] = str_replace("%20", " ", $logs->details);
+                $row[] = str_replace('%20', ' ', $logs->details);
 
                 $row[] = $logs->user_fullname;
 
@@ -60,15 +60,15 @@ class Logs_controller extends CI_Controller {
             }
             
             $output = array(
-                            "draw" => $_POST['draw'],
-                            "recordsTotal" => $this->logs->count_all_access(),
-                            "recordsFiltered" => $this->logs->count_filtered_access(),
-                            "data" => $data,
+                            'draw' => $_POST['draw'],
+                            'recordsTotal' => $this->logs->count_all_access(),
+                            'recordsFiltered' => $this->logs->count_filtered_access(),
+                            'data' => $data,
                     );
             //output to json format
             echo json_encode($output);
         }
-        else if ($type == "ops")
+        else if ($type == 'ops')
         {
             $list = $this->logs->get_ops_datatables();
             $data = array();
@@ -79,7 +79,7 @@ class Logs_controller extends CI_Controller {
                 $row[] = 'L' . $logs->log_id;
                 
                 $row[] = $logs->log_type;
-                $row[] = str_replace("%20", " ", $logs->details);
+                $row[] = str_replace('%20', ' ', $logs->details);
 
                 $row[] = $logs->user_fullname;
 
@@ -89,10 +89,10 @@ class Logs_controller extends CI_Controller {
             }
             
             $output = array(
-                            "draw" => $_POST['draw'],
-                            "recordsTotal" => $this->logs->count_all_ops(),
-                            "recordsFiltered" => $this->logs->count_filtered_ops(),
-                            "data" => $data,
+                            'draw' => $_POST['draw'],
+                            'recordsTotal' => $this->logs->count_all_ops(),
+                            'recordsFiltered' => $this->logs->count_filtered_ops(),
+                            'data' => $data,
                     );
             //output to json format
             echo json_encode($output);
@@ -110,7 +110,7 @@ class Logs_controller extends CI_Controller {
                 'details' => $details
             );
         $insert = $this->logs->save($data);
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
  
 

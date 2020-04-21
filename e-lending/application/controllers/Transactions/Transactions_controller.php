@@ -7,8 +7,7 @@ class Transactions_controller extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('Clients/Clients_model','clients');
-        // $this->load->model('atm/atm_model','atm');
-        // $this->load->model('companies/companies_model','companies');
+        $this->load->model('companies/companies_model','companies');
         $this->load->model('Loans/Loans_model','loans');
         $this->load->model('Transactions/Transactions_model','transactions');
         
@@ -17,7 +16,7 @@ class Transactions_controller extends CI_Controller {
    public function index($client_id, $loan_id)
    {
         // check if logged in and admin
-        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == "0")
+        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == '0')
         {
           redirect('error500');
         }
@@ -25,12 +24,14 @@ class Transactions_controller extends CI_Controller {
         $client_data = $this->clients->get_by_id($client_id);
         $loan_data = $this->loans->get_by_id($loan_id);
 
+        $data['loan_balance'] = $this->loans->get_client_total_balance($client_id);
+
         $data['client'] = $client_data;
         $data['loan'] = $loan_data;
 
         $this->load->helper('url');							
-        											
-        $data['title'] = "<i class='fa fa-credit-card'></i>&nbsp; Loan Transactions History";					
+
+        $data['title'] = '<i class="far fa-id-card"></i>';
         $this->load->view('template/dashboard_header',$data);
         $this->load->view('transactions/transactions_view',$data);   //Kani lang ang ilisi kung mag dungag mo ug Page
         $this->load->view('template/dashboard_navigation');
@@ -87,19 +88,19 @@ class Transactions_controller extends CI_Controller {
 
             if ($transactions->type == 1)
             {
-                $row[] = '<a class="btn btn-sm btn-info" href="javascript:void(0)" title="Edit" onclick="edit_trans_date_remarks('."'".$transactions->trans_id."'".')" disabled><i class="fa fa-pencil-square-o"></i></a>';
+                $row[] = '<a class="btn btn-info" href="javascript:void(0)" title="Edit" onclick="edit_trans_date_remarks('."'".$transactions->trans_id."'".')" disabled><i class="fas fa-pencil-alt"></i></a>';
             }
             else if ($transactions->type == 4 && $count == sizeof($list))
             {
-                $row[] = '<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_interest('."'".$transactions->trans_id."'".', '."'".$transactions->interest."'".')"><i class="fa fa-trash"></i></a>';
+                $row[] = '<a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_interest('."'".$transactions->trans_id."'".', '."'".$transactions->interest."'".')"><i class="far fa-trash-alt"></i></a>';
             }
             else if (($transactions->type == 2 || $transactions->type == 3) && $count == sizeof($list))
             {
-                $row[] = '<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_payment('."'".$transactions->trans_id."'".', '."'".$transactions->amount."'".')"><i class="fa fa-trash"></i></a>';
+                $row[] = '<a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_payment('."'".$transactions->trans_id."'".', '."'".$transactions->amount."'".')"><i class="far fa-trash-alt"></i></a>';
             }
             else
             {
-                $row[] = '<a class="btn btn-sm btn-info" href="javascript:void(0)" title="Edit" onclick="edit_trans_date_remarks('."'".$transactions->trans_id."'".')"><i class="fa fa-pencil-square-o"></i></a>';
+                $row[] = '<a class="btn btn-info" href="javascript:void(0)" title="Edit" onclick="edit_trans_date_remarks('."'".$transactions->trans_id."'".')"><i class="fas fa-pencil-alt"></i></a>';
             }
 
             $row[] = $transactions->encoded;
@@ -110,10 +111,10 @@ class Transactions_controller extends CI_Controller {
         }
  
         $output = array(
-                        "draw" => $_POST['draw'],
-                        "recordsTotal" => $this->transactions->count_all($loan_id),
-                        "recordsFiltered" => $this->transactions->count_filtered($loan_id),
-                        "data" => $data,
+                        'draw' => $_POST['draw'],
+                        'recordsTotal' => $this->transactions->count_all($loan_id),
+                        'recordsFiltered' => $this->transactions->count_filtered($loan_id),
+                        'data' => $data,
                 );
         //output to json format
         echo json_encode($output);
@@ -166,7 +167,7 @@ class Transactions_controller extends CI_Controller {
             );
         $this->loans->update(array('loan_id' => $loan_id), $dataloans);
 
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     public function ajax_add_interest() // for loan interest
@@ -196,7 +197,7 @@ class Transactions_controller extends CI_Controller {
                 'balance' => $total
             );
         $this->loans->update(array('loan_id' => $loan_id), $dataloans);
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     public function ajax_adjustment() // for paid add amount / discount amount
@@ -246,7 +247,7 @@ class Transactions_controller extends CI_Controller {
             );
         $this->loans->update(array('loan_id' => $loan_id), $dataloans);
 
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     public function ajax_edit($trans_id)
@@ -283,7 +284,7 @@ class Transactions_controller extends CI_Controller {
             );
         $this->loans->update(array('loan_id' => $loan_id), $dataloans);
 
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     // delete interest
@@ -294,7 +295,7 @@ class Transactions_controller extends CI_Controller {
 
         $this->loans->deduct_balance($loan_id, $interest_amt);
 
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     // delete payment
@@ -309,7 +310,7 @@ class Transactions_controller extends CI_Controller {
 
         $this->loans->change_status($loan_id, 2); // change status to ONGOING
 
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     private function _validate_paid()

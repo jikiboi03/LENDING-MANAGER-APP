@@ -14,7 +14,7 @@ class Capital_controller extends CI_Controller {
    public function index()
    {
       // check if logged in and admin
-      if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == "0")
+      if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == '0')
       {
         redirect('error500');
       }
@@ -57,7 +57,7 @@ class Capital_controller extends CI_Controller {
       $data['total_deductions'] = $total_deductions;
 
                                                     
-      $data['title'] = '<i class="fa fa-money"></i> &nbsp; Lending Capital';                    
+      $data['title'] = '<i class="far fa-gem"></i> &nbsp; Capital';                    
       $this->load->view('template/dashboard_header',$data);
       $this->load->view('capital/capital_view',$data);   //Kani lang ang ilisi kung mag dungag mo ug Page
       $this->load->view('template/dashboard_navigation');
@@ -81,7 +81,7 @@ class Capital_controller extends CI_Controller {
 
             $row[] = $capital->remarks;
 
-            $row[] = '<a class="btn btn-sm btn-info" href="javascript:void(0)" title="Edit" onclick="edit_capital_date_remarks('."'".$capital->capital_id."'".')"><i class="fa fa-pencil-square-o"></i></a>';
+            $row[] = '<a class="btn btn-info" href="javascript:void(0)" title="Edit" onclick="edit_capital_date_remarks('."'".$capital->capital_id."'".')"><i class="fas fa-pencil-alt"></i></a>';
 
             $row[] = $capital->encoded;
  
@@ -89,10 +89,10 @@ class Capital_controller extends CI_Controller {
         }
  
         $output = array(
-                        "draw" => $_POST['draw'],
-                        "recordsTotal" => $this->capital->count_all(),
-                        "recordsFiltered" => $this->capital->count_filtered(),
-                        "data" => $data,
+                        'draw' => $_POST['draw'],
+                        'recordsTotal' => $this->capital->count_all(),
+                        'recordsFiltered' => $this->capital->count_filtered(),
+                        'data' => $data,
                 );
         //output to json format
         echo json_encode($output);
@@ -108,7 +108,7 @@ class Capital_controller extends CI_Controller {
                 'remarks' => $this->input->post('remarks')
             );
         $insert = $this->capital->save($data);
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     public function ajax_edit($capital_id)
@@ -125,7 +125,7 @@ class Capital_controller extends CI_Controller {
                 'remarks' => $this->input->post('remarks')
             );
         $this->capital->update(array('capital_id' => $this->input->post('capital_id')), $data);
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     private function _validate()

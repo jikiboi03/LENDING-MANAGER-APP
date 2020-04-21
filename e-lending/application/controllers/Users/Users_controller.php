@@ -12,14 +12,14 @@ class Users_controller extends CI_Controller {
 	public function index()
 	{
 		// check if logged in and admin
-		if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == "0")
+		if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == '0')
 		{
           redirect('error500');
         }
 
 		$this->load->helper('url');							
 		
-	   	$data['title'] = "<i class='fa fa-user-circle'></i> &nbsp; Users";	
+	   	$data['title'] = '<i class="fas fa-user-shield"></i> &nbsp; Users';	
 	   	$this->load->view('template/dashboard_header', $data);
 	    $this->load->view('users/users_view', $data);		// mao lang ni ang replaceable
 	    $this->load->view('template/dashboard_navigation');
@@ -48,7 +48,7 @@ class Users_controller extends CI_Controller {
             $row[] = $users->lastname;
             $row[] = $users->firstname;
 
-            if ($users->client_id == "")
+            if ($users->client_id == '')
             {
             	$row[] = 'n/a';
             }
@@ -65,31 +65,31 @@ class Users_controller extends CI_Controller {
 			if ($users->user_id == 101)
 			{
 				//add html for action
-				$row[] = ' <a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View / Edit" onclick="view_edit_user('."'".$users->user_id."'".')" disabled><i class="fa fa-eye"></i></a>
+				$row[] = ' <a class="btn btn-primary" href="javascript:void(0)" title="View / Edit" onclick="view_edit_user('."'".$users->user_id."'".')" disabled><i class="far fa-eye"></i></a>
 
-							<a class="btn btn-sm btn-success" href="javascript:void(0)" title="Privileges" onclick="edit_privileges('."'".$users->user_id."'".')" disabled><i class="fa fa-unlock-alt"></i></a>
+							<a class="btn btn-success" href="javascript:void(0)" title="Privileges" onclick="edit_privileges('."'".$users->user_id."'".')" disabled><i class="fas fa-user-lock"></i></a>
 							
-					  		<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_user('."'".$users->user_id."'".')" disabled><i class="fa fa-trash-o"></i></a>';
+					  		<a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_user('."'".$users->user_id."'".')" disabled><i class="far fa-trash-alt"></i></a>';
 			}
 			else
 			{
 				if ($users->client_id == "")
             	{
             		//add html for action
-            		$row[] = ' <a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View / Edit" onclick="view_edit_user('."'".$users->user_id."'".')"><i class="fa fa-eye"></i></a>
+            		$row[] = ' <a class="btn btn-primary" href="javascript:void(0)" title="View / Edit" onclick="view_edit_user('."'".$users->user_id."'".')"><i class="far fa-eye"></i></a>
 
-            					<a class="btn btn-sm btn-success" href="javascript:void(0)" title="Privileges" onclick="edit_privileges('."'".$users->user_id."'".')"><i class="fa fa-unlock-alt"></i></a>
+            					<a class="btn btn-success" href="javascript:void(0)" title="Privileges" onclick="edit_privileges('."'".$users->user_id."'".')"><i class="fas fa-user-lock"></i></a>
             					
-            			  		<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_user('."'".$users->user_id."'".')"><i class="fa fa-trash-o"></i></a>';
+            			  		<a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_user('."'".$users->user_id."'".')"><i class="far fa-trash-alt"></i></a>';
 				}
 				else
 				{
 					//add html for action
-					$row[] = ' <a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View / Edit" onclick="view_edit_user('."'".$users->user_id."'".')"><i class="fa fa-eye"></i></a>
+					$row[] = ' <a class="btn btn-primary" href="javascript:void(0)" title="View / Edit" onclick="view_edit_user('."'".$users->user_id."'".')"><i class="far fa-eye"></i></a>
 
-								<a class="btn btn-sm btn-success" href="javascript:void(0)" title="Privileges" onclick="edit_privileges('."'".$users->user_id."'".')" disabled><i class="fa fa-unlock-alt"></i></a>
+								<a class="btn btn-success" href="javascript:void(0)" title="Privileges" onclick="edit_privileges('."'".$users->user_id."'".')" disabled><i class="fas fa-user-lock"></i></a>
 								
-						  		<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_user('."'".$users->user_id."'".')"><i class="fa fa-trash-o"></i></a>';
+						  		<a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_user('."'".$users->user_id."'".')"><i class="far fa-trash-alt"></i></a>';
 				}
 			}
 		
@@ -97,10 +97,10 @@ class Users_controller extends CI_Controller {
 		}
 
 		$output = array(
-						"draw" => $_POST['draw'],
-						"recordsTotal" => $this->users->count_all(),
-						"recordsFiltered" => $this->users->count_filtered(),
-						"data" => $data,
+						'draw' => $_POST['draw'],
+						'recordsTotal' => $this->users->count_all(),
+						'recordsFiltered' => $this->users->count_filtered(),
+						'data' => $data,
 				);
 		//output to json format
 		echo json_encode($output);
@@ -128,7 +128,7 @@ class Users_controller extends CI_Controller {
 				'removed' => '0'
 			);
 		$insert = $this->users->save($data);
-		echo json_encode(array("status" => TRUE));
+		echo json_encode(array('status' => TRUE));
 	}
 
 	public function ajax_update()
@@ -145,19 +145,8 @@ class Users_controller extends CI_Controller {
 		        'address' => $this->input->post('address')	        
 			);
 		$this->users->update(array('user_id' => $this->input->post('user_id')), $data);
-		echo json_encode(array("status" => TRUE));
+		echo json_encode(array('status' => TRUE));
 	}
-
-	// public function password_update()
-	// {
-		
-		
-	// 	$data = array(
-	// 			'password' => password_hash($this->input->post('password'),PASSWORD_BCRYPT)
-	// 		);
-	// 	$this->users->update(array('user_id' => $this->input->post('id')), $data);
-	// 	echo json_encode(array("status" => TRUE));
-	// }
 
 	public function ajax_privileges_update()
 	{
@@ -195,7 +184,7 @@ class Users_controller extends CI_Controller {
 					//'report' => $this->input->post('report')
 					  	);
 				$this->users->update(array('user_id' => $this->input->post('user_id')), $data);
-				echo json_encode(array("status" => TRUE));	
+				echo json_encode(array('status' => TRUE));	
             }
 		}
 		// if the user is currently not an administrator
@@ -207,7 +196,7 @@ class Users_controller extends CI_Controller {
 				//'report' => $this->input->post('report')
 			  	);
 			$this->users->update(array('user_id' => $this->input->post('user_id')), $data);
-			echo json_encode(array("status" => TRUE));
+			echo json_encode(array('status' => TRUE));
 		}
 	}
 
@@ -234,7 +223,7 @@ class Users_controller extends CI_Controller {
 	                'removed' => '1'
 			            );
 					$this->users->update(array('user_id' => $user_id), $data);
-					echo json_encode(array("status" => TRUE));
+					echo json_encode(array('status' => TRUE));
 	            } 
 	            // reject if only 1 remaining -> refer to custom_ajax_datatable.js delete_user
 	        }
@@ -245,7 +234,7 @@ class Users_controller extends CI_Controller {
 	            'removed' => '1'
 		            );
 				$this->users->update(array('user_id' => $user_id), $data);
-				echo json_encode(array("status" => TRUE));
+				echo json_encode(array('status' => TRUE));
 	        }
 		}
 	}

@@ -66,7 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						// set log
 						$this->ajax_add_log($log_type, $details);
 
-						$this->session->set_flashdata('error', '<strong>Login Error!</strong><br />Invalid Username and Password');
+						$this->session->set_flashdata('error', '<strong>Login Error!</strong><br />Invalid username and password');
 						redirect('/sudo');
 					}
 
@@ -81,7 +81,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				// set log
 				$this->ajax_add_log($log_type, $details);
 
-				$this->session->set_flashdata('error', '<strong>Login Error!</strong><br />Invalid Username and Password');
+				$this->session->set_flashdata('error', '<strong>Login Error!</strong><br />Invalid username and password');
 				redirect('/sudo');
 				
 			}

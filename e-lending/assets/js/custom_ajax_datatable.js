@@ -15,7 +15,6 @@ $("#form_add_payment").submit(function( event ) { // ---------------------------
   event.preventDefault();
 });
 
-
 $(document).ready(function() 
 {
     if(tableID == "companies-table")
@@ -40,6 +39,10 @@ $(document).ready(function()
                 { 
                     "targets": [ -1 ], //last column
                     "orderable": false, //set not orderable
+                },
+                {
+                    "targets": 5,
+                    "className": "text-center",
                 },
                 ],
                 "scrollX": true
@@ -67,6 +70,10 @@ $(document).ready(function()
                 { 
                     "targets": [ -1 ], //last column
                     "orderable": false, //set not orderable
+                },
+                {
+                    "targets": 5,
+                    "className": "text-center",
                 },
                 ],
                 "scrollX": true
@@ -97,41 +104,57 @@ $(document).ready(function()
                     "orderable": false, //set not orderable
                 },
                 {
-                      "targets": 6,
-                      "className": "text-right",
+                    "targets": 6,
+                    "className": "text-right large-font-col",
                 },
                 {
-                      "targets": 7,
-                      "className": "text-center",
+                    "targets": 7,
+                    "className": "text-center large-font-col",
                 },
+                {
+                    "targets": 8,
+                    "className": "text-center",
+              },
                 ],
 
                 "rowCallback": function( row, data, index )
                 {
-                  var sex = data[10],
-                      $node = this.api().row(row).nodes().to$();
+                  var sex = data[9],
+                    $node1 = this.api().cells(row, 1).nodes().to$();
+                    $node2 = this.api().cells(row, 2).nodes().to$();
 
                   if (sex == 'Male') 
                   {
-                    $node.css('background-color', '#ccb3ff');
+                    $node1.css('background-color', '#d4d1ff');
+                    $node2.css('background-color', '#d4d1ff');
                   }
                   else
                   {
-                    $node.css('background-color', '#ffb3d9');
+                    $node1.css('background-color', '#f5c4d3');
+                    $node2.css('background-color', '#f5c4d3');
                   }
 
-                  var status = data[11],
-                      $node = this.api().row(row).nodes().to$();
+                  var status = data[10],
+                    $node0 = this.api().cells(row, 0).nodes().to$();
+                    $node5 = this.api().cells(row, 5).nodes().to$();
+                    $node6 = this.api().cells(row, 6).nodes().to$();
+                    $node7 = this.api().cells(row, 7).nodes().to$();
 
                   if (status == 'active') 
                   { 
                     if (isOdd(index) == 1) // to have different color when changed color is in sequence
                     {
-                      $node.css('background-color', '#b3fffa');
+                      $node0.css('background-color', '#b3fffa');
+                      $node5.css('background-color', '#b3fffa');
+                      $node6.css('background-color', '#b3fffa');
+                      $node7.css('background-color', '#b3fffa');
                     }
                     else
                     {
-                      $node.css('background-color', '#99ffff');
+                      $node0.css('background-color', '#99ffff');
+                      $node5.css('background-color', '#99ffff');
+                      $node6.css('background-color', '#99ffff');
+                      $node7.css('background-color', '#99ffff');
                     }
                   }
                 },
@@ -200,7 +223,7 @@ $(document).ready(function()
                 },
                 {
                       "targets": 9,
-                      "className": "text-right",
+                      "className": "text-right large-font-col",
                 },
                 {
                       "targets": 10,
@@ -358,7 +381,7 @@ $(document).ready(function()
                 },
                 {
                       "targets": 5,
-                      "className": "text-right",
+                      "className": "text-right large-font-col",
                 },
                 {
                       "targets": 7,
@@ -573,20 +596,24 @@ $(document).ready(function()
                     "orderable": false, //set not orderable
                 },
                 {
-                      "targets": 2,
-                      "className": "text-right",
+                    "targets": 2,
+                    "className": "text-right",
                 },
                 {
-                      "targets": 3,
-                      "className": "text-right",
+                    "targets": 3,
+                    "className": "text-right",
                 },
                 {
-                      "targets": 4,
-                      "className": "text-center",
+                    "targets": 4,
+                    "className": "text-right",
+            },
+                {
+                    "targets": 5,
+                    "className": "text-right",
                 },
                 {
-                      "targets": 5,
-                      "className": "text-center",
+                    "targets": 6,
+                    "className": "text-center",
                 }
                 ],  
 
@@ -729,6 +756,10 @@ $(document).ready(function()
                     "targets": [ -1 ], //last column
                     "orderable": false, //set not orderable
                 },
+                {
+                    "targets": 7,
+                    "className": "text-center",
+                }
                 ],
 
                 "rowCallback": function( row, data, index ) {
@@ -808,11 +839,6 @@ $("#userfile2").change(function(){
 $("#userfile3").change(function(){
     readURL(this,'#image3');
 });
-
-// if attendance_date selection box is changed
-// $("#attendance_date").change(function(){
-//     window.location.href='../attendance-page/' + $('[name="attendance_date"]').val();
-// });
 
 
 // ================================================== VIEW SECTION =================================================================
@@ -956,7 +982,7 @@ function add_loan() // ---> calling for the Add Modal form
 function add_payment() // ---> calling for the Add Modal form
 {
     save_method = 'add-payment';
-    text = 'Add payment';
+    text = 'Add Payment';
     
     $('#form_add_payment')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
@@ -969,7 +995,7 @@ function add_payment() // ---> calling for the Add Modal form
 function add_interest() // ---> calling for the Add Modal form
 {
     save_method = 'add-interest';
-    text = 'Add interest';
+    text = 'Add Interest';
     
     $('#form_add_interest')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
@@ -982,7 +1008,7 @@ function add_interest() // ---> calling for the Add Modal form
 function adjust_loan() // ---> calling for the Add Modal form
 {
     save_method = 'adjust-loan';
-    text = 'Adjust loan';
+    text = 'Adjust Loan';
     
     $('#form_adjust_loan')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
@@ -1006,7 +1032,7 @@ function adjust_capital() // ---> calling for the Add Modal form
 function add_schedule() // ---> calling for the Add Modal form
 {
     save_method = 'add-schedule';
-    text = 'Add Appointment Schedule Record';
+    text = 'Add Appointment Schedule';
     
     $('#form')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
@@ -1142,7 +1168,7 @@ function edit_client(id)
 function edit_loan(id)
 {
     save_method = 'update-loan';
-    $('#form')[0].reset(); // reset form on modals
+    $('#form_add_loan')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
     $('.help-block').empty(); // clear error string
  
@@ -1296,13 +1322,6 @@ function edit_schedule(id)
     });
 }
 
-// function edit_cis_view(child_id)
-// {
-//     window.location.href='edit-cis-page/' + child_id;
-// }
-
-
-
 function reload_table()
 {
     table.ajax.reload(null,false); //reload datatable ajax
@@ -1310,68 +1329,15 @@ function reload_table()
 
 // =================================================== SAVE SECTION =====================================================================
 
-// updating cis record
-// function save_cis()
-// {
-//     // resetting errors in form validations
-//     $('.form-group').removeClass('has-error'); // clear error class
-//     $('.help-block').empty(); // clear error string
-
-//     $('#btnSave').text('Saving...'); //change button text
-//     $('#btnSave').attr('disabled',true); //set button disable 
-    
-//     $form = '#form';
-//     url = "../../cis/cis_controller/ajax_update";
-
-//     // ajax adding data to database
-//     $.ajax({
-//         url : url,
-//         type: "POST",
-//         data: $($form).serialize(),
-//         dataType: "JSON",
-//         success: function(data)
-//         {
- 
-//             if(data.status) //if success close modal and reload ajax table
-//             {
-//                 var log_type = 'Update';
-
-//                 var details = 'child CIS record updated C' 
-//                 + $('[name="child_id"]').val() + ': '
-//                 + $('[name="firstname"]').val() + ' ' 
-//                 + $('[name="middlename"]').val() + ' ' 
-//                 + $('[name="lastname"]').val(); 
-
-//                 set_system_log_two(log_type, details);
-
-//                 window.location.href='../../profiles-page/' + $('[name="child_id"]').val();
-//             }
-//             else
-//             {
-//                 for (var i = 0; i < data.inputerror.length; i++) 
-//                 {
-//                     $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
-//                     $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
-//                 }
-//             }
-//             $('#btnSave').text('Save'); //change button text
-//             $('#btnSave').attr('disabled',false); //set button enable 
- 
- 
-//         },
-//         error: function (jqXHR, textStatus, errorThrown)
-//         {
-//             alert('Error adding / update data');
-//             $('#btnSave').text('Save'); //change button text
-//             $('#btnSave').attr('disabled',false); //set button enable 
- 
-//         }
-//     });
-// }
 
 function cancel_trans()
 {
     window.location.href='../../../profiles-page/' + $('[name="client_id"]').val();
+}
+
+function clients_page()
+{
+    window.location.href='../clients-page';
 }
 
 function cancel_cp_trans()
@@ -1385,10 +1351,8 @@ function save()
     $('.form-group').removeClass('has-error'); // clear error class
     $('.help-block').empty(); // clear error string
 
-    $('#btnSave').text('Saving...'); //change button text
     $('#btnSave').attr('disabled',true); //set button disable 
 
-    $('.btnSave').text('Saving...'); //change button text
     $('.btnSave').attr('disabled',true); //set button disable 
 
     var url;
@@ -1714,21 +1678,17 @@ function save()
                     $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
                 }
             }
-            $('#btnSave').text('Save'); //change button text
             $('#btnSave').attr('disabled',false); //set button enable 
 
             // fixed for not disabling sace button 10-12-19
-            $('.btnSave').text('Save'); //change button text
             $('.btnSave').attr('disabled',false); //set button enable 
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
             alert('Error adding / update data');
-            $('#btnSave').text('Save'); //change button text
             $('#btnSave').attr('disabled',false); //set button enable 
 
             // fixed for not disabling sace button 10-12-19
-            $('.btnSave').text('Save'); //change button text
             $('.btnSave').attr('disabled',false); //set button enable 
         }
     });
@@ -2476,7 +2436,7 @@ if (document.getElementById("container-interests"))
             type: 'line'
         },
         title: {
-            text: 'Monthly Total Loan Interests / Net Profit for Year ( ' + current_year + ' ): ₱ ' + year_total
+            text: 'Net Profit for Year ( ' + current_year + ' ): ₱ ' + year_total
         },
         subtitle: {
             text: 'January to December ' + current_year
@@ -2486,7 +2446,7 @@ if (document.getElementById("container-interests"))
         },
         yAxis: {
             title: {
-                text: 'Interest Values in Php Amount'
+                text: 'Interest values in PhP amount'
             }
         },
         plotOptions: {
@@ -2504,7 +2464,7 @@ if (document.getElementById("container-interests"))
             }
         },
         series: [{
-            name: 'Monthly Total Interest',
+            name: 'Monthly total interest',
             data: [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec]
         }]
     });
@@ -2539,7 +2499,7 @@ for (i = 0; i < years_count; i++) {
                 type: 'line'
             },
             title: {
-                text: 'Monthly Total Loan Interests / Net Profit for Year ( ' + prev_year + ' ): ₱ ' + prev_year_total
+                text: 'Net Profit for Year ( ' + prev_year + ' ): ₱ ' + prev_year_total
             },
             subtitle: {
                 text: 'January to December ' + prev_year
@@ -2549,7 +2509,7 @@ for (i = 0; i < years_count; i++) {
             },
             yAxis: {
                 title: {
-                    text: 'Interest Values in Php Amount'
+                    text: 'Interest values in PhP amount'
                 }
             },
             plotOptions: {
@@ -2567,7 +2527,7 @@ for (i = 0; i < years_count; i++) {
                 }
             },
             series: [{
-                name: 'Monthly Total Interest',
+                name: 'Monthly total interest',
                 data: [prev_jan, prev_feb, prev_mar, prev_apr, prev_may, prev_jun, 
                 prev_jul, prev_aug, prev_sep, prev_oct, prev_nov, prev_dec]
             }]

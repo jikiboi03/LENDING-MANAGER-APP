@@ -15,13 +15,10 @@ class Statistics_controller extends CI_Controller {
   public function index()
   {						
     // check if logged in and admin
-    if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == "0")
+    if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == '0')
     {
       redirect('error500');
     }
-
-    
-
 
     // ========================= FOR MONTHLY INTERESTS CHART ==================================================
 
@@ -164,10 +161,10 @@ class Statistics_controller extends CI_Controller {
         }
  
         $output = array(
-                        "draw" => $_POST['draw'],
-                        "recordsTotal" => $this->loans->count_all_top_list(),
-                        "recordsFiltered" => $this->loans->count_filtered_top_list(),
-                        "data" => $data,
+                        'draw' => $_POST['draw'],
+                        'recordsTotal' => $this->loans->count_all_top_list(),
+                        'recordsFiltered' => $this->loans->count_filtered_top_list(),
+                        'data' => $data,
                 );
         //output to json format
         echo json_encode($output);

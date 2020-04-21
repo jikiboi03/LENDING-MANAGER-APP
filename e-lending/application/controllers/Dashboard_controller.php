@@ -19,7 +19,7 @@ class Dashboard_controller extends CI_Controller {
   public function index()
   {						
     // check if logged in and admin
-    if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == "0")
+    if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == '0')
     {
       redirect('error500');
     }
@@ -139,16 +139,16 @@ class Dashboard_controller extends CI_Controller {
             // algo in checking if the due date falls under 5 days after the current date
 
             // get end day of the current month
-            $mo_name = date("M", strtotime($today));
+            $mo_name = date('M', strtotime($today));
 
             // get end day of the current month
-            $mo_end_day = date("t", strtotime($today));
+            $mo_end_day = date('t', strtotime($today));
 
             // get current day of the current month
-            $curr_day = date("d", strtotime($today));
+            $curr_day = date('d', strtotime($today));
 
             // get every loans start date
-            $due_day = date("d", strtotime($active_loans->date_start));
+            $due_day = date('d', strtotime($active_loans->date_start));
             
             $mo_5day_less = ($mo_end_day - 5);
 
@@ -182,8 +182,8 @@ class Dashboard_controller extends CI_Controller {
             }
         }
 
-        if ($near_due_date_str == "")
-            $near_due_date_str = "None";
+        if ($near_due_date_str == '')
+            $near_due_date_str = 'None';
     }
 
     $data['near_due_date_str'] = $near_due_date_str;

@@ -16,7 +16,7 @@ class Clients_controller extends CI_Controller {
    public function index()
    {
         // check if logged in and admin
-        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == "0")
+        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == '0')
         {
           redirect('error500');
         }
@@ -27,7 +27,7 @@ class Clients_controller extends CI_Controller {
 
         $this->load->helper('url');							
         											
-        $data['title'] = '<i class="fa fa-users"></i> &nbsp; Clients';					
+        $data['title'] = '<i class="fas fa-users"></i> &nbsp; Clients';					
         $this->load->view('template/dashboard_header',$data);
         $this->load->view('clients/clients_view',$data);
         $this->load->view('template/dashboard_navigation');
@@ -48,26 +48,19 @@ class Clients_controller extends CI_Controller {
             $row[] = $clients->fname;
             $row[] = $clients->contact;
 
-            $row[] = $this->companies->get_company_name($clients->comp_id); // company name
             $row[] = $this->atm->get_atm_name($clients->atm_id); // atm bank name
+            $row[] = $this->companies->get_company_name($clients->comp_id); // company name
 
             $loan_balance = $this->loans->get_client_total_balance($clients->client_id);
 
             $row[] = '<i>₱ ' . number_format($loan_balance, 2, '.', ',') . '</i>';      
             $row[] = '<u><b>' . $clients->pin . '</b></u>';
 
-            // $row[] = $clients->job;
-            // $row[] = $clients->salary;
-            // $row[] = $clients->address;
-            // $row[] = $clients->remarks;
+            $row[] = '<a class="btn btn-primary" href="' . base_url("profiles-page/" . $clients->client_id) . '" title="View"><i class="far fa-eye"></i></a>
 
-            $row[] = '<a class="btn btn-sm btn-primary" href="' . base_url("profiles-page/" . $clients->client_id) . '" title="View"><i class="fa fa-eye"></i> </a>
-
-                    <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Edit" onclick="edit_client('."'".$clients->client_id."'".')"><i class="fa fa-pencil-square-o"></i></a>
+                    <a class="btn btn-info" href="javascript:void(0)" title="Edit" onclick="edit_client('."'".$clients->client_id."'".')"><i class="fas fa-pencil-alt"></i></a>
                       
-                      <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_client('."'".$clients->client_id."'".')"><i class="fa fa-trash"></i></a>';
-
-            $row[] = $clients->encoded;
+                      <a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_client('."'".$clients->client_id."'".')"><i class="far fa-trash-alt"></i></a>';
             $row[] = $clients->sex;
 
             // validate if client has an ongoing loan transaction in loans_table
@@ -86,10 +79,10 @@ class Clients_controller extends CI_Controller {
         }
  
         $output = array(
-                        "draw" => $_POST['draw'],
-                        "recordsTotal" => $this->clients->count_all(),
-                        "recordsFiltered" => $this->clients->count_filtered(),
-                        "data" => $data,
+                        'draw' => $_POST['draw'],
+                        'recordsTotal' => $this->clients->count_all(),
+                        'recordsFiltered' => $this->clients->count_filtered(),
+                        'data' => $data,
                 );
         //output to json format
         echo json_encode($output);
@@ -139,7 +132,7 @@ class Clients_controller extends CI_Controller {
             );
         $insert = $this->users->save($data);
 
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
  
     public function ajax_update()
@@ -164,7 +157,7 @@ class Clients_controller extends CI_Controller {
                 'remarks' => $this->input->post('remarks')
             );
         $this->clients->update(array('client_id' => $this->input->post('client_id')), $data);
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     // delete a child
@@ -174,7 +167,7 @@ class Clients_controller extends CI_Controller {
                 'removed' => '1'
             );
         $this->clients->update(array('client_id' => $client_id), $data);
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     private function _validate() // not required: salary, remarks
@@ -261,16 +254,9 @@ class Clients_controller extends CI_Controller {
         if($this->input->post('job') == '')
         {
             $data['inputerror'][] = 'job';
-            $data['error_string'][] = 'Job Information is required';
+            $data['error_string'][] = 'Job information is required';
             $data['status'] = FALSE;
         }
-
-        // if($this->input->post('salary') == '')
-        // {
-        //     $data['inputerror'][] = 'salary';
-        //     $data['error_string'][] = 'Salary Information is required';
-        //     $data['status'] = FALSE;
-        // }
 
         if($this->input->post('address') == '')
         {
@@ -278,13 +264,6 @@ class Clients_controller extends CI_Controller {
             $data['error_string'][] = 'Address is required';
             $data['status'] = FALSE;
         }
-
-        // if($this->input->post('remarks') == '')
-        // {
-        //     $data['inputerror'][] = 'remarks';
-        //     $data['error_string'][] = 'Remarks is required';
-        //     $data['status'] = FALSE;
-        // }     
 
         if($data['status'] === FALSE)
         {

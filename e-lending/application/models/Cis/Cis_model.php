@@ -103,7 +103,7 @@ class Cis_model extends CI_Model {
         $this->db->where('graduated', '0');
         $this->db->where('removed', '0');
 
-        $date_to = $year . '-' . sprintf("%02d", $previous_month) . '-16';
+        $date_to = $year . '-' . sprintf('%02d', $previous_month) . '-16';
 
         $this->db->where('date_registered <=', $date_to);
 
@@ -124,7 +124,7 @@ class Cis_model extends CI_Model {
         $this->db->where('graduated', '0');
         $this->db->where('removed', '0');
 
-        $date_to = $year . '-' . sprintf("%02d", $previous_month) . '-16';
+        $date_to = $year . '-' . sprintf('%02d', $previous_month) . '-16';
 
         $this->db->where('date_registered <=', $date_to);
 
@@ -145,7 +145,7 @@ class Cis_model extends CI_Model {
         $this->db->where('graduated', '0');
         $this->db->where('removed', '0');
 
-        $date_to = $year . '-' . sprintf("%02d", $previous_month) . '-16';
+        $date_to = $year . '-' . sprintf('%02d', $previous_month) . '-16';
 
         $this->db->where('date_registered <=', $date_to);
 
@@ -170,7 +170,7 @@ class Cis_model extends CI_Model {
         $this->db->where('graduated', '0');
         $this->db->where('removed', '0');
 
-        $date_to = $year . '-' . sprintf("%02d", $reg_month) . '-01';
+        $date_to = $year . '-' . sprintf('%02d', $reg_month) . '-01';
 
         $this->db->where('date_registered <=', $date_to);
 
@@ -191,7 +191,7 @@ class Cis_model extends CI_Model {
         $this->db->where('graduated', '0');
         $this->db->where('removed', '0');
 
-        $date_to = $year . '-' . sprintf("%02d", $reg_month) . '-01';
+        $date_to = $year . '-' . sprintf('%02d', $reg_month) . '-01';
 
         $this->db->where('date_registered <=', $date_to);
 
@@ -212,7 +212,7 @@ class Cis_model extends CI_Model {
         $this->db->where('graduated', '0');
         $this->db->where('removed', '0');
 
-        $date_to = $year . '-' . sprintf("%02d", $reg_month) . '-01';
+        $date_to = $year . '-' . sprintf('%02d', $reg_month) . '-01';
 
         $this->db->where('date_registered <=', $date_to);
 
@@ -237,7 +237,7 @@ class Cis_model extends CI_Model {
         $this->db->where('graduated', '0');
         $this->db->where('removed', '0');
 
-        $date_to = $year . '-' . sprintf("%02d", $reg_month) . '-01';
+        $date_to = $year . '-' . sprintf('%02d', $reg_month) . '-01';
 
         $this->db->where('date_registered <=', $date_to);
 
@@ -258,7 +258,7 @@ class Cis_model extends CI_Model {
         $this->db->where('graduated', '0');
         $this->db->where('removed', '0');
 
-        $date_to = $year . '-' . sprintf("%02d", $reg_month) . '-01';
+        $date_to = $year . '-' . sprintf('%02d', $reg_month) . '-01';
 
         $this->db->where('date_registered <=', $date_to);
 
@@ -279,7 +279,7 @@ class Cis_model extends CI_Model {
         $this->db->where('graduated', '0');
         $this->db->where('removed', '0');
 
-        $date_to = $year . '-' . sprintf("%02d", $reg_month) . '-01';
+        $date_to = $year . '-' . sprintf('%02d', $reg_month) . '-01';
 
         $this->db->where('date_registered <=', $date_to);
 
@@ -318,7 +318,7 @@ class Cis_model extends CI_Model {
     //     $this->db->where('sex','Male');
     //     $this->db->where('graduated','0');
     //     $this->db->where('removed', '0');
-    //     $this->db->order_by("lastname", "asc");
+    //     $this->db->order_by('lastname', 'asc');
     //     $query = $this->db->get();
 
     //     return $query->result();
@@ -330,7 +330,7 @@ class Cis_model extends CI_Model {
     //     $this->db->from($this->table);
     //     $this->db->where('graduated','0');
     //     $this->db->where('removed', '0');
-    //     $this->db->order_by("lastname", "asc");
+    //     $this->db->order_by('lastname', 'asc');
     //     $query = $this->db->get();
 
     //     return $query->result();
@@ -342,7 +342,7 @@ class Cis_model extends CI_Model {
         $this->db->from($this->table);
         $this->db->where('graduated','0');
         $this->db->where('removed', '0');
-        $this->db->order_by("lastname", "asc");
+        $this->db->order_by('lastname', 'asc');
         $query = $this->db->get();
 
         return $query->result();
@@ -354,7 +354,7 @@ class Cis_model extends CI_Model {
         $this->db->from($this->table);
         $this->db->where('graduated','1');
         $this->db->where('removed', '0');
-        $this->db->order_by("lastname", "asc");
+        $this->db->order_by('lastname', 'asc');
         $query = $this->db->get();
 
         return $query->result();
@@ -369,7 +369,7 @@ class Cis_model extends CI_Model {
 
         $this->db->like('dob', '-' . $month . '-', 'both');
 
-        $this->db->order_by("lastname", "asc");
+        $this->db->order_by('lastname', 'asc');
         $query = $this->db->get();
 
         return $query->result();
@@ -380,7 +380,7 @@ class Cis_model extends CI_Model {
     {
         $this->db->from($this->table);
         $this->db->where('removed', '0');
-        $this->db->order_by("lastname", "asc");
+        $this->db->order_by('lastname', 'asc');
         $query = $this->db->get();
 
         return $query->result();
@@ -458,8 +458,8 @@ class Cis_model extends CI_Model {
         $this->db->from($this->table);
         $this->db->where('removed', '0');
 
-        $this->db->group_by("barangay_id");
-        $this->db->order_by("barangay_count", "desc");
+        $this->db->group_by('barangay_id');
+        $this->db->order_by('barangay_count', 'desc');
         $this->db->limit(1);
 
         $query = $this->db->get();

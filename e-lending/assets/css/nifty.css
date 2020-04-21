@@ -5,7 +5,8 @@ body {
 }
 body {
   background-color: #e7ebee;
-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; */
+  font-family: 'Raleway', sans-serif;
   font-size: 12px;
   color: #515151;
   -moz-osx-font-smoothing: grayscale;

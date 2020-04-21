@@ -17,7 +17,7 @@ class Profiles_controller extends CI_Controller {
    public function index($client_id)
    {
         // check if logged in and admin
-        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == "0")
+        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == '0')
         {
           redirect('error500');
         }
@@ -30,9 +30,9 @@ class Profiles_controller extends CI_Controller {
 
         $this->load->helper('url');							
         											
-        $data['title'] = "<i class='fa fa-id-card'></i>&nbsp; Client Profile";					
+        $data['title'] = '<i class="far fa-id-card"></i>';					
         $this->load->view('template/dashboard_header',$data);
-        $this->load->view('profiles/profiles_view',$data);   //Kani lang ang ilisi kung mag dungag mo ug Page
+        $this->load->view('profiles/profiles_view',$data);
         $this->load->view('template/dashboard_navigation');
         $this->load->view('template/dashboard_footer');
 
@@ -60,31 +60,31 @@ class Profiles_controller extends CI_Controller {
             {
                 $row[] = 'New';
 
-                $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i> </a>
+                $row[] = '<a class="btn btn-primary" href="javascript:void(0)" title="View" onclick="view_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="far fa-eye"></i> </a>
 
-                    <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Edit" onclick="edit_loan('."'".$loans->loan_id."'".')"><i class="fa fa-pencil-square-o"></i> </a>
+                    <a class="btn btn-info" href="javascript:void(0)" title="Edit" onclick="edit_loan_date_remarks('."'".$loans->loan_id."'".')"><i class="fas fa-pencil-alt"></i> </a>
                       
-                      <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_loan('."'".$loans->loan_id."'".')"><i class="fa fa-trash"></i></a>';
+                    <a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_loan('."'".$loans->loan_id."'".')"><i class="far fa-trash-alt"></i></a>';
             }
             else if ($loans->status == 2) // buttons are disabled (date and remarks can only be edited)
             {
                 $row[] = 'Ongoing';
 
-                $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i> </a>
+                $row[] = '<a class="btn btn-primary" href="javascript:void(0)" title="View" onclick="view_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="far fa-eye"></i> </a>
 
-                    <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Edit" onclick="edit_loan_date_remarks('."'".$loans->loan_id."'".')"><i class="fa fa-pencil-square-o"></i> </a>
+                    <a class="btn btn-info" href="javascript:void(0)" title="Edit" onclick="edit_loan_date_remarks('."'".$loans->loan_id."'".')"><i class="fas fa-pencil-alt"></i> </a>
                       
-                      <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_loan('."'".$loans->loan_id."'".')" disabled><i class="fa fa-trash"></i></a>';
+                    <a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_loan('."'".$loans->loan_id."'".')" disabled><i class="far fa-trash-alt"></i></a>';
             }
             else // buttons are disabled (date and remarks can only be edited)
             {
                 $row[] = 'Cleared';
 
-                $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="View" onclick="view_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i> </a>
+                $row[] = '<a class="btn btn-primary" href="javascript:void(0)" title="View" onclick="view_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="far fa-eye"></i> </a>
 
-                    <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Edit" onclick="edit_loan_date_remarks('."'".$loans->loan_id."'".')"><i class="fa fa-pencil-square-o"></i> </a>
+                    <a class="btn btn-info" href="javascript:void(0)" title="Edit" onclick="edit_loan_date_remarks('."'".$loans->loan_id."'".')"><i class="fas fa-pencil-alt"></i> </a>
                       
-                      <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_loan('."'".$loans->loan_id."'".')" disabled><i class="fa fa-trash"></i></a>';
+                    <a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_loan('."'".$loans->loan_id."'".')" disabled><i class="far fa-trash-alt"></i></a>';
             }
             $row[] = number_format($loans->paid, 2, '.', ',');
             $row[] = number_format($loans->balance, 2, '.', ',');
@@ -97,30 +97,14 @@ class Profiles_controller extends CI_Controller {
         }
  
         $output = array(
-                        "draw" => $_POST['draw'],
-                        "recordsTotal" => $this->loans->count_all($client_id),
-                        "recordsFiltered" => $this->loans->count_filtered($client_id),
-                        "data" => $data,
+                        'draw' => $_POST['draw'],
+                        'recordsTotal' => $this->loans->count_all($client_id),
+                        'recordsFiltered' => $this->loans->count_filtered($client_id),
+                        'data' => $data,
                 );
         //output to json format
         echo json_encode($output);
     }
- 
-    // public function edit_cis_view($client_id)
-    // {
-    //     $data['child'] = $this->cis->get_by_id($client_id);
-
-    //     // get barangays list for dropdown
-    //     $data['barangays'] = $this->barangays->get_barangays();
-
-    //     $this->load->helper('url');                         
-                                                    
-    //     $data['title'] = 'Edit Child Information (CIS)';                   
-    //     $this->load->view('template/dashboard_header',$data);
-    //     $this->load->view('profiles/edit_cis_view',$data);
-    //     $this->load->view('template/dashboard_navigation');
-    //     $this->load->view('template/dashboard_footer');
-    // }
 
     //========================================= client SECTION ==========================================================
  
@@ -154,7 +138,7 @@ class Profiles_controller extends CI_Controller {
             );
         $inserttrans = $this->transactions->save($datatrans);
 
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     public function ajax_edit($loan_id)
@@ -188,7 +172,7 @@ class Profiles_controller extends CI_Controller {
             );
         $this->transactions->update(array('loan_id' => $this->input->post('loan_id')), $datatrans);
 
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     public function ajax_update_date_remarks() // editing loan date/remarks only
@@ -208,7 +192,7 @@ class Profiles_controller extends CI_Controller {
             );
         $this->transactions->update(array('loan_id' => $this->input->post('loan_id'), 'type' => 1), $datatrans);
 
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     // delete a loan
@@ -219,7 +203,7 @@ class Profiles_controller extends CI_Controller {
         // delete transaction record using loan_id
         $this->transactions->delete_by_id($loan_id);
 
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     //========================================= CLIENT SECTION =======================================================
@@ -242,7 +226,6 @@ class Profiles_controller extends CI_Controller {
          {
             $error = array('error' => $this->upload->display_errors()); 
             $this->load->view('upload_form', $error);
-            // echo '<script type="text/javascript">alert("' . $error.toString() . '"); </script>';
          }
          else // upload success
          { 
@@ -273,7 +256,6 @@ class Profiles_controller extends CI_Controller {
          {
             $error = array('error' => $this->upload->display_errors()); 
             $this->load->view('upload_form', $error);
-            // echo '<script type="text/javascript">alert("' . $error.toString() . '"); </script>';
          }
          else // upload success
          { 
@@ -304,7 +286,6 @@ class Profiles_controller extends CI_Controller {
          {
             $error = array('error' => $this->upload->display_errors()); 
             $this->load->view('upload_form', $error);
-            // echo '<script type="text/javascript">alert("' . $error.toString() . '"); </script>';
          }
          else // upload success
          { 
@@ -329,7 +310,7 @@ class Profiles_controller extends CI_Controller {
 
         $this->loans->update_loan_paid($loan_id, $total_paid);
 
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     private function _validate()
@@ -340,6 +321,12 @@ class Profiles_controller extends CI_Controller {
         $data['status'] = TRUE;
 
         if($this->input->post('amount') == '')
+        {
+            $data['inputerror'][] = 'amount';
+            $data['error_string'][] = 'Amount is required';
+            $data['status'] = FALSE;
+        }
+        else if($this->input->post('amount') == 0)
         {
             $data['inputerror'][] = 'amount';
             $data['error_string'][] = 'Amount is required';

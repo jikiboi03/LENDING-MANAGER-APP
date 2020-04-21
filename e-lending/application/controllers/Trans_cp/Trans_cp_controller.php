@@ -16,7 +16,7 @@ class Trans_cp_controller extends CI_Controller {
    public function index($client_id, $loan_id)
    {
         // check if logged in and not admin
-        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') != "0" || $this->session->userdata('client_id') != $client_id)
+        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') != '0' || $this->session->userdata('client_id') != $client_id)
         {
           redirect('error500');
         }
@@ -29,7 +29,7 @@ class Trans_cp_controller extends CI_Controller {
 
         $this->load->helper('url');							
         											
-        $data['title'] = "<i class='fa fa-credit-card'></i>&nbsp; Loan Details";
+        $data['title'] = '<i class="far fa-id-card"></i>';
         $this->load->view('template/dashboard_header',$data);
         $this->load->view('trans_cp/trans_cp_view',$data);
         $this->load->view('template/dashboard_navigation_client');
@@ -88,10 +88,10 @@ class Trans_cp_controller extends CI_Controller {
         }
  
         $output = array(
-                        "draw" => $_POST['draw'],
-                        "recordsTotal" => $this->transactions->count_all($loan_id),
-                        "recordsFiltered" => $this->transactions->count_filtered($loan_id),
-                        "data" => $data,
+                        'draw' => $_POST['draw'],
+                        'recordsTotal' => $this->transactions->count_all($loan_id),
+                        'recordsFiltered' => $this->transactions->count_filtered($loan_id),
+                        'data' => $data,
                 );
         //output to json format
         echo json_encode($output);

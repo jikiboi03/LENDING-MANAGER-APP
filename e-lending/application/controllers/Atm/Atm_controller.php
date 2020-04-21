@@ -12,14 +12,14 @@ class Atm_controller extends CI_Controller {
    public function index()
    {
         // check if logged in and admin
-        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == "0")
+        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == '0')
         {
           redirect('error500');
         }
       
         $this->load->helper('url');							
         											
-        $data['title'] = '<i class="fa fa-university"></i> &nbsp; ATM Banks';					
+        $data['title'] = '<i class="fas fa-university"></i> &nbsp; ATM Banks';					
         $this->load->view('template/dashboard_header',$data);
         $this->load->view('atm/atm_view',$data);   //Kani lang ang ilisi kung mag dungag mo ug Page
         $this->load->view('template/dashboard_navigation');
@@ -43,18 +43,18 @@ class Atm_controller extends CI_Controller {
             $row[] = $atm->encoded;
 
             //add html for action
-            $row[] = '<a class="btn btn-info" href="javascript:void(0)" title="Edit" onclick="edit_atm('."'".$atm->atm_id."'".')"><i class="fa fa-pencil-square-o"></i></a>
+            $row[] = '<a class="btn btn-info" href="javascript:void(0)" title="Edit" onclick="edit_atm('."'".$atm->atm_id."'".')"><i class="fas fa-pencil-alt"></i></a>
                       
-                      <a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_atm('."'".$atm->atm_id."'".', '."'".$atm->name."'".')"><i class="fa fa-trash"></i></a>';
+                      <a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_atm('."'".$atm->atm_id."'".', '."'".$atm->name."'".')"><i class="far fa-trash-alt"></i></a>';
  
             $data[] = $row;
         }
  
         $output = array(
-                        "draw" => $_POST['draw'],
-                        "recordsTotal" => $this->atm->count_all(),
-                        "recordsFiltered" => $this->atm->count_filtered(),
-                        "data" => $data,
+                        'draw' => $_POST['draw'],
+                        'recordsTotal' => $this->atm->count_all(),
+                        'recordsFiltered' => $this->atm->count_filtered(),
+                        'data' => $data,
                 );
         //output to json format
         echo json_encode($output);
@@ -76,7 +76,7 @@ class Atm_controller extends CI_Controller {
                 'removed' => 0
             );
         $insert = $this->atm->save($data);
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
  
     public function ajax_update()
@@ -88,7 +88,7 @@ class Atm_controller extends CI_Controller {
                 'remarks' => $this->input->post('remarks')
             );
         $this->atm->update(array('atm_id' => $this->input->post('atm_id')), $data);
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     // delete a atm
@@ -98,7 +98,7 @@ class Atm_controller extends CI_Controller {
                 'removed' => 1
             );
         $this->atm->update(array('atm_id' => $atm_id), $data);
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     private function _validate()

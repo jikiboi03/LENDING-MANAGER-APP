@@ -12,14 +12,14 @@ class Companies_controller extends CI_Controller {
    public function index()
    {
         // check if logged in and admin
-        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == "0")
+        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == '0')
         {
           redirect('error500');
         }
 
           $this->load->helper('url');							
         												
-          $data['title'] = '<i class="fa fa-building"></i> &nbsp; Companies';					
+          $data['title'] = '<i class="far fa-building"></i> &nbsp; Companies';					
         $this->load->view('template/dashboard_header',$data);
         $this->load->view('companies/companies_view',$data);
         $this->load->view('template/dashboard_navigation');
@@ -43,18 +43,18 @@ class Companies_controller extends CI_Controller {
             $row[] = $companies->encoded;
 
             //add html for action
-            $row[] = '<a class="btn btn-info" href="javascript:void(0)" title="Edit" onclick="edit_company('."'".$companies->comp_id."'".')"><i class="fa fa-pencil-square-o"></i></a>
+            $row[] = '<a class="btn btn-info" href="javascript:void(0)" title="Edit" onclick="edit_company('."'".$companies->comp_id."'".')"><i class="fas fa-pencil-alt"></i></a>
                       
-                      <a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_company('."'".$companies->comp_id."'".', '."'".$companies->name."'".')"><i class="fa fa-trash"></i></a>';
+                      <a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_company('."'".$companies->comp_id."'".', '."'".$companies->name."'".')"><i class="far fa-trash-alt"></i></a>';
  
             $data[] = $row;
         }
  
         $output = array(
-                        "draw" => $_POST['draw'],
-                        "recordsTotal" => $this->companies->count_all(),
-                        "recordsFiltered" => $this->companies->count_filtered(),
-                        "data" => $data,
+                        'draw' => $_POST['draw'],
+                        'recordsTotal' => $this->companies->count_all(),
+                        'recordsFiltered' => $this->companies->count_filtered(),
+                        'data' => $data,
                 );
         //output to json format
         echo json_encode($output);
@@ -76,7 +76,7 @@ class Companies_controller extends CI_Controller {
                 'removed' => 0
             );
         $insert = $this->companies->save($data);
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
  
     public function ajax_update()
@@ -88,7 +88,7 @@ class Companies_controller extends CI_Controller {
                 'remarks' => $this->input->post('remarks')
             );
         $this->companies->update(array('comp_id' => $this->input->post('comp_id')), $data);
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     // delete a company
@@ -98,7 +98,7 @@ class Companies_controller extends CI_Controller {
                 'removed' => 1
             );
         $this->companies->update(array('comp_id' => $comp_id), $data);
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array('status' => TRUE));
     }
 
     private function _validate()

@@ -17,7 +17,7 @@ class Client_portal_controller extends CI_Controller {
    public function index($client_id)
    {
         // check if logged in and not admin
-        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') != "0" || $this->session->userdata('client_id') != $client_id)
+        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') != '0' || $this->session->userdata('client_id') != $client_id)
         {
           redirect('error500');
         }
@@ -30,7 +30,7 @@ class Client_portal_controller extends CI_Controller {
 
         $this->load->helper('url');                         
                                                     
-        $data['title'] = "<i class='fa fa-id-card'></i>&nbsp; Client Portal";                  
+        $data['title'] = '<i class="far fa-id-card"></i>';                  
         $this->load->view('template/dashboard_header',$data);
         $this->load->view('client_portal/client_portal_view',$data);
         $this->load->view('template/dashboard_navigation_client');
@@ -80,7 +80,7 @@ class Client_portal_controller extends CI_Controller {
                         '<span style="float:left;">Total Paid</span><span style="float:right;">- <u>' . $paid . '</u></span>' . '<br>' .
                         '<span style="float:left;">Balance</span><span style="float:right;">' . $balance . '</span>' . '<br>' .
                         '<br>' .
-                        '<a style="width: 100%;" class="btn btn-dark" width="100%" href="javascript:void(0)" title="View Detail" onclick="view_cp_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="fa fa-eye"></i>&nbsp; View Loan Details</a></span>';
+                        '<a style="width: 100%;" class="btn btn-primary" width="100%" href="javascript:void(0)" title="View Detail" onclick="view_cp_loan('."'".$client_id."'".', '."'".$loans->loan_id."'".')"><i class="far fa-eye"></i>&nbsp; View Loan Details</a></span>';
 
             $row[] = $loan_str_1;
             $row[] = $remarks;
@@ -110,10 +110,10 @@ class Client_portal_controller extends CI_Controller {
         }
  
         $output = array(
-                        "draw" => $_POST['draw'],
-                        "recordsTotal" => $this->loans->count_active_loans_all($client_id),
-                        "recordsFiltered" => $this->loans->count_active_loans_filtered($client_id),
-                        "data" => $data,
+                        'draw' => $_POST['draw'],
+                        'recordsTotal' => $this->loans->count_active_loans_all($client_id),
+                        'recordsFiltered' => $this->loans->count_active_loans_filtered($client_id),
+                        'data' => $data,
                 );
         //output to json format
         echo json_encode($output);
