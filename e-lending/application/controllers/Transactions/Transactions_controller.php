@@ -7,7 +7,7 @@ class Transactions_controller extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('Clients/Clients_model','clients');
-        $this->load->model('companies/companies_model','companies');
+        $this->load->model('Companies/Companies_model','companies');
         $this->load->model('Loans/Loans_model','loans');
         $this->load->model('Transactions/Transactions_model','transactions');
         
