@@ -20,6 +20,14 @@ class Clients_controller extends CI_Controller {
         {
           redirect('error500');
         }
+
+        // validate if username already exist in the database table
+        $username_duplicates = $this->users->get_username_duplicates($this->session->userdata('username'));
+
+        if ($username_duplicates->num_rows() == 0)
+        {
+            redirect('error500');
+        }
         
         // get companies and atm list for dropdown
         $data['companies'] = $this->companies->get_companies();

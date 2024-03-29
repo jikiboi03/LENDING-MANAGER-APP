@@ -13,7 +13,7 @@ class Dashboard_controller extends CI_Controller {
     $this->load->model('Schedules/Schedules_model','schedules');
     $this->load->model('Transactions/Transactions_model','transactions');
     $this->load->model('Capital/Capital_model','capital');
-    
+    $this->load->model('Users/Users_model','users');
   }
 
   public function index()
@@ -22,6 +22,14 @@ class Dashboard_controller extends CI_Controller {
     if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == '0')
     {
       redirect('error500');
+    }
+
+    // validate if username already exist in the database table
+    $username_duplicates = $this->users->get_username_duplicates($this->session->userdata('username'));
+
+    if ($username_duplicates->num_rows() == 0)
+    {
+        redirect('error500');
     }
 
     // get today's date and yesterday

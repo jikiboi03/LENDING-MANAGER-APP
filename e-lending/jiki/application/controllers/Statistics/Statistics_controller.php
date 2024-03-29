@@ -10,6 +10,7 @@ class Statistics_controller extends CI_Controller {
     $this->load->model('Clients/Clients_model','clients');
     $this->load->model('Loans/Loans_model','loans');
     $this->load->model('Transactions/Transactions_model','transactions');
+    $this->load->model('Users/Users_model','users');
   }
 
   public function index()
@@ -18,6 +19,14 @@ class Statistics_controller extends CI_Controller {
     if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == '0')
     {
       redirect('error500');
+    }
+
+    // validate if username already exist in the database table
+    $username_duplicates = $this->users->get_username_duplicates($this->session->userdata('username'));
+
+    if ($username_duplicates->num_rows() == 0)
+    {
+        redirect('error500');
     }
 
     // ========================= FOR MONTHLY INTERESTS CHART ==================================================

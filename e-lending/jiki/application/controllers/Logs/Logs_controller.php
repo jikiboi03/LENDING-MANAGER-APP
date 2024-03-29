@@ -7,6 +7,7 @@ class Logs_controller extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('Logs/Logs_model','logs');
+        $this->load->model('Users/Users_model','users');
     }
 
     public function index($type)
@@ -15,6 +16,14 @@ class Logs_controller extends CI_Controller {
         if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == '0')
         {
           redirect('error500');
+        }
+
+        // validate if username already exist in the database table
+        $username_duplicates = $this->users->get_username_duplicates($this->session->userdata('username'));
+
+        if ($username_duplicates->num_rows() == 0)
+        {
+            redirect('error500');
         }
 
         $this->load->helper('url');
