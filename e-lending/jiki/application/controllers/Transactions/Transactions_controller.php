@@ -1,267 +1,219 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Transactions_controller extends CI_Controller {
-
+/**
+ * @property CI_Loader $load
+ * @property CI_Session $session
+ * @property CI_Input $input 
+ * @property Clients_model $clients
+ * @property Companies_model $companies
+ * @property Loans_model $loans
+ * @property Transactions_model $transactions
+ * @property Users_model $users
+ */
+class Transactions_controller extends CI_Controller
+{
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Clients/Clients_model','clients');
-        $this->load->model('Companies/Companies_model','companies');
-        $this->load->model('Loans/Loans_model','loans');
-        $this->load->model('Transactions/Transactions_model','transactions');
-        $this->load->model('Users/Users_model','users');
+        $this->load->model('Clients/Clients_model', 'clients');
+        $this->load->model('Companies/Companies_model', 'companies');
+        $this->load->model('Loans/Loans_model', 'loans');
+        $this->load->model('Transactions/Transactions_model', 'transactions');
+        $this->load->model('Users/Users_model', 'users');
     }
 
-   public function index($client_id, $loan_id)
-   {
-        // check if logged in and admin
-        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == '0')
-        {
-          redirect('error500');
-        }
-
-        // validate if username already exist in the database table
-        $username_duplicates = $this->users->get_username_duplicates($this->session->userdata('username'));
-
-        if ($username_duplicates->num_rows() == 0)
-        {
+    public function index($client_id, $loan_id)
+    {
+        if (!$this->session->userdata('user_id') || $this->session->userdata('administrator') === '0') {
             redirect('error500');
         }
 
-        $client_data = $this->clients->get_by_id($client_id);
-        $loan_data = $this->loans->get_by_id($loan_id);
+        $duplicates = $this->users->get_username_duplicates($this->session->userdata('username'));
+        if ($duplicates->num_rows() === 0) {
+            redirect('error500');
+        }
 
+        $data['client'] = $this->clients->get_by_id($client_id);
+        $data['loan'] = $this->loans->get_by_id($loan_id);
         $data['loan_balance'] = $this->loans->get_client_total_balance($client_id);
 
-        $data['client'] = $client_data;
-        $data['loan'] = $loan_data;
+        $last_payment = $this->transactions->get_last_trans_payment($loan_id);
+        $data['last_payment_amount'] = $last_payment->amount ?? 0;
+        $data['last_payment_date'] = $last_payment->date ?? null;
 
-        $this->load->helper('url');							
+        $last_interest = $this->transactions->get_last_trans_interest($loan_id);
+        $data['last_interest_amount'] = $last_interest->interest ?? 0;
+        $data['last_interest_date'] = $last_interest->date ?? null;
 
         $data['title'] = '<i class="far fa-id-card"></i>';
-        $this->load->view('template/dashboard_header',$data);
-        $this->load->view('transactions/transactions_view',$data);   //Kani lang ang ilisi kung mag dungag mo ug Page
+        $this->load->helper('url');
+        $this->load->view('template/dashboard_header', $data);
+        $this->load->view('transactions/transactions_view', $data);
         $this->load->view('template/dashboard_navigation');
         $this->load->view('template/dashboard_footer');
+    }
 
-   }
-   
     public function ajax_list($loan_id)
     {
-        $count = 1;
         $list = $this->transactions->get_datatables($loan_id);
-        $data = array();
+        $data = [];
         $no = $_POST['start'];
-        foreach ($list as $transactions) {
+        $count = 1;
+
+        foreach ($list as $t) {
             $no++;
-            $row = array();
-            $row[] = 'T' . $transactions->trans_id;
+            $row = [];
 
-            $row[] = $transactions->date;
+            $row[] = 'T' . $t->trans_id;
+            $row[] = $t->date;
 
-            if ($transactions->type == 1)
-            {
-              $type = 'Trans. Start';
-            }
-            else if ($transactions->type == 2)
-            {
-              $type = 'Paid Partial'; 
-            }
-            else if ($transactions->type == 3)
-            {
-              $type = 'Paid Full'; 
-            }
-            else if ($transactions->type == 4)
-            {
-              $type = 'Add Interest'; 
-            }
-            else if ($transactions->type == 5)
-            {
-              $type = 'Add Amount'; 
-            }
-            else if ($transactions->type == 6)
-            {
-              $type = 'Discount Amount'; 
-            }
-
-            $row[] = $type;          
-
-            
-            $row[] = number_format($transactions->amount, 2, '.', ',');
-            $row[] = number_format($transactions->interest, 2, '.', ',');
-            $row[] = number_format($transactions->total, 2, '.', ',');
-
-            $row[] = $transactions->remarks;
-
-            if ($transactions->type == 1)
-            {
-                $row[] = '<a class="btn btn-info" href="javascript:void(0)" title="Edit" onclick="edit_trans_date_remarks('."'".$transactions->trans_id."'".')" disabled><i class="fas fa-pencil-alt"></i></a>';
-            }
-            else if ($transactions->type == 4 && $count == sizeof($list))
-            {
-                $row[] = '<a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_interest('."'".$transactions->trans_id."'".', '."'".$transactions->interest."'".')"><i class="far fa-trash-alt"></i></a>';
-            }
-            else if (($transactions->type == 2 || $transactions->type == 3) && $count == sizeof($list))
-            {
-                $row[] = '<a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_payment('."'".$transactions->trans_id."'".', '."'".$transactions->amount."'".')"><i class="far fa-trash-alt"></i></a>';
-            }
-            else
-            {
-                $row[] = '<a class="btn btn-info" href="javascript:void(0)" title="Edit" onclick="edit_trans_date_remarks('."'".$transactions->trans_id."'".')"><i class="fas fa-pencil-alt"></i></a>';
+            switch ($t->type) {
+                case 1:
+                    $type = 'Trans. Start';
+                    break;
+                case 2:
+                    $type = 'Paid Partial';
+                    break;
+                case 3:
+                    $type = 'Paid Full';
+                    break;
+                case 4:
+                    $type = 'Add Interest';
+                    break;
+                case 5:
+                    $type = 'Add Amount';
+                    break;
+                case 6:
+                    $type = 'Discount Amount';
+                    break;
+                default:
+                    $type = 'Unknown';
+                    break;
             }
 
-            $row[] = $transactions->encoded;
- 
+            $row[] = $type;
+
+            $row[] = $t->amount == 0 ? '-' : number_format($t->amount, 2, '.', ',');
+            $row[] = $t->interest == 0 ? '-' : number_format($t->interest, 2, '.', ',');
+            $row[] = number_format($t->total, 2, '.', ',');
+
+            $row[] = $t->remarks;
+
+            if ($t->type == 1) {
+                $row[] = '<a class="btn btn-info" href="javascript:void(0)" title="Edit" disabled><i class="fas fa-pencil-alt"></i></a>';
+            } elseif ($t->type == 4 && $count === sizeof($list)) {
+                $row[] = '<a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_interest(\'' . $t->trans_id . '\', \'' . $t->interest . '\')"><i class="far fa-trash-alt"></i></a>';
+            } elseif (in_array($t->type, [2, 3]) && $count === sizeof($list)) {
+                $row[] = '<a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_payment(\'' . $t->trans_id . '\', \'' . $t->amount . '\')"><i class="far fa-trash-alt"></i></a>';
+            } else {
+                $row[] = '<a class="btn btn-info" href="javascript:void(0)" title="Edit" onclick="edit_trans_date_remarks(\'' . $t->trans_id . '\')"><i class="fas fa-pencil-alt"></i></a>';
+            }
+
+            $row[] = $t->encoded;
             $data[] = $row;
-
             $count++;
         }
- 
-        $output = array(
-                        'draw' => $_POST['draw'],
-                        'recordsTotal' => $this->transactions->count_all($loan_id),
-                        'recordsFiltered' => $this->transactions->count_filtered($loan_id),
-                        'data' => $data,
-                );
-        //output to json format
-        echo json_encode($output);
-    }
- 
-    // insert transaactions methods ===================================================================================
 
-    public function ajax_paid() // for paid partial / full
+        echo json_encode([
+            'draw' => $_POST['draw'],
+            'recordsTotal' => $this->transactions->count_all($loan_id),
+            'recordsFiltered' => $this->transactions->count_filtered($loan_id),
+            'data' => $data
+        ]);
+    }
+
+    public function ajax_paid()
     {
         $this->_validate_paid();
 
         $loan_id = $this->input->post('loan_id');
-        $amount = $this->input->post('amount'); // paid amount
-        $total = $this->input->post('total'); // total due / remaining balance after payment
+        $amount = $this->input->post('amount');
+        $total = $this->input->post('total');
 
-        if ($total == 0)
-        {
-          $type = 3; // Paid Full
-          $date_end = $this->input->post('date'); // if fully paid, set date_end / cleared
-          $status = 3; // update loan status
-        }
-        else
-        {
-          $type = 2; // Paid Partial
-          $date_end = 'n/a'; // if partial only, set n/a
-          $status = 2; // update loan status
-        }
+        $type = ($total == 0) ? 3 : 2;
+        $status = ($total == 0) ? 3 : 2;
+        $date_end = ($total == 0) ? $this->input->post('date') : 'n/a';
 
-        $data = array(
-                'loan_id' => $loan_id,
-                'date' => $this->input->post('date'),
-                'type' => $type,
-                'amount' => (-1 * $amount),
-                'interest' => 0,
-                'total' => $total,
-                'remarks' => $this->input->post('remarks')
-            );
-        $insert = $this->transactions->save($data);
+        $this->transactions->save([
+            'loan_id' => $loan_id,
+            'date' => $this->input->post('date'),
+            'type' => $type,
+            'amount' => -1 * $amount,
+            'interest' => 0,
+            'total' => $total,
+            'remarks' => $this->input->post('remarks')
+        ]);
 
-        // get current paid to add new paid for total paid
-        $current_paid = $this->loans->get_paid_value($loan_id);
-        $total_paid = ($current_paid + $amount);
+        $this->loans->update(['loan_id' => $loan_id], [
+            'status' => $status,
+            'date_end' => $date_end,
+            'paid' => $this->loans->get_paid_value($loan_id) + $amount,
+            'balance' => $total
+        ]);
 
-        // for loans table record
-        $dataloans = array(
-                'status' => $status,
-                'date_end' => $date_end,
-                'paid' => $total_paid,
-                'balance' => $total
-            );
-        $this->loans->update(array('loan_id' => $loan_id), $dataloans);
-
-        echo json_encode(array('status' => TRUE));
+        echo json_encode(['status' => true]);
     }
 
-    public function ajax_add_interest() // for loan interest
+    public function ajax_add_interest()
     {
         $this->_validate_add_int();
 
         $loan_id = $this->input->post('loan_id');
-        $total = $this->input->post('total'); // total due / total balance after added interest
+        $total = $this->input->post('total');
 
-        $type = 4;
-        $status = 2; // update loan status
+        $this->transactions->save([
+            'loan_id' => $loan_id,
+            'date' => $this->input->post('date'),
+            'type' => 4,
+            'amount' => 0,
+            'interest' => $this->input->post('interest'),
+            'total' => $total,
+            'remarks' => $this->input->post('remarks')
+        ]);
 
-        $data = array(
-                'loan_id' => $loan_id,
-                'date' => $this->input->post('date'),
-                'type' => $type,
-                'amount' => 0,
-                'interest' => $this->input->post('interest'),
-                'total' => $total,
-                'remarks' => $this->input->post('remarks')
-            );
-        $insert = $this->transactions->save($data);
+        $this->loans->update(['loan_id' => $loan_id], [
+            'status' => 2,
+            'balance' => $total
+        ]);
 
-        // for loans table record
-        $dataloans = array(
-                'status' => $status,
-                'balance' => $total
-            );
-        $this->loans->update(array('loan_id' => $loan_id), $dataloans);
-        echo json_encode(array('status' => TRUE));
+        echo json_encode(['status' => true]);
     }
 
-    public function ajax_adjustment() // for paid add amount / discount amount
+    public function ajax_adjustment()
     {
         $this->_validate_adjustment();
 
         $loan_id = $this->input->post('loan_id');
-        $adjustment = $this->input->post('adjustment_amount'); // add amount / discount amount value
-        $total = $this->input->post('total'); // total due / remaining balance after adjustment
+        $adjustment = $this->input->post('adjustment_amount');
+        $total = $this->input->post('total');
 
-        if ($total == 0)
-        {
-          $date_end = $this->input->post('date'); // if fully paid, set date_end / cleared
-          $status = 3; // update loan status
-        }
-        else
-        {
-          $date_end = 'n/a'; // if partial only, set n/a
-          $status = 2; // update loan status
-        }
+        $type = ($adjustment > 0) ? 5 : 6;
+        $status = ($total == 0) ? 3 : 2;
+        $date_end = ($total == 0) ? $this->input->post('date') : 'n/a';
 
-        if ($adjustment > 0)
-        {
-          $type = 5; // Add Amount - positive value
-        }
-        else
-        {
-          $type = 6; // Discount - negative value
-        }
+        $this->transactions->save([
+            'loan_id' => $loan_id,
+            'date' => $this->input->post('date'),
+            'type' => $type,
+            'amount' => $adjustment,
+            'interest' => 0,
+            'total' => $total,
+            'remarks' => $this->input->post('remarks')
+        ]);
 
-        $data = array(
-                'loan_id' => $loan_id,
-                'date' => $this->input->post('date'),
-                'type' => $type,
-                'amount' => $adjustment,
-                'interest' => 0,
-                'total' => $total,
-                'remarks' => $this->input->post('remarks')
-            );
-        $insert = $this->transactions->save($data);
+        $this->loans->update(['loan_id' => $loan_id], [
+            'status' => $status,
+            'date_end' => $date_end,
+            'balance' => $total
+        ]);
 
-        // for loans table record
-        $dataloans = array(
-                'status' => $status,
-                'date_end' => $date_end,
-                'balance' => $total
-            );
-        $this->loans->update(array('loan_id' => $loan_id), $dataloans);
-
-        echo json_encode(array('status' => TRUE));
+        echo json_encode(['status' => true]);
     }
 
     public function ajax_edit($trans_id)
     {
-        $data = $this->transactions->get_by_id($trans_id);
-        echo json_encode($data);
+        echo json_encode($this->transactions->get_by_id($trans_id));
     }
 
     public function ajax_update()
@@ -269,199 +221,87 @@ class Transactions_controller extends CI_Controller {
         $this->_validate_date();
 
         $loan_id = $this->input->post('loan_id');
-        $total = $this->input->post('total'); // total due / remaining balance after payment
+        $total = $this->input->post('total');
+        $date_end = ($total == 0) ? $this->input->post('date') : 'n/a';
 
-        if ($total == 0)
-        {
-          $date_end = $this->input->post('date'); // if fully paid, set date_end / cleared
-        }
-        else
-        {
-          $date_end = 'n/a'; // if partial only, set n/a
-        }
+        $this->transactions->update(['trans_id' => $this->input->post('trans_id')], [
+            'date' => $this->input->post('date'),
+            'remarks' => $this->input->post('remarks')
+        ]);
 
-        $data = array(
-                'date' => $this->input->post('date'),
-                'remarks' => $this->input->post('remarks')
-            );
-        $this->transactions->update(array('trans_id' => $this->input->post('trans_id')), $data);
+        $this->loans->update(['loan_id' => $loan_id], ['date_end' => $date_end]);
 
-        // for loans table record
-        $dataloans = array(
-                'date_end' => $date_end,
-            );
-        $this->loans->update(array('loan_id' => $loan_id), $dataloans);
-
-        echo json_encode(array('status' => TRUE));
+        echo json_encode(['status' => true]);
     }
 
-    // delete interest
     public function ajax_delete($trans_id, $interest_amt, $loan_id)
     {
-        // delete transaction record using trans_id
         $this->transactions->delete_by_trans_id($trans_id);
-
-        $this->loans->deduct_balance($loan_id, $interest_amt);
-
-        echo json_encode(array('status' => TRUE));
+        $this->loans->adjust_balance($loan_id, $interest_amt, 'deduct');
+        echo json_encode(['status' => true]);
     }
 
-    // delete payment
     public function ajax_delete_pay($trans_id, $pay_amt, $loan_id)
     {
-        // delete transaction record using trans_id
         $this->transactions->delete_by_trans_id($trans_id);
-
-        $this->loans->add_balance($loan_id, $pay_amt);
-
-        $this->loans->deduct_paid($loan_id, $pay_amt);
-
-        $this->loans->change_status($loan_id, 2); // change status to ONGOING
-
-        echo json_encode(array('status' => TRUE));
+        $this->loans->adjust_balance($loan_id, $pay_amt, 'add');
+        $this->loans->adjust_paid($loan_id, $pay_amt, 'deduct');
+        $this->loans->change_status($loan_id, 2);
+        echo json_encode(['status' => true]);
     }
+
+    // ================================
+    // === Validation Helpers Below ===
+    // ================================
 
     private function _validate_paid()
     {
-        $data = array();
-        $data['error_string'] = array();
-        $data['inputerror'] = array();
-        $data['status'] = TRUE;
-
-        if($this->input->post('amount') == '')
-        {
-            $data['inputerror'][] = 'amount';
-            $data['error_string'][] = 'Amount value is required';
-            $data['status'] = FALSE;
-        }
-        else if($this->input->post('amount') <= 0)
-        {
-            $data['inputerror'][] = 'amount';
-            $data['error_string'][] = 'Amount value should be greater than zero';
-            $data['status'] = FALSE;
-        }
-
-        if($this->input->post('total') < 0)
-        {
-            $data['inputerror'][] = 'total';
-            $data['error_string'][] = 'Total balance should be a positive value';
-            $data['status'] = FALSE;
-        }
-
-        // if($this->input->post('interest') == '')
-        // {
-        //     $data['inputerror'][] = 'interest';
-        //     $data['error_string'][] = 'Interest to the loan is required';
-        //     $data['status'] = FALSE;
-        // }
-
-        if($this->input->post('date') == '')
-        {
-            $data['inputerror'][] = 'date';
-            $data['error_string'][] = 'Date of transaction is required';
-            $data['status'] = FALSE;
-        }   
-
-        if($data['status'] === FALSE)
-        {
-            echo json_encode($data);
-            exit();
-        }
+        $this->_run_validation([
+            ['amount', 'Payment value is required', fn ($v) => $v !== '' && $v > 0],
+            ['total', 'Total balance should be a positive value', fn ($v) => $v >= 0],
+            ['date', 'Date of transaction is required', fn ($v) => $v !== '']
+        ]);
     }
 
     private function _validate_add_int()
     {
-        $data = array();
-        $data['error_string'] = array();
-        $data['inputerror'] = array();
-        $data['status'] = TRUE;
-
-        if($this->input->post('interest') == '')
-        {
-            $data['inputerror'][] = 'interest';
-            $data['error_string'][] = 'Interest value is required';
-            $data['status'] = FALSE;
-        }
-        else if($this->input->post('interest') <= 0)
-        {
-            $data['inputerror'][] = 'interest';
-            $data['error_string'][] = 'Interest value should be greater than zero';
-            $data['status'] = FALSE;
-        }
-
-        if($this->input->post('date') == '')
-        {
-            $data['inputerror'][] = 'date';
-            $data['error_string'][] = 'Date of transaction is required';
-            $data['status'] = FALSE;
-        }   
-
-        if($data['status'] === FALSE)
-        {
-            echo json_encode($data);
-            exit();
-        }
+        $this->_run_validation([
+            ['interest', 'Interest value is required and must be greater than zero', fn ($v) => $v !== '' && $v > 0],
+            ['date', 'Date of transaction is required', fn ($v) => $v !== '']
+        ]);
     }
 
     private function _validate_adjustment()
     {
-        $data = array();
-        $data['error_string'] = array();
-        $data['inputerror'] = array();
-        $data['status'] = TRUE;
-
-        if($this->input->post('adjustment_amount') == '')
-        {
-            $data['inputerror'][] = 'adjustment_amount';
-            $data['error_string'][] = 'Adjustment value is required';
-            $data['status'] = FALSE;
-        }
-        else if($this->input->post('adjustment_amount') == 0)
-        {
-            $data['inputerror'][] = 'adjustment_amount';
-            $data['error_string'][] = 'Adjustment value is required';
-            $data['status'] = FALSE;
-        }
-
-        if($this->input->post('total') < 0)
-        {
-            $data['inputerror'][] = 'total';
-            $data['error_string'][] = 'Total balance should have a positive value';
-            $data['status'] = FALSE;
-        }
-
-        if($this->input->post('date') == '')
-        {
-            $data['inputerror'][] = 'date';
-            $data['error_string'][] = 'Date of transaction is required';
-            $data['status'] = FALSE;
-        }   
-
-        if($data['status'] === FALSE)
-        {
-            echo json_encode($data);
-            exit();
-        }
+        $this->_run_validation([
+            ['adjustment_amount', 'Adjustment value is required and must not be zero', fn ($v) => $v !== '' && $v != 0],
+            ['total', 'Total balance should have a positive value', fn ($v) => $v >= 0],
+            ['date', 'Date of transaction is required', fn ($v) => $v !== '']
+        ]);
     }
 
     private function _validate_date()
     {
-        $data = array();
-        $data['error_string'] = array();
-        $data['inputerror'] = array();
-        $data['status'] = TRUE;
+        $this->_run_validation([
+            ['date', 'Date of transaction is required', fn ($v) => $v !== '']
+        ]);
+    }
 
-        if($this->input->post('date') == '')
-        {
-            $data['inputerror'][] = 'date';
-            $data['error_string'][] = 'Date of transaction is required';
-            $data['status'] = FALSE;
-        }   
+    private function _run_validation(array $rules)
+    {
+        $errors = ['error_string' => [], 'inputerror' => [], 'status' => true];
+        foreach ($rules as [$field, $msg, $check]) {
+            $value = $this->input->post($field);
+            if (!$check($value)) {
+                $errors['inputerror'][] = $field;
+                $errors['error_string'][] = $msg;
+                $errors['status'] = false;
+            }
+        }
 
-        if($data['status'] === FALSE)
-        {
-            echo json_encode($data);
+        if (!$errors['status']) {
+            echo json_encode($errors);
             exit();
         }
     }
- }
+}

@@ -1,140 +1,147 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Companies_controller extends CI_Controller {
-
+/**
+ * @property Companies_model $companies
+ * @property Users_model $users
+ * @property CI_Session $session
+ * @property CI_Input $input
+ * @property CI_Loader $load
+ * @property CI_URI $uri
+ * @property CI_Output $output
+ * @property CI_Config $config
+ * @property CI_Language $lang
+ */
+class Companies_controller extends CI_Controller
+{
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Companies/Companies_model','companies');
-        $this->load->model('Users/Users_model','users');
+        $this->load->model('Companies/Companies_model', 'companies');
+        $this->load->model('Users/Users_model', 'users');
+        $this->load->helper('url');
     }
 
-   public function index()
-   {
-        // check if logged in and admin
-        if($this->session->userdata('user_id') == '' || $this->session->userdata('administrator') == '0')
-        {
-          redirect('error500');
-        }
-
-        // validate if username already exist in the database table
-        $username_duplicates = $this->users->get_username_duplicates($this->session->userdata('username'));
-
-        if ($username_duplicates->num_rows() == 0)
-        {
+    public function index()
+    {
+        // Check if user is logged in and is an administrator
+        if (
+            $this->session->userdata('user_id') === '' ||
+            $this->session->userdata('administrator') === '0'
+        ) {
             redirect('error500');
         }
 
-          $this->load->helper('url');							
-        												
-          $data['title'] = '<i class="far fa-building"></i> &nbsp; Companies';					
-        $this->load->view('template/dashboard_header',$data);
-        $this->load->view('companies/companies_view',$data);
+        // Validate if username exists in the database
+        $username_duplicates = $this->users->get_username_duplicates(
+            $this->session->userdata('username')
+        );
+
+        if ($username_duplicates->num_rows() === 0) {
+            redirect('error500');
+        }
+
+        $data['title'] = '<i class="far fa-building"></i> &nbsp; Companies';
+        $this->load->view('template/dashboard_header', $data);
+        $this->load->view('companies/companies_view', $data);
         $this->load->view('template/dashboard_navigation');
         $this->load->view('template/dashboard_footer');
+    }
 
-   }
-   
     public function ajax_list()
     {
         $list = $this->companies->get_datatables();
-        $data = array();
+        $data = [];
         $no = $_POST['start'];
-        foreach ($list as $companies) {
+
+        foreach ($list as $company) {
             $no++;
-            $row = array();
-            $row[] = 'J' . $companies->comp_id;
-            $row[] = $companies->name;
-            $row[] = $companies->address;
-            $row[] = $companies->remarks;
-
-            $row[] = $companies->encoded;
-
-            //add html for action
-            $row[] = '<a class="btn btn-info" href="javascript:void(0)" title="Edit" onclick="edit_company('."'".$companies->comp_id."'".')"><i class="fas fa-pencil-alt"></i></a>
-                      
-                      <a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_company('."'".$companies->comp_id."'".', '."'".$companies->name."'".')"><i class="far fa-trash-alt"></i></a>';
- 
+            $row = [];
+            $row[] = 'J' . $company->comp_id;
+            $row[] = $company->name;
+            $row[] = $company->address;
+            $row[] = $company->remarks;
+            $row[] = $company->encoded;
+            $row[] = '
+                <a class="btn btn-info" href="javascript:void(0)" title="Edit" onclick="edit_company(\'' . $company->comp_id . '\')">
+                    <i class="fas fa-pencil-alt"></i>
+                </a>
+                <a class="btn btn-danger" href="javascript:void(0)" title="Delete" onclick="delete_company(\'' . $company->comp_id . '\', \'' . $company->name . '\')">
+                    <i class="far fa-trash-alt"></i>
+                </a>
+            ';
             $data[] = $row;
         }
- 
-        $output = array(
-                        'draw' => $_POST['draw'],
-                        'recordsTotal' => $this->companies->count_all(),
-                        'recordsFiltered' => $this->companies->count_filtered(),
-                        'data' => $data,
-                );
-        //output to json format
-        echo json_encode($output);
+
+        echo json_encode([
+            'draw' => $_POST['draw'],
+            'recordsTotal' => $this->companies->count_all(),
+            'recordsFiltered' => $this->companies->count_filtered(),
+            'data' => $data
+        ]);
     }
- 
+
     public function ajax_edit($comp_id)
     {
         $data = $this->companies->get_by_id($comp_id);
         echo json_encode($data);
     }
- 
+
     public function ajax_add()
     {
         $this->_validate();
-        $data = array(
-                'name' => $this->input->post('name'),
-                'address' => $this->input->post('address'),
-                'remarks' => $this->input->post('remarks'),
-                'removed' => 0
-            );
-        $insert = $this->companies->save($data);
-        echo json_encode(array('status' => TRUE));
+
+        $data = [
+            'name' => $this->input->post('name'),
+            'address' => $this->input->post('address'),
+            'remarks' => $this->input->post('remarks'),
+            'removed' => 0
+        ];
+
+        $this->companies->save($data);
+        echo json_encode(['status' => TRUE]);
     }
- 
+
     public function ajax_update()
     {
         $this->_validate();
-        $data = array(
-                'name' => $this->input->post('name'),
-                'address' => $this->input->post('address'),
-                'remarks' => $this->input->post('remarks')
-            );
-        $this->companies->update(array('comp_id' => $this->input->post('comp_id')), $data);
-        echo json_encode(array('status' => TRUE));
+
+        $data = [
+            'name' => $this->input->post('name'),
+            'address' => $this->input->post('address'),
+            'remarks' => $this->input->post('remarks')
+        ];
+
+        $this->companies->update(['comp_id' => $this->input->post('comp_id')], $data);
+        echo json_encode(['status' => TRUE]);
     }
 
-    // delete a company
     public function ajax_delete($comp_id)
     {
-        $data = array(
-                'removed' => 1
-            );
-        $this->companies->update(array('comp_id' => $comp_id), $data);
-        echo json_encode(array('status' => TRUE));
+        $this->companies->update(['comp_id' => $comp_id], ['removed' => 1]);
+        echo json_encode(['status' => TRUE]);
     }
 
     private function _validate()
     {
-        $data = array();
-        $data['error_string'] = array();
-        $data['inputerror'] = array();
-        $data['status'] = TRUE;
+        $data = [
+            'error_string' => [],
+            'inputerror' => [],
+            'status' => TRUE
+        ];
 
-        if($this->input->post('name') == '')
-        {
+        $name = $this->input->post('name');
+        $address = $this->input->post('address');
+        $current_name = $this->input->post('current_name');
+
+        if ($name === '') {
             $data['inputerror'][] = 'name';
             $data['error_string'][] = 'Company name is required';
             $data['status'] = FALSE;
-        }
-        // validation for duplicates
-        else
-        {
-            $new_name = $this->input->post('name');
-            // check if name has a new value or not
-            if ($this->input->post('current_name') != $new_name)
-            {
-                // validate if name already exist in the databaase table
-                $duplicates = $this->companies->get_duplicates($this->input->post('name'));
-
-                if ($duplicates->num_rows() != 0)
-                {
+        } else {
+            if ($current_name !== $name) {
+                $duplicates = $this->companies->get_duplicates($name);
+                if ($duplicates->num_rows() !== 0) {
                     $data['inputerror'][] = 'name';
                     $data['error_string'][] = 'Company name is already registered';
                     $data['status'] = FALSE;
@@ -142,17 +149,15 @@ class Companies_controller extends CI_Controller {
             }
         }
 
-        if($this->input->post('address') == '')
-        {
+        if ($address === '') {
             $data['inputerror'][] = 'address';
             $data['error_string'][] = 'Company address is required';
             $data['status'] = FALSE;
         }
 
-        if($data['status'] === FALSE)
-        {
+        if ($data['status'] === FALSE) {
             echo json_encode($data);
-            exit();
+            exit;
         }
     }
- }
+}
