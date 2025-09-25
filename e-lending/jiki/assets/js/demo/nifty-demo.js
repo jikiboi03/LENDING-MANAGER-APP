@@ -587,7 +587,7 @@ $(document).ready(function () {
 		dataNumAlert = 1;
 	}
 
-	if (near_due_date_str != "None" && ((location.href.match(/([^\/]*)\/*$/)[1] == 'dashboard') || (location.href.match(/([^\/]*)\/*$/)[1] == 'clients-page')))
+	if (near_due_date_str != "None" && ((location.href.match(/([^\/]*)\/*$/)[1] == 'dashboard')))
 	{
 		var dataNum = 5,
 			timer = 32000;
