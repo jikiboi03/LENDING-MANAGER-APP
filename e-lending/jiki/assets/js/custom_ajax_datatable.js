@@ -1,2536 +1,1295 @@
-var save_method; //for save method string
-var table;
-var text;
-var tableID = $("table").attr('id');
+let saveMethod;
+let table;
+let text;
+let tableID = $("table").attr("id");
+const today = new Date().toISOString().split("T")[0];
 
-$("#form_add_loan").submit(function( event ) { // -------------------------------- EXPIREMENTAL FUNCTION (Fixes dismissed modal when add_cash_input buttons are clicked)
-  event.preventDefault();
+$(
+	"#form_add_loan, #form_add_interest, #form_add_payment, #form_quick_payment"
+).submit(function (event) {
+	event.preventDefault();
 });
 
-$("#form_add_interest").submit(function( event ) { // -------------------------------- EXPIREMENTAL FUNCTION (Fixes dismissed modal when add_cash_input buttons are clicked)
-  event.preventDefault();
+$(document).ready(function () {
+	const getTable = (selector, options) => {
+		return $(selector).DataTable({
+			processing: true,
+			language: {
+				processing:
+					'<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span>',
+			},
+			serverSide: true,
+			order: [],
+			scrollX: true,
+			...options,
+		});
+	};
+
+	const getAjaxOption = (url) => ({
+		ajax: {
+			url,
+			type: "POST",
+		},
+	});
+
+	const tableMap = {
+		"companies-table": () => {
+			table = getTable("#companies-table", {
+				...getAjaxOption("showlist-companies"),
+				columnDefs: [
+					{ targets: [-1], orderable: false },
+					{ targets: 5, className: "text-center" },
+				],
+			});
+		},
+
+		"atm-table": () => {
+			table = getTable("#atm-table", {
+				...getAjaxOption("showlist-atm"),
+				columnDefs: [
+					{ targets: [-1], orderable: false },
+					{ targets: 4, className: "text-center" },
+				],
+			});
+		},
+
+		"clients-table": () => {
+			table = getTable("#clients-table", {
+				...getAjaxOption("showlist-clients"),
+				pageLength: 15,
+				columnDefs: [
+					{ targets: [-1, -3], orderable: false },
+					{ targets: 2, className: "text-right large-font-col" },
+					{ targets: 3, className: "text-center large-font-col" },
+					{ targets: 7, className: "text-center" },
+				],
+				rowCallback(row, data, index) {
+					const [, , col2, col3, col4, col5, col6, col7, sex, status] = data;
+					const $api = this.api();
+
+					$api
+						.cells(row, 0)
+						.nodes()
+						.to$()
+						.css("background-color", sex === "Male" ? "#d4d1ff" : "#f5c4d3");
+
+					if (status === "active") {
+						const color = isOdd(index) ? "#c0f1ee" : "#c8eaea";
+						[
+							$api.cells(row, 2),
+							$api.cells(row, 3),
+							$api.cells(row, 4),
+							$api.cells(row, 5),
+							$api.cells(row, 6),
+							$api.cells(row, 7),
+						].forEach((cell) =>
+							cell.nodes().to$().css("background-color", color)
+						);
+					}
+				},
+			});
+		},
+
+		"loans-table": () => {
+			const client_id = $('[name="client_id"]').val();
+			table = getTable("#loans-table", {
+				...getAjaxOption(
+					`../Profiles/Profiles_controller/ajax_list/${client_id}`
+				),
+				ordering: false,
+				columnDefs: [
+					{ targets: [-1], orderable: false },
+					{ targets: [1, 3, 5], className: "text-right" },
+					{ targets: [2, 4], className: "text-right large-font-col" },
+				],
+				rowCallback(row, data) {
+					const status = data[5];
+					const $node = this.api().row(row).nodes().to$();
+					const colors = { New: "#99ff99", Ongoing: "#ccff99" };
+					$node.css("background-color", colors[status] || "#f5f5f5");
+				},
+			});
+		},
+
+		"client-portal-loans-table": () => {
+			const client_id = $('[name="client_id"]').val();
+			table = getTable("#client-portal-loans-table", {
+				...getAjaxOption(
+					`../Client_portal/Client_portal_controller/ajax_list/${client_id}`
+				),
+				ordering: false,
+				searching: false,
+				bPaginate: false,
+				columnDefs: [
+					{ targets: [-1], orderable: false },
+					{ targets: 2, visible: false },
+				],
+				rowCallback(row, data) {
+					const status = data[2];
+					const $node = this.api().row(row).nodes().to$();
+					const colors = { New: "#99ff99", Ongoing: "#ccff99" };
+					$node.css("background-color", colors[status] || "#cccccc");
+				},
+			});
+		},
+
+		"transactions-table": () => {
+			const loan_id = $('[name="loan_id"]').val();
+			table = getTable("#transactions-table", {
+				...getAjaxOption(
+					`../../../Transactions/Transactions_controller/ajax_list/${loan_id}`
+				),
+				ordering: false,
+				searching: false,
+				bPaginate: false,
+				columnDefs: [
+					{ targets: [-1], orderable: false },
+					{ targets: [1, 3, 4, 5], className: "text-right large-font-col" },
+					{ targets: 7, className: "text-center" },
+				],
+				rowCallback(row, data) {
+					const type = data[2];
+					const $node = this.api().row(row).nodes().to$();
+					const colors = {
+						"Trans. Start": "#99ff99",
+						"Paid Partial": "#ccff99",
+						"Add Interest": "#99ffff",
+						"Add Amount": "#99cccc",
+						"Discount Amount": "#ffcc99",
+					};
+					if (colors[type]) $node.css("background-color", colors[type]);
+				},
+			});
+		},
+
+		"client-portal-transactions-table": () => {
+			const loan_id = $('[name="loan_id"]').val();
+			table = getTable("#client-portal-transactions-table", {
+				...getAjaxOption(
+					`../../../Trans_cp/Trans_cp_controller/ajax_list/${loan_id}`
+				),
+				ordering: false,
+				searching: false,
+				bPaginate: false,
+				columnDefs: [
+					{ targets: [-1], orderable: false },
+					{ targets: [3, 4, 5], className: "text-right" },
+					{ targets: 7, className: "text-center" },
+				],
+				rowCallback(row, data) {
+					const type = data[2];
+					const $node = this.api().row(row).nodes().to$();
+					const colors = {
+						"Trans. Start": "#99ff99",
+						"Paid Partial": "#ccff99",
+						"Paid Full": "#cccccc",
+						"Add Interest": "#99ffff",
+						"Add Amount": "#99cccc",
+						"Discount Amount": "#ffcc99",
+					};
+					if (colors[type]) $node.css("background-color", colors[type]);
+				},
+			});
+		},
+
+		"capital-table": () => {
+			table = getTable("#capital-table", {
+				...getAjaxOption("showlist-capital"),
+				columnDefs: [
+					{ targets: [-1, -2, -3], orderable: false },
+					{ targets: 1, className: "text-center" },
+					{ targets: [2, 3], className: "text-right" },
+					{ targets: [4, 5], className: "text-center" },
+				],
+				rowCallback(row, data, index) {
+					const amount = parseFloat(data[2]);
+					const $node = this.api().row(row).nodes().to$();
+					const even = isOdd(index) === 1;
+					const bgColor =
+						amount >= 0
+							? even
+								? "#99cccc"
+								: "#aad5d5"
+							: even
+							? "#ffcc99"
+							: "#ffbf80";
+					$node.css("background-color", bgColor);
+				},
+			});
+		},
+
+		"top-clients-list-table": () => {
+			table = getTable("#top-clients-list-table", {
+				...getAjaxOption("showlist-statistics"),
+				ordering: false,
+				searching: false,
+				columnDefs: [
+					{ targets: [-1], orderable: false },
+					{ targets: [2, 3, 4, 5], className: "text-right" },
+					{ targets: 6, className: "text-center" },
+				],
+				rowCallback(row, data, index) {
+					const has_balance = parseFloat(data[4]);
+					if (has_balance !== 0) {
+						const $node = this.api().row(row).nodes().to$();
+						$node.css("background-color", isOdd(index) ? "#ffffcc" : "#ffff99");
+					}
+				},
+			});
+		},
+
+		"logs-table": () => {
+			const logs_type = $('[name="logs_type"]').val();
+			table = getTable("#logs-table", {
+				...getAjaxOption(`showlist-logs-${logs_type}`),
+				columnDefs: [{ targets: [-1], orderable: false }],
+				rowCallback(row, data) {
+					const log_type = data[1];
+					const colors = {
+						Add: "#99ff99",
+						Update: "#99ffff",
+						Delete: "#ffcc99",
+						Logout: "#cccccc",
+						Report: "#ccff99",
+					};
+					this.api()
+						.row(row)
+						.nodes()
+						.to$()
+						.css("background-color", colors[log_type]);
+				},
+			});
+		},
+
+		"schedules-table": () => {
+			table = getTable("#schedules-table", {
+				...getAjaxOption("showlist-schedules"),
+				columnDefs: [{ targets: [-1], orderable: false }],
+				rowCallback(row, data) {
+					const type = data[6];
+					const $node = this.api().row(row).nodes().to$();
+					if (type === "Today") $node.css("background-color", "#99ff99");
+					else if (type === "Ended") $node.css("background-color", "#cccccc");
+				},
+			});
+		},
+
+		"users-table": () => {
+			table = getTable("#users-table", {
+				...getAjaxOption("showlist-users"),
+				columnDefs: [{ targets: [-1], orderable: false }],
+				rowCallback(row, data) {
+					const [user_id, user_type] = data;
+					const $node = this.api().row(row).nodes().to$();
+					if (user_type === "Administrator")
+						$node.css("background-color", "#66ffff");
+					if (user_id === "U101") $node.css("background-color", "#ffff66");
+				},
+			});
+		},
+	};
+
+	if (tableMap.hasOwnProperty(tableID)) {
+		tableMap[tableID]();
+	}
 });
 
-$("#form_add_payment").submit(function( event ) { // -------------------------------- EXPIREMENTAL FUNCTION (Fixes dismissed modal when add_cash_input buttons are clicked)
-  event.preventDefault();
-});
+function isOdd(num) {
+	return num % 2;
+}
 
-$(document).ready(function() 
-{
-    if(tableID == "companies-table")
-    {
-    //datatables
-            table = $('#companies-table').DataTable({ 
-         
-                "processing": true, //Feature control the processing indicator.
-                "language": {
-                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
-                "serverSide": true, //Feature control DataTables' server-side processing mode.
-                "order": [], //Initial no order.
-         
-                // Load data for the table's content from an Ajax source
-                "ajax": {
-                    "url": "showlist-companies",
-                    "type": "POST",
-                },
-         
-                //Set column definition initialisation properties.
-                "columnDefs": [
-                { 
-                    "targets": [ -1 ], //last column
-                    "orderable": false, //set not orderable
-                },
-                {
-                    "targets": 5,
-                    "className": "text-center",
-                },
-                ],
-                "scrollX": true
-            });
-    }
-    if(tableID == "atm-table")
-    {
-    //datatables
-            table = $('#atm-table').DataTable({ 
-         
-                "processing": true, //Feature control the processing indicator.
-                "language": {
-                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
-                "serverSide": true, //Feature control DataTables' server-side processing mode.
-                "order": [], //Initial no order.
-         
-                // Load data for the table's content from an Ajax source
-                "ajax": {
-                    "url": "showlist-atm",
-                    "type": "POST",
-                },
-         
-                //Set column definition initialisation properties.
-                "columnDefs": [
-                { 
-                    "targets": [ -1 ], //last column
-                    "orderable": false, //set not orderable
-                },
-                {
-                    "targets": 5,
-                    "className": "text-center",
-                },
-                ],
-                "scrollX": true
-            });
-    }
-    else if(tableID == "clients-table")
-    {
-    //datatables
-            table = $('#clients-table').DataTable({ 
-         
-                "processing": true, //Feature control the processing indicator.
-                "language": {
-                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
-                "pageLength": 15,
-                "serverSide": true, //Feature control DataTables' server-side processing mode.
-                "order": [], //Initial no order.
-         
-                // Load data for the table's content from an Ajax source
-                "ajax": {
-                    "url": "showlist-clients",
-                    "type": "POST",
-                },
-         
-                //Set column definition initialisation properties.
-                "columnDefs": [
-                { 
-                    "targets": [ -2 ], // 2nd last column
-                    "orderable": false, //set not orderable
-                },
-                {
-                    "targets": 6,
-                    "className": "text-right large-font-col",
-                },
-                {
-                    "targets": 7,
-                    "className": "text-center large-font-col",
-                },
-                {
-                    "targets": 8,
-                    "className": "text-center",
-              },
-                ],
-
-                "rowCallback": function( row, data, index )
-                {
-                  var sex = data[9],
-                    $node1 = this.api().cells(row, 1).nodes().to$();
-                    $node2 = this.api().cells(row, 2).nodes().to$();
-
-                  if (sex == 'Male') 
-                  {
-                    $node1.css('background-color', '#d4d1ff');
-                    $node2.css('background-color', '#d4d1ff');
-                  }
-                  else
-                  {
-                    $node1.css('background-color', '#f5c4d3');
-                    $node2.css('background-color', '#f5c4d3');
-                  }
-
-                  var status = data[10],
-                    $node0 = this.api().cells(row, 0).nodes().to$();
-                    $node5 = this.api().cells(row, 5).nodes().to$();
-                    $node6 = this.api().cells(row, 6).nodes().to$();
-                    $node7 = this.api().cells(row, 7).nodes().to$();
-
-                  if (status == 'active') 
-                  { 
-                    if (isOdd(index) == 1) // to have different color when changed color is in sequence
-                    {
-                      $node0.css('background-color', '#b3fffa');
-                      $node5.css('background-color', '#b3fffa');
-                      $node6.css('background-color', '#b3fffa');
-                      $node7.css('background-color', '#b3fffa');
-                    }
-                    else
-                    {
-                      $node0.css('background-color', '#99ffff');
-                      $node5.css('background-color', '#99ffff');
-                      $node6.css('background-color', '#99ffff');
-                      $node7.css('background-color', '#99ffff');
-                    }
-                  }
-                },
-                "scrollX": true 
-            });
-    }
-    else if(tableID == "loans-table")
-    {
-    //datatables
-
-            // get client_id
-            var client_id = $('[name="client_id"]').val();
-
-            table = $('#loans-table').DataTable({ 
-         
-                "processing": true, //Feature control the processing indicator.
-                "language": {
-                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
-                "serverSide": true, //Feature control DataTables' server-side processing mode.
-                "order": [], //Initial no order.
-                "ordering": false,
-         
-                // Load data for the table's content from an Ajax source
-                "ajax": {
-                    "url": "../Profiles/Profiles_controller/ajax_list/" + client_id,
-                    "type": "POST",
-                },
-         
-                //Set column definition initialisation properties.
-                "columnDefs": [
-                { 
-                    "targets": [ -1 ], //last column
-                    "orderable": false, //set not orderable
-                },
-                {
-                      "targets": 1,
-                      "className": "text-right",
-                },
-                {
-                      "targets": 2,
-                      "className": "text-right",
-                },
-                {
-                      "targets": 3,
-                      "className": "text-right",
-                },
-                {
-                      "targets": 4,
-                      "className": "text-center",
-                },
-                {
-                      "targets": 5,
-                      "className": "text-center",
-                },
-                {
-                      "targets": 6,
-                      "className": "text-center",
-                },
-                {
-                      "targets": 7,
-                      "className": "text-center",
-                },
-                {
-                      "targets": 8,
-                      "className": "text-right",
-                },
-                {
-                      "targets": 9,
-                      "className": "text-right large-font-col",
-                },
-                {
-                      "targets": 10,
-                      "className": "text-right",
-                }
-                ],
-
-                "rowCallback": function( row, data, index )
-                {
-                  var status = data[6],
-                      $node = this.api().row(row).nodes().to$();
-
-                  if (status == 'New') 
-                  {
-                    $node.css('background-color', '#99ff99');
-                  }
-                  else if (status == 'Ongoing') 
-                  {
-                    $node.css('background-color', '#ccff99');
-                  }
-                  else
-                  {
-                    $node.css('background-color', '#cccccc');
-                  }
-                },
-                "scrollX": true 
-            });
-    }
-    else if(tableID == "client-portal-loans-table")
-    {
-    //datatables
-
-            // get client_id
-            var client_id = $('[name="client_id"]').val();
-
-            table = $('#client-portal-loans-table').DataTable({ 
-         
-                "processing": true, //Feature control the processing indicator.
-                "language": {
-                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
-                "serverSide": true, //Feature control DataTables' server-side processing mode.
-                "order": [], //Initial no order.
-                "ordering": false,
-                "searching": false,
-                "bPaginate": false,
-         
-                // Load data for the table's content from an Ajax source
-                "ajax": {
-                    "url": "../Client_portal/Client_portal_controller/ajax_list/" + client_id,
-                    "type": "POST",
-                },
-         
-                //Set column definition initialisation properties.
-                "columnDefs": [
-                { 
-                    "targets": [ -1 ], //last column
-                    "orderable": false, //set not orderable
-                },
-                {
-                      "targets": 2,
-                      "visible": false,
-                },
-                // {
-                //       "targets": 3,
-                //       "className": "text-right",
-                // },
-                // {
-                //       "targets": 4,
-                //       "className": "text-center",
-                // },
-                // {
-                //       "targets": 5,
-                //       "className": "text-center",
-                // },
-                // {
-                //       "targets": 6,
-                //       "className": "text-center",
-                // },
-                // {
-                //       "targets": 7,
-                //       "className": "text-center",
-                // },
-                // {
-                //       "targets": 8,
-                //       "className": "text-right",
-                // },
-                // {
-                //       "targets": 9,
-                //       "className": "text-right",
-                // },
-                // {
-                //       "targets": 10,
-                //       "className": "text-right",
-                // }
-                ],
-
-                "rowCallback": function( row, data, index )
-                {
-                  var status = data[2],
-                      $node = this.api().row(row).nodes().to$();
-
-                  if (status == 'New') 
-                  {
-                    $node.css('background-color', '#99ff99');
-                  }
-                  else if (status == 'Ongoing') 
-                  {
-                    $node.css('background-color', '#ccff99');
-                  }
-                  else
-                  {
-                    $node.css('background-color', '#cccccc');
-                  }
-                },
-                "scrollX": true 
-            });
-    }
-    else if(tableID == "transactions-table")
-    {
-    //datatables
-
-            // get loan_id
-            var loan_id = $('[name="loan_id"]').val();
-
-            table = $('#transactions-table').DataTable({ 
-         
-                "processing": true, //Feature control the processing indicator.
-                "language": {
-                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
-                "serverSide": true, //Feature control DataTables' server-side processing mode.
-                "order": [], //Initial no order.
-                "ordering": false,
-                "searching": false,
-                "bPaginate": false,
-         
-                // Load data for the table's content from an Ajax source
-                "ajax": {
-                    "url": "../../../Transactions/Transactions_controller/ajax_list/" + loan_id,
-                    "type": "POST",
-                },
-         
-                //Set column definition initialisation properties.
-                "columnDefs": [
-                { 
-                    "targets": [ -1 ], //last column
-                    "orderable": false, //set not orderable
-                },
-                {
-                      "targets": 3,
-                      "className": "text-right",
-                },
-                {
-                      "targets": 4,
-                      "className": "text-right",
-                },
-                {
-                      "targets": 5,
-                      "className": "text-right large-font-col",
-                },
-                {
-                      "targets": 7,
-                      "className": "text-center",
-                }
-                ],
-
-                "rowCallback": function( row, data, index ) {
-                  var type = data[2],
-                      $node = this.api().row(row).nodes().to$();
-
-                  // set color based on log type
-                  if (type == 'Trans. Start') {
-                     $node.css('background-color', '#99ff99');
-                  }
-                  else if (type == 'Paid Partial') {
-                     $node.css('background-color', '#ccff99');
-                  }
-                  else if (type == 'Paid Full') {
-                     $node.css('background-color', '#cccccc');
-                  }
-                  else if (type == 'Add Interest') {
-                     $node.css('background-color', '#99ffff');
-                  }
-                  else if (type == 'Add Amount') {
-                     $node.css('background-color', '#99cccc');
-                  }
-                  else if (type == 'Discount Amount') {
-                     $node.css('background-color', '#ffcc99');
-                  }
-                },    
-
-                "scrollX": true 
-            });
-    }
-    else if(tableID == "client-portal-transactions-table")
-    {
-    //datatables
-
-            // get loan_id
-            var loan_id = $('[name="loan_id"]').val();
-
-            table = $('#client-portal-transactions-table').DataTable({ 
-         
-                "processing": true, //Feature control the processing indicator.
-                "language": {
-                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
-                "serverSide": true, //Feature control DataTables' server-side processing mode.
-                "order": [], //Initial no order.
-                "ordering": false,
-                "searching": false,
-                "bPaginate": false,
-         
-                // Load data for the table's content from an Ajax source
-                "ajax": {
-                    "url": "../../../Trans_cp/Trans_cp_controller/ajax_list/" + loan_id,
-                    "type": "POST",
-                },
-         
-                //Set column definition initialisation properties.
-                "columnDefs": [
-                { 
-                    "targets": [ -1 ], //last column
-                    "orderable": false, //set not orderable
-                },
-                {
-                      "targets": 3,
-                      "className": "text-right",
-                },
-                {
-                      "targets": 4,
-                      "className": "text-right",
-                },
-                {
-                      "targets": 5,
-                      "className": "text-right",
-                },
-                {
-                      "targets": 7,
-                      "className": "text-center",
-                }
-                ],
-
-                "rowCallback": function( row, data, index ) {
-                  var type = data[2],
-                      $node = this.api().row(row).nodes().to$();
-
-                  // set color based on log type
-                  if (type == 'Trans. Start') {
-                     $node.css('background-color', '#99ff99');
-                  }
-                  else if (type == 'Paid Partial') {
-                     $node.css('background-color', '#ccff99');
-                  }
-                  else if (type == 'Paid Full') {
-                     $node.css('background-color', '#cccccc');
-                  }
-                  else if (type == 'Add Interest') {
-                     $node.css('background-color', '#99ffff');
-                  }
-                  else if (type == 'Add Amount') {
-                     $node.css('background-color', '#99cccc');
-                  }
-                  else if (type == 'Discount Amount') {
-                     $node.css('background-color', '#ffcc99');
-                  }
-                },    
-
-                "scrollX": true 
-            });
-    }
-    else if(tableID == "capital-table")
-    {
-    //datatables
-
-            table = $('#capital-table').DataTable({ 
-         
-                "processing": true, //Feature control the processing indicator.
-                "language": {
-                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
-                "serverSide": true, //Feature control DataTables' server-side processing mode.
-                "order": [], //Initial no order.
-         
-                // Load data for the table's content from an Ajax source
-                "ajax": {
-                    "url": "showlist-capital",
-                    "type": "POST",
-                },
-         
-                //Set column definition initialisation properties.
-                "columnDefs": [
-                { 
-                    "targets": [ -1 ], //last column
-                    "orderable": false, //set not orderable
-                },
-                {
-                      "targets": 1,
-                      "className": "text-center",
-                },
-                {
-                      "targets": 2,
-                      "className": "text-right",
-                },
-                {
-                      "targets": 3,
-                      "className": "text-right",
-                },
-                {
-                      "targets": 4,
-                      "className": "text-center",
-                },
-                {
-                      "targets": 5,
-                      "className": "text-center",
-                }
-                ],
-
-                "rowCallback": function( row, data, index ) {
-                  var amount = parseFloat(data[2]),
-                      $node = this.api().row(row).nodes().to$();
-
-                  // set color based on log type
-                  if (amount >= 0) {
-                      if (isOdd(index) == 1) // to have different color when changed color is in sequence
-                      {
-                        $node.css('background-color', '#99cccc');
-                      }
-                      else
-                      {
-                        $node.css('background-color', '#aad5d5');
-                      }
-                  }
-                  else {
-                      if (isOdd(index) == 1) // to have different color when changed color is in sequence
-                      {
-                        $node.css('background-color', '#ffcc99');
-                      }
-                      else
-                      {
-                        $node.css('background-color', '#ffbf80');
-                      }
-                  }
-                },    
-
-                "scrollX": true 
-            });
-    }
-    else if(tableID == "top-clients-list-table")
-    {
-    //datatables
-
-            table = $('#top-clients-list-table').DataTable({ 
-         
-                "processing": true, //Feature control the processing indicator.
-                "language": {
-                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
-                "serverSide": true, //Feature control DataTables' server-side processing mode.
-                "order": [], //Initial no order.
-                "ordering": false,
-                "searching": false,
-         
-                // Load data for the table's content from an Ajax source
-                "ajax": {
-                    "url": "showlist-statistics",
-                    "type": "POST",
-                },
-         
-                //Set column definition initialisation properties.
-                "columnDefs": [
-                { 
-                    "targets": [ -1 ], //last column
-                    "orderable": false, //set not orderable
-                },
-                {
-                    "targets": 2,
-                    "className": "text-right",
-                },
-                {
-                    "targets": 3,
-                    "className": "text-right",
-                },
-                {
-                    "targets": 4,
-                    "className": "text-right",
-            },
-                {
-                    "targets": 5,
-                    "className": "text-right",
-                },
-                {
-                    "targets": 6,
-                    "className": "text-center",
-                }
-                ],  
-
-                "rowCallback": function( row, data, index ) {
-                  var has_balance = parseFloat(data[4]),
-                      $node = this.api().row(row).nodes().to$();
-
-                  // set color based on log type
-                  if (has_balance != 0) {
-                    //  $node.css('background-color', '#ffff66');
-                    
-                    if (isOdd(index) == 1) // to have different color when changed color is in sequence
-                    {
-                      $node.css('background-color', '#ffffcc');
-                    }
-                    else
-                    {
-                      $node.css('background-color', '#ffff99');
-                    }
-                  }
-
-                },   
-
-                "scrollX": true 
-            });
-    }
-
-
-    else if(tableID == "logs-table")
-    {
-            var logs_type = $('[name="logs_type"]').val();
-
-            url = 'showlist-logs-' + logs_type;
-
-            table = $('#logs-table').DataTable({ 
-         
-                "processing": true, //Feature control the processing indicator.
-                "language": {
-                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
-                "serverSide": true, //Feature control DataTables' server-side processing mode.
-                "order": [], //Initial no order.
-         
-                // Load data for the table's content from an Ajax source
-                "ajax": {
-                    "url": url,
-                    "type": "POST",
-                },
-         
-                //Set column definition initialisation properties.
-                "columnDefs": [
-                { 
-                    "targets": [ -1 ], //last column
-                    "orderable": false, //set not orderable
-                },
-                ],
-
-                "rowCallback": function( row, data, index ) {
-                  var log_type = data[1],
-                      $node = this.api().row(row).nodes().to$();
-
-                  // set color based on log type
-                  if (log_type == 'Add') {
-                     $node.css('background-color', '#99ff99');
-                  }
-                  else if (log_type == 'Update') {
-                     $node.css('background-color', '#99ffff');
-                  }
-                  else if (log_type == 'Delete') {
-                     $node.css('background-color', '#ffcc99');
-                  }
-                  else if (log_type == 'Logout') {
-                     $node.css('background-color', '#cccccc');
-                  }
-                  else if (log_type == 'Report') {
-                     $node.css('background-color', '#ccff99');
-                  }
-                }               
-            });           
-    }
-    
-    else if(tableID == "schedules-table")
-    {
-            table = $('#schedules-table').DataTable({ 
-         
-                "processing": true, //Feature control the processing indicator.
-                "language": {
-                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
-                "serverSide": true, //Feature control DataTables' server-side processing mode.
-                "order": [], //Initial no order.
-         
-                // Load data for the table's content from an Ajax source
-                "ajax": {
-                    "url": "showlist-schedules",
-                    "type": "POST",
-                },
-         
-                //Set column definition initialisation properties.
-                "columnDefs": [
-                { 
-                    "targets": [ -1 ], //last column
-                    "orderable": false, //set not orderable
-                },
-                ],
-
-                "rowCallback": function( row, data, index ) {
-                  var log_type = data[6],
-                      $node = this.api().row(row).nodes().to$();
-
-                  // set color based on log type
-                  if (log_type == 'Today') {
-                     $node.css('background-color', '#99ff99');
-                  }      
-                  else if (log_type == 'Ended') {
-                     $node.css('background-color', '#cccccc');
-                  }
-                  
-                }               
-            });           
-    }
-
-    else if(tableID == "users-table")
-    {
-            table = $('#users-table').DataTable({ 
-         
-                "processing": true, //Feature control the processing indicator.
-                "language": {
-                            processing: '<i style="color: gray;" class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span> '},
-                "serverSide": true, //Feature control DataTables' server-side processing mode.
-                "order": [], //Initial no order.
-         
-                // Load data for the table's content from an Ajax source
-                "ajax": {
-                    "url": "showlist-users",
-                    "type": "POST",
-                },
-         
-                //Set column definition initialisation properties.
-                "columnDefs": [
-                { 
-                    "targets": [ -1 ], //last column
-                    "orderable": false, //set not orderable
-                },
-                {
-                    "targets": 7,
-                    "className": "text-center",
-                }
-                ],
-
-                "rowCallback": function( row, data, index ) {
-                  var user_type = data[1], user_id = data[0]
-                      $node = this.api().row(row).nodes().to$();
-
-                  // set color to light cyan if admin  
-                  if (user_type == 'Administrator') {
-                     $node.css('background-color', '#66ffff');
-                  }
-                  // set color to light gold if super admin
-                  if (user_id == 'U101') {
-                     $node.css('background-color', '#ffff66');
-                  }
-                },
-                "scrollX": true              
-            });           
-    }
-         
-});
-
-function isOdd(num) { return num % 2;}
-
-// ------------------------------------------------- 
+// -------------------------------------------------
 
 // reset file path everytime modal_form_view is closed - for image upload
-$('#modal_form_view').on('hidden.bs.modal', function(){
-    $("#userfile").val("");
+$("#modal_form_view").on("hidden.bs.modal", function () {
+	$("#userfile").val("");
 });
 
 // ============================================================ DASHBOARD BACKUP DB SECTION =======================================
 
-
-function back_up_db()
-{
-    $.confirm({
-        title: 'Confirm Backup',
-        theme: 'modern',
-        type: 'blue',
-        icon: 'fa fa-database',
-        content: 'Are you sure to backup the database?',
-        buttons: {
-            confirm: function () {
-                window.location.href='database-backup.php';
-            },
-            cancel: function () {
-                // close
-            },
-        }
-    });
+function back_up_db() {
+	$.confirm({
+		title: "Confirm Backup",
+		theme: "modern",
+		type: "blue",
+		icon: "fa fa-database",
+		content: "Are you sure to backup the database?",
+		buttons: {
+			confirm: function () {
+				window.location.href = "database-backup.php";
+			},
+			cancel: function () {
+				// close
+			},
+		},
+	});
 }
-
 
 // ================================================================== VIEW IMAGE SECTION ==========================================
 
+function readURL(input, image) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
 
-function readURL(input,image) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        
-        reader.onload = function (e) {
-            $(image).attr('src', e.target.result);
-        }
-        
-        reader.readAsDataURL(input.files[0]);
-    }
+		reader.onload = function (e) {
+			$(image).attr("src", e.target.result);
+		};
+
+		reader.readAsDataURL(input.files[0]);
+	}
 }
 
-$("#userfile1").change(function(){
-    readURL(this,'#image1');
+$("#userfile1").change(function () {
+	readURL(this, "#image1");
 });
 
-$("#userfile2").change(function(){
-    readURL(this,'#image2');
+$("#userfile2").change(function () {
+	readURL(this, "#image2");
 });
 
-$("#userfile3").change(function(){
-    readURL(this,'#image3');
+$("#userfile3").change(function () {
+	readURL(this, "#image3");
 });
-
 
 // ================================================== VIEW SECTION =================================================================
 
-
-
-function view_profile(client_id)
-{
-     window.location.href='profiles-page/' + client_id;
+function view_profile(client_id) {
+	window.location.href = "profiles-page/" + client_id;
 }
 
-function view_loan(client_id, loan_id)
-{
-     window.location.href='transactions-page/' + client_id + '/' + loan_id;
+function view_loan(client_id, loan_id) {
+	window.location.href = "transactions-page/" + client_id + "/" + loan_id;
 }
 
-function view_cp_loan(client_id, loan_id)
-{
-     window.location.href='transactions-client-page/' + client_id + '/' + loan_id;
+function view_cp_loan(client_id, loan_id) {
+	window.location.href =
+		"transactions-client-page/" + client_id + "/" + loan_id;
 }
 
-function edit_privileges(id) // for customer table
-{
-    save_method = 'update-privileges';
-    $('#form')[0].reset(); // reset form on modals
-    $('#form_privileges')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
- 
-    //Ajax Load data from ajax
-    $.ajax({
-        url : "Users/Users_controller/ajax_edit/" + id,
-        type: "GET",
-        dataType: "JSON",
-        success: function(data)
-        {
-            $('[name="user_id"]').val(data.user_id);
-            $('[name="administrator"]').val(data.administrator).prop('selected', true);
-            $('[name="current_administrator"]').val(data.administrator);
-            
-            //$('[name="report"]').val(data.report).prop('selected', true);
+// Helper functions for modal operations
+const resetForms = (forms = ["#form"]) => {
+	forms.forEach((form) => document.querySelector(form)?.reset());
+	$(".form-group").removeClass("has-error");
+	$(".help-block").empty();
+};
 
-            $('#modal_form_privileges').modal('show'); // show bootstrap modal when complete loaded
-            $('.modal-title').text('Edit Privileges'); // Set title to Bootstrap modal title
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
-}
+const showModal = (modalId, title) => {
+	$(modalId).modal("show");
+	$(".modal-title").text(title);
+};
 
-function view_edit_user(id) // for customer table
-{
-    save_method = 'update-user';
-    $('#form')[0].reset(); // reset form on modals
-    $('#form_privileges')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
- 
-    //Ajax Load data from ajax
-    $.ajax({
-        url : "Users/Users_controller/ajax_edit/" + id,
-        type: "GET",
-        dataType: "JSON",
-        success: function(data)
-        {
-            $('[name="user_id"]').val(data.user_id);
-            $('[name="username"]').val(data.username);
-            $('[name="password"]').val(data.password);
-            $('[name="repassword"]').val(data.password);
-            $('[name="current_username"]').val(data.username);
-            $('[name="lastname"]').val(data.lastname);
-            $('[name="firstname"]').val(data.firstname);
-            $('[name="current_name"]').val(data.lastname + data.firstname);
-            $('[name="contact"]').val(data.contact);
-            $('[name="email"]').val(data.email);
-            $('[name="address"]').val(data.address);
+const handleAjaxError = () => {
+	alert("Error get data from ajax");
+};
 
-            $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-            $('.modal-title').text('Edit User'); // Set title to Bootstrap modal title
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
-}
+const fetchData = (url, successCallback) => {
+	$.ajax({
+		url,
+		type: "GET",
+		dataType: "JSON",
+		success: successCallback,
+		error: handleAjaxError,
+	});
+};
 
+// === Privileges ===
+const edit_privileges = (id) => {
+	saveMethod = "update-privileges";
+	resetForms(["#form", "#form_privileges"]);
 
-// ================================================== ADD SECTION ======================================================================
+	fetchData(`Users/Users_controller/ajax_edit/${id}`, (data) => {
+		$('[name="user_id"]').val(data.user_id);
+		$('[name="administrator"]').val(data.administrator).prop("selected", true);
+		$('[name="current_administrator"]').val(data.administrator);
+		showModal("#modal_form_privileges", "EDIT PRIVILEGES");
+	});
+};
 
-function add_company() // ---> calling for the Add Modal form
-{
-    save_method = 'add-company';
-    text = 'Add Company';
-    
-    $('#form')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
-    $('#modal_form').modal('show'); // show bootstrap modal
-    $('.modal-title').text(text); // Set Title to Bootstrap modal title
-}
+const view_edit_user = (id) => {
+	saveMethod = "update-user";
+	resetForms(["#form", "#form_privileges"]);
 
-function add_atm() // ---> calling for the Add Modal form
-{
-    save_method = 'add-atm';
-    text = 'Add ATM Bank';
-    
-    $('#form')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
-    $('#modal_form').modal('show'); // show bootstrap modal
-    $('.modal-title').text(text); // Set Title to Bootstrap modal title
-}
+	fetchData(`Users/Users_controller/ajax_edit/${id}`, (data) => {
+		$('[name="user_id"]').val(data.user_id);
+		$('[name="username"]').val(data.username);
+		$('[name="repassword"]').val(data.password);
+		$('[name="current_username"]').val(data.username);
+		$('[name="lastname"]').val(data.lastname);
+		$('[name="firstname"]').val(data.firstname);
+		$('[name="current_name"]').val(data.lastname + data.firstname);
+		$('[name="contact"]').val(data.contact);
+		$('[name="email"]').val(data.email);
+		$('[name="address"]').val(data.address);
+		showModal("#modal_form", "EDIT USER");
+	});
+};
 
-function add_client() // ---> calling for the Add Modal form
-{
-    save_method = 'add-client';
-    text = 'Add Client';
-    
-    $('#form')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
-    $('#modal_form').modal('show'); // show bootstrap modal
-    $('.modal-title').text(text); // Set Title to Bootstrap modal title
-}
+// === Add Section ===
+const add_company = () => {
+	saveMethod = "add-company";
+	resetForms();
+	showModal("#modal_form", "ADD COMPANY");
+};
 
-function add_loan() // ---> calling for the Add Modal form
-{
-    save_method = 'add-loan';
-    text = 'Add New Loan';
-    
-    $('#form_add_loan')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
-    $('#modal_form').modal('show'); // show bootstrap modal
-    $('.modal-title').text(text); // Set Title to Bootstrap modal title
-}
+const add_atm = () => {
+	saveMethod = "add-atm";
+	resetForms();
+	showModal("#modal_form", "ADD ATM BANK");
+};
 
-function add_payment() // ---> calling for the Add Modal form
-{
-    save_method = 'add-payment';
-    text = 'Add Payment';
-    
-    $('#form_add_payment')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
-    $('#modal_form_add_payment').modal('show'); // show bootstrap modal
-    $('.modal-title').text(text); // Set Title to Bootstrap modal title
-}
+const add_client = () => {
+	saveMethod = "add-client";
+	resetForms();
+	showModal("#modal_form", "ADD CLIENT");
+};
 
+const add_loan = () => {
+	saveMethod = "add-loan";
+	resetForms(["#form_add_loan"]);
+	$('[name="date_start"]').val(today);
+	showModal("#modal_form", "ADD NEW LOAN");
+};
 
-function add_interest() // ---> calling for the Add Modal form
-{
-    save_method = 'add-interest';
-    text = 'Add Interest';
-    
-    $('#form_add_interest')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
-    $('#modal_form_add_interest').modal('show'); // show bootstrap modal
-    $('.modal-title').text(text); // Set Title to Bootstrap modal title
-}
+const add_payment = () => {
+	saveMethod = "add-payment";
+	resetForms(["#form_add_payment"]);
+	$('[name="date"]').val(today);
+	showModal("#modal_form_add_payment", "ADD PAYMENT");
+};
 
+const quick_pay = (loan_id, total_balance) => {
+	saveMethod = "quick-payment";
+	resetForms(["#form_quick_payment", "#form_add_loan"]);
+	$('[name="loan_id"]').val(loan_id);
+	$('[name="total_balance"]').val(total_balance);
+	$('[name="date"]').val(today);
+	showModal("#modal_form_quick_payment", "QUICK PAY");
+};
 
-function adjust_loan() // ---> calling for the Add Modal form
-{
-    save_method = 'adjust-loan';
-    text = 'Adjust Loan';
-    
-    $('#form_adjust_loan')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
-    $('#modal_form_adjust_loan').modal('show'); // show bootstrap modal
-    $('.modal-title').text(text); // Set Title to Bootstrap modal title
-}
+const add_interest = () => {
+	saveMethod = "add-interest";
+	resetForms(["#form_add_interest"]);
+	showModal("#modal_form_add_interest", "ADD INTEREST");
+};
 
-function adjust_capital() // ---> calling for the Add Modal form
-{
-    save_method = 'adjust-capital';
-    text = 'Adjust Capital';
-    
-    $('#form')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
-    $('#modal_form').modal('show'); // show bootstrap modal
-    $('.modal-title').text(text); // Set Title to Bootstrap modal title
-}
+const adjust_loan = () => {
+	saveMethod = "adjust-loan";
+	resetForms(["#form_adjust_loan"]);
+	$('[name="date"]').val(today);
+	showModal("#modal_form_adjust_loan", "ADJUST LOAN");
+};
 
-function add_schedule() // ---> calling for the Add Modal form
-{
-    save_method = 'add-schedule';
-    text = 'Add Appointment Schedule';
-    
-    $('#form')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
-    $('#modal_form').modal('show'); // show bootstrap modal
-    $('.modal-title').text(text); // Set Title to Bootstrap modal title
-}
+const adjust_capital = () => {
+	saveMethod = "adjust-capital";
+	resetForms();
+	showModal("#modal_form", "ADJUST CAPITAL");
+};
 
+const add_schedule = () => {
+	saveMethod = "add-schedule";
+	resetForms();
+	showModal("#modal_form", "ADD APPOINTMENT SCHEDULE");
+};
 
-function add_user()
-{
-    save_method = 'add-user';
+const add_user = () => {
+	saveMethod = "add-user";
+	resetForms(["#form", "#form_privileges"]);
+	showModal("#modal_form", "ADD USER");
+};
 
-    $('#form')[0].reset(); // reset form on modals
-    $('#form_privileges')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
-    $('#modal_form').modal('show'); // show bootstrap modal
-    $('.modal-title').text('Add User'); // Set Title to Bootstrap modal title
-}
+// === Edit Section ===
+const edit_company = (id) => {
+	saveMethod = "update-company";
+	resetForms();
 
+	fetchData(`Companies/Companies_controller/ajax_edit/${id}`, (data) => {
+		$('[name="comp_id"]').val(data.comp_id);
+		$('[name="name"]').val(data.name);
+		$('[name="address"]').val(data.address);
+		$('[name="remarks"]').val(data.remarks);
+		$('[name="current_name"]').val(data.name);
+		showModal("#modal_form", "EDIT COMPANY");
+	});
+};
 
-// ================================================ EDIT SECTION =========================================================================
+const edit_atm = (id) => {
+	saveMethod = "update-atm";
+	resetForms();
 
+	fetchData(`Atm/Atm_controller/ajax_edit/${id}`, (data) => {
+		$('[name="atm_id"]').val(data.atm_id);
+		$('[name="name"]').val(data.name);
+		$('[name="remarks"]').val(data.remarks);
+		$('[name="current_name"]').val(data.name);
+		showModal("#modal_form", "EDIT ATM BANK");
+	});
+};
 
+const edit_client = (id) => {
+	saveMethod = "update-client";
+	resetForms();
 
-function edit_company(id)
-{
-    save_method = 'update-company';
-    $('#form')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
- 
-    //Ajax Load data from ajax
-    $.ajax({
-        url : "Companies/Companies_controller/ajax_edit/" + id,
-        type: "GET",
-        dataType: "JSON",
-        success: function(data)
-        {
-            $('[name="comp_id"]').val(data.comp_id);
-            $('[name="name"]').val(data.name);
-            $('[name="address"]').val(data.address);
-            $('[name="remarks"]').val(data.remarks);
-            $('[name="current_name"]').val(data.name);
+	fetchData(`Clients/Clients_controller/ajax_edit/${id}`, (data) => {
+		$('[name="client_id"]').val(data.client_id);
+		$('[name="lname"]').val(data.lname);
+		$('[name="fname"]').val(data.fname);
+		$('[name="sex"]').val(data.sex).prop("selected", true);
+		$('[name="contact"]').val(data.contact);
+		$('[name="address"]').val(data.address);
+		$('[name="comp_id"]').val(data.comp_id).prop("selected", true);
+		$('[name="job"]').val(data.job);
+		$('[name="salary"]').val(data.salary);
+		$('[name="atm_id"]').val(data.atm_id).prop("selected", true);
+		$('[name="atm_type"]').val(data.atm_type).prop("selected", true);
+		$('[name="pin"]').val(data.pin);
+		$('[name="remarks"]').val(data.remarks);
+		$('[name="current_name"]').val(data.lname + data.fname);
+		showModal("#modal_form", "EDIT CLIENT");
+	});
+};
 
-            $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-            $('.modal-title').text('Edit Company'); // Set title to Bootstrap modal title
- 
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
-}
+const edit_loan = (id) => {
+	saveMethod = "update-loan";
+	resetForms(["#form_add_loan"]);
 
-function edit_atm(id)
-{
-    save_method = 'update-atm';
-    $('#form')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
- 
-    //Ajax Load data from ajax
-    $.ajax({
-        url : "Atm/Atm_controller/ajax_edit/" + id,
-        type: "GET",
-        dataType: "JSON",
-        success: function(data)
-        {
-            $('[name="atm_id"]').val(data.atm_id);
-            $('[name="name"]').val(data.name);
-            $('[name="branch"]').val(data.branch);
-            $('[name="remarks"]').val(data.remarks);
-            $('[name="current_name"]').val(data.name);
+	fetchData(`../Profiles/Profiles_controller/ajax_edit/${id}`, (data) => {
+		$('[name="loan_id"]').val(data.loan_id);
+		$('[name="amount"]').val(data.amount);
+		$('[name="interest"]').val(data.interest);
+		$('[name="total"]').val(data.total);
+		$('[name="date_start"]').val(data.date_start);
+		$('[name="date_end"]').val(data.date_end);
+		$('[name="remarks"]').val(data.remarks);
+		showModal("#modal_form", "EDIT LOAN");
+	});
+};
 
-            $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-            $('.modal-title').text('Edit ATM Bank'); // Set title to Bootstrap modal title
- 
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
-}
+const edit_loan_date_remarks = (id) => {
+	saveMethod = "update-loan-date-remarks";
+	resetForms(["#form_edit_date_remarks"]);
 
-function edit_client(id)
-{
-    save_method = 'update-client';
-    $('#form')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
- 
-    //Ajax Load data from ajax
-    $.ajax({
-        url : "Clients/Clients_controller/ajax_edit/" + id,
-        type: "GET",
-        dataType: "JSON",
-        success: function(data)
-        {
-            $('[name="client_id"]').val(data.client_id);
-            $('[name="lname"]').val(data.lname);
-            $('[name="fname"]').val(data.fname);
+	fetchData(`../Profiles/Profiles_controller/ajax_edit/${id}`, (data) => {
+		$('[name="loan_id"]').val(data.loan_id);
+		$('[name="date_start"]').val(data.date_start);
+		$('[name="remarks"]').val(data.remarks);
+		showModal("#modal_form_edit_date_remarks", "EDIT LOAN DATE/REMARKS");
+	});
+};
 
-            $('[name="sex"]').val(data.sex).prop('selected', true);
-            $('[name="contact"]').val(data.contact);
-            $('[name="address"]').val(data.address);
-            
-            $('[name="comp_id"]').val(data.comp_id).prop('selected', true);
-            $('[name="job"]').val(data.job);
-            $('[name="salary"]').val(data.salary);
+const edit_trans_date_remarks = (id) => {
+	saveMethod = "update-trans-date-remarks";
+	resetForms(["#form_edit_date_remarks"]);
 
-            $('[name="atm_id"]').val(data.atm_id).prop('selected', true);
-            $('[name="atm_type"]').val(data.atm_type).prop('selected', true);
-            $('[name="pin"]').val(data.pin)
+	fetchData(
+		`../../../Transactions/Transactions_controller/ajax_edit/${id}`,
+		(data) => {
+			$('[name="trans_id"]').val(data.trans_id);
+			$('[name="total"]').val(data.total);
+			$('[name="date"]').val(data.date);
+			$('[name="remarks"]').val(data.remarks);
+			showModal(
+				"#modal_form_edit_date_remarks",
+				"EDIT TRANSACTION DATE/REMARKS"
+			);
+		}
+	);
+};
 
-            $('[name="remarks"]').val(data.remarks);
-            $('[name="current_name"]').val(data.lname + data.fname);
+const edit_capital_date_remarks = (id) => {
+	saveMethod = "update-capital-date-remarks";
+	resetForms(["#form_edit_date_remarks"]);
 
-            $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-            $('.modal-title').text('Edit Client'); // Set title to Bootstrap modal title
- 
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
-}
+	fetchData(`Capital/Capital_controller/ajax_edit/${id}`, (data) => {
+		$('[name="capital_id"]').val(data.capital_id);
+		$('[name="date"]').val(data.date);
+		$('[name="remarks"]').val(data.remarks);
+		showModal(
+			"#modal_form_edit_date_remarks",
+			"EDIT CAPITAL ADJUSTMENT DATE/REMARKS"
+		);
+	});
+};
 
-function edit_loan(id)
-{
-    save_method = 'update-loan';
-    $('#form_add_loan')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
- 
-    //Ajax Load data from ajax
-    $.ajax({
-        url : "../Profiles/Profiles_controller/ajax_edit/" + id,
-        type: "GET",
-        dataType: "JSON",
-        success: function(data)
-        {
-            $('[name="loan_id"]').val(data.loan_id);
-            
-            $('[name="amount"]').val(data.amount);
-            $('[name="interest"]').val(data.interest);
-            $('[name="total"]').val(data.total);
+const edit_schedule = (id) => {
+	saveMethod = "update-schedule";
+	resetForms();
 
-            $('[name="date_start"]').val(data.date_start);
-            $('[name="date_end"]').val(data.date_end);
-            
-            $('[name="remarks"]').val(data.remarks);
-            
-            $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-            $('.modal-title').text('Edit Loan'); // Set title to Bootstrap modal title
- 
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
-}
+	fetchData(`Schedules/Schedules_controller/ajax_edit/${id}`, (data) => {
+		$('[name="sched_id"]').val(data.sched_id);
+		$('[name="title"]').val(data.title);
+		$('[name="date"]').val(data.date);
+		$('[name="time"]').val(data.time);
+		$('[name="remarks"]').val(data.remarks);
+		showModal("#modal_form", "EDIT APPOINTMENT SCHEDULE");
+	});
+};
 
-function edit_loan_date_remarks(id)
-{
-    save_method = 'update-loan-date-remarks';
-    $('#form_edit_date_remarks')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
- 
-    //Ajax Load data from ajax
-    $.ajax({
-        url : "../Profiles/Profiles_controller/ajax_edit/" + id,
-        type: "GET",
-        dataType: "JSON",
-        success: function(data)
-        {
-            $('[name="loan_id"]').val(data.loan_id);
-
-            $('[name="date_start"]').val(data.date_start);
-            $('[name="remarks"]').val(data.remarks);
-            
-            $('#modal_form_edit_date_remarks').modal('show'); // show bootstrap modal when complete loaded
-            $('.modal-title').text('Edit Loan Date/Remarks'); // Set title to Bootstrap modal title
- 
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
-}
-
-function edit_trans_date_remarks(id)
-{
-    save_method = 'update-trans-date-remarks';
-    $('#form_edit_date_remarks')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
- 
-    //Ajax Load data from ajax
-    $.ajax({
-        url : "../../../Transactions/Transactions_controller/ajax_edit/" + id,
-        type: "GET",
-        dataType: "JSON",
-        success: function(data)
-        {
-            $('[name="trans_id"]').val(data.trans_id);
-            $('[name="total"]').val(data.total);
-            $('[name="date"]').val(data.date);
-            $('[name="remarks"]').val(data.remarks);
-
-            $('#modal_form_edit_date_remarks').modal('show'); // show bootstrap modal when complete loaded
-            $('.modal-title').text('Edit Transaction Date/Remarks'); // Set title to Bootstrap modal title
- 
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
-}
-
-function edit_capital_date_remarks(id)
-{
-    save_method = 'update-capital-date-remarks';
-    $('#form_edit_date_remarks')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
- 
-    //Ajax Load data from ajax
-    $.ajax({
-        url : "Capital/Capital_controller/ajax_edit/" + id,
-        type: "GET",
-        dataType: "JSON",
-        success: function(data)
-        {
-            $('[name="capital_id"]').val(data.capital_id);
-
-            $('[name="date"]').val(data.date);
-            $('[name="remarks"]').val(data.remarks);
-
-            $('#modal_form_edit_date_remarks').modal('show'); // show bootstrap modal when complete loaded
-            $('.modal-title').text('Edit Capital Adjustment Date/Remarks'); // Set title to Bootstrap modal title
- 
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
-}
-
-function edit_schedule(id)
-{
-    save_method = 'update-schedule';
-    $('#form')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
- 
-    //Ajax Load data from ajax
-    $.ajax({
-        url : "Schedules/Schedules_controller/ajax_edit/" + id,
-        type: "GET",
-        dataType: "JSON",
-        success: function(data)
-        {
-            $('[name="sched_id"]').val(data.sched_id);
-            $('[name="title"]').val(data.title);
-            $('[name="date"]').val(data.date);
-            $('[name="time"]').val(data.time);
-            $('[name="remarks"]').val(data.remarks);
-
-            $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-            $('.modal-title').text('Edit Appointment Schedule'); // Set title to Bootstrap modal title
- 
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
-}
-
-function reload_table()
-{
-    table.ajax.reload(null,false); //reload datatable ajax
+function reload_table() {
+	table.ajax.reload(null, false); //reload datatable ajax
 }
 
 // =================================================== SAVE SECTION =====================================================================
 
-
-function cancel_trans()
-{
-    window.location.href='../../../profiles-page/' + $('[name="client_id"]').val();
+function cancel_trans() {
+	window.location.href =
+		"../../../profiles-page/" + $('[name="client_id"]').val();
 }
 
-function clients_page()
-{
-    window.location.href='../clients-page';
+function clients_page() {
+	window.location.href = "../clients-page";
 }
 
-function cancel_cp_trans()
-{
-    window.location.href='../../../client-portal-page/' + $('[name="client_id"]').val();
+function cancel_cp_trans() {
+	window.location.href =
+		"../../../client-portal-page/" + $('[name="client_id"]').val();
 }
 
-function save()
-{
-    // resetting errors in form validations
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
+// Utility to map save methods to URLs and form IDs
+const saveConfig = {
+	"add-client": { url: "Clients/Clients_controller/ajax_add" },
+	"update-client": { url: "Clients/Clients_controller/ajax_update" },
+	"add-company": { url: "Companies/Companies_controller/ajax_add" },
+	"update-company": { url: "Companies/Companies_controller/ajax_update" },
+	"add-atm": { url: "Atm/Atm_controller/ajax_add" },
+	"update-atm": { url: "Atm/Atm_controller/ajax_update" },
+	"add-loan": {
+		url: "../Profiles/Profiles_controller/ajax_add",
+		form: "#form_add_loan",
+	},
+	"update-loan": { url: "../Profiles/Profiles_controller/ajax_update" },
+	"update-loan-date-remarks": {
+		url: "../Profiles/Profiles_controller/ajax_update_date_remarks",
+		form: "#form_edit_date_remarks",
+	},
+	"add-payment": {
+		url: "../../../Transactions/Transactions_controller/ajax_paid",
+		form: "#form_add_payment",
+	},
+	"quick-payment": {
+		url: "../Profiles/Profiles_controller/ajax_paid",
+		form: "#form_quick_payment",
+	},
+	"add-interest": {
+		url: "../../../Transactions/Transactions_controller/ajax_add_interest",
+		form: "#form_add_interest",
+	},
+	"adjust-loan": {
+		url: "../../../Transactions/Transactions_controller/ajax_adjustment",
+		form: "#form_adjust_loan",
+	},
+	"update-trans-date-remarks": {
+		url: "../../../Transactions/Transactions_controller/ajax_update",
+		form: "#form_edit_date_remarks",
+	},
+	"adjust-capital": { url: "Capital/Capital_controller/ajax_add" },
+	"update-capital-date-remarks": {
+		url: "Capital/Capital_controller/ajax_update",
+		form: "#form_edit_date_remarks",
+	},
+	"add-schedule": { url: "Schedules/Schedules_controller/ajax_add" },
+	"update-schedule": { url: "Schedules/Schedules_controller/ajax_update" },
+	"add-user": { url: "Users/Users_controller/ajax_add" },
+	"update-user": { url: "Users/Users_controller/ajax_update" },
+	"update-privileges": {
+		url: "Users/Users_controller/ajax_privileges_update",
+		form: "#form_privileges",
+	},
+};
 
-    $('#btnSave').attr('disabled',true); //set button disable 
+let isSaving = false;
 
-    $('.btnSave').attr('disabled',true); //set button disable 
+function save() {
+	if (isSaving) return;
+	isSaving = true;
 
-    var url;
- 
-    // initialize form for both add and update as default 
-    $form = '#form';
+	// Reset validation errors
+	$(".form-group").removeClass("has-error");
+	$(".help-block").empty();
 
-    if(save_method == 'add-client') 
-    {
-        url = "Clients/Clients_controller/ajax_add";
-    }
-    else if(save_method == 'update-client') 
-    {
-        url = "Clients/Clients_controller/ajax_update";
-    }
-    else if(save_method == 'add-company') 
-    {
-        url = "Companies/Companies_controller/ajax_add";
-    }
-    else if(save_method == 'update-company') 
-    {
-        url = "Companies/Companies_controller/ajax_update";
-    }
-    else if(save_method == 'add-atm') 
-    {
-        url = "Atm/Atm_controller/ajax_add";
-    }
-    else if(save_method == 'update-atm') 
-    {
-        url = "Atm/Atm_controller/ajax_update";
-    }
-    else if(save_method == 'add-loan') 
-    {
-        $form = '#form_add_loan';
-        url = "../Profiles/Profiles_controller/ajax_add";
-    }
-    else if(save_method == 'update-loan') 
-    {
-        url = "../Profiles/Profiles_controller/ajax_update";
-    }
-    else if(save_method == 'update-loan-date-remarks') 
-    {
-        $form = '#form_edit_date_remarks';
-        url = "../Profiles/Profiles_controller/ajax_update_date_remarks";
-    }
-    else if(save_method == 'add-payment') 
-    {
-        $form = '#form_add_payment';
-        url = "../../../Transactions/Transactions_controller/ajax_paid";
-    }
-    else if(save_method == 'add-interest') 
-    {
-        $form = '#form_add_interest';
-        url = "../../../Transactions/Transactions_controller/ajax_add_interest";
-    }
-    else if(save_method == 'adjust-loan') 
-    {
-        $form = '#form_adjust_loan';
-        url = "../../../Transactions/Transactions_controller/ajax_adjustment";
-    }
-    else if(save_method == 'update-trans-date-remarks') 
-    {
-        $form = '#form_edit_date_remarks';
-        url = "../../../Transactions/Transactions_controller/ajax_update";
-    }
-    else if(save_method == 'adjust-capital') 
-    {
-        $form = '#form';
-        url = "Capital/Capital_controller/ajax_add";
-    }
-    else if(save_method == 'update-capital-date-remarks') 
-    {
-        $form = '#form_edit_date_remarks';
-        url = "Capital/Capital_controller/ajax_update";
-    }
-    
-    else if(save_method == 'add-schedule') 
-    {
-        url = "Schedules/Schedules_controller/ajax_add";
-    }
-    else if(save_method == 'update-schedule') 
-    {
-        url = "Schedules/Schedules_controller/ajax_update";
-    }
+	// Disable save buttons
+	$("#btnSave, .btnSave").prop("disabled", true);
 
-    else if(save_method == 'add-user') 
-    {
-        url = "Users/Users_controller/ajax_add";
-    }
-    else if(save_method == 'update-user') 
-    {
-        url = "Users/Users_controller/ajax_update";
-    }
-    else if(save_method == 'update-privileges') 
-    {
-        // change form for add stock to form_add_stock
-        $form = '#form_privileges';
-        url = "Users/Users_controller/ajax_privileges_update";
-    }
- 
-    // ajax adding data to database
-    $.ajax({
-        url : url,
-        type: "POST",
-        data: $($form).serialize(),
-        dataType: "JSON",
-        success: function(data)
-        {
- 
-            if(data.status) //if success close modal and reload ajax table
-            {
-                $('#modal_form').modal('hide');
-                $('#modal_form_edit').modal('hide');
-                
-                $('#modal_form_privileges').modal('hide');
+	// Get configuration
+	const config = saveConfig[saveMethod] || {};
+	const form = config.form || "#form";
+	const url = config.url;
 
-                $('#modal_form_add_payment').modal('hide');
-                $('#modal_form_add_interest').modal('hide');
-                $('#modal_form_adjust_loan').modal('hide');
-                $('#modal_form_edit_date_remarks').modal('hide');
-                
-                reload_table();
+	if (!url) {
+		alert("Save method not configured.");
+		isSaving = false;
+		$("#btnSave, .btnSave").prop("disabled", false);
+		return;
+	}
 
-
-                // set logs -------------------------------------------------------------------
-
-                var log_type = "";
-                var details = "";
-
-                if(save_method == 'add-client') 
-                {
-                    log_type = 'Add';
-
-                    details = 'New client record added: ' + $('[name="lname"]').val() 
-                    + ', ' + $('[name="fname"]').val();
-
-                    set_system_log(log_type, details);
-                }
-                else if(save_method == 'update-client') 
-                {
-                    log_type = 'Update';
-
-                    details = 'Client updated C' + $('[name="client_id"]').val() 
-                    + ': ' + $('[name="lname"]').val() + ', ' + $('[name="fname"]').val();
-
-                    set_system_log(log_type, details);
-                }
-                else if(save_method == 'add-company')
-                {
-                    log_type = 'Add';
-
-                    details = 'New company added: ' + $('[name="name"]').val(); 
-
-                    set_system_log(log_type, details);
-                }
-                else if(save_method == 'update-company') 
-                {
-                    log_type = 'Update';
-
-                    details = 'Company updated J' + $('[name="comp_id"]').val() 
-                    + ': ' + $('[name="current_name"]').val() + ' to ' + $('[name="name"]').val();
-
-                    set_system_log(log_type, details);
-                }
-                else if(save_method == 'add-atm')
-                {
-                    log_type = 'Add';
-
-                    details = 'New ATM bank added: ' + $('[name="name"]').val(); 
-
-                    set_system_log(log_type, details);
-                }
-                else if(save_method == 'update-atm') 
-                {
-                    log_type = 'Update';
-
-                    details = 'ATM Bank updated A' + $('[name="atm_id"]').val() 
-                    + ': ' + $('[name="current_name"]').val() + ' to ' + $('[name="name"]').val();
-
-                    set_system_log(log_type, details);
-                }
-                else if(save_method == 'add-payment')
-                {
-                    log_type = 'Add';
-
-                    details = 'New payment added to Loan ID: L' + $('[name="loan_id"]').val() + ' of Client: ' 
-                    + $('[name="client_name"]').val(); 
-
-                    set_system_log_three(log_type, details);
-
-                    // refresh transaction page
-                    window.location.href='../' +  $('[name="client_id"]').val() + '/' + $('[name="loan_id"]').val();
-                }
-                else if(save_method == 'add-interest')
-                {
-                    log_type = 'Add';
-
-                    details = 'New interest added to Loan ID: L' + $('[name="loan_id"]').val() + ' of Client: ' 
-                    + $('[name="client_name"]').val(); 
-
-                    set_system_log_three(log_type, details);
-
-                    // refresh transaction page
-                    window.location.href='../' +  $('[name="client_id"]').val() + '/' + $('[name="loan_id"]').val();
-                }
-                else if(save_method == 'adjust-loan')
-                {
-                    log_type = 'Update';
-
-                    details = 'New loan adjustment to Loan ID: L' + $('[name="loan_id"]').val() + ' of Client: ' 
-                    + $('[name="client_name"]').val(); 
-
-                    set_system_log_three(log_type, details);
-
-                    // refresh transaction page
-                    window.location.href='../' +  $('[name="client_id"]').val() + '/' + $('[name="loan_id"]').val();
-                }
-                else if(save_method == 'update-trans-date-remarks') 
-                {
-                    log_type = 'Update';
-
-                    details = 'Transaction updated T' + $('[name="trans_id"]').val() + ' of Client: ' 
-                    + $('[name="client_name"]').val(); 
-
-                    set_system_log_three(log_type, details);
-                }
-                else if(save_method == 'adjust-capital')
-                {
-                    log_type = 'Update';
-
-                    details = 'New capital adjustment'; 
-
-                    set_system_log(log_type, details);
-
-                    // refresh capital page
-                    window.location.href='';
-                }
-                else if(save_method == 'update-capital-date-remarks') 
-                {
-                    log_type = 'Update';
-
-                    details = 'Capital adjustment updated to: P' + $('[name="capital_id"]').val(); 
-
-                    set_system_log(log_type, details);
-                }
-
-                else if(save_method == 'add-schedule')
-                {
-                    log_type = 'Add';
-
-                    details = 'New schedule added: ' + $('[name="title"]').val(); 
-
-                    set_system_log(log_type, details);
-                }
-                else if(save_method == 'update-schedule') 
-                {
-                    log_type = 'Update';
-
-                    details = 'Schedule updated S' + $('[name="sched_id"]').val() 
-                    + ': ' + $('[name="title"]').val();
-
-                    set_system_log(log_type, details);
-                }
-                else if(save_method == 'add-loan') 
-                {
-                    log_type = 'Add';
-
-                    details = 'New loan added to: C' + $('[name="client_id"]').val() + ': ' + $('[name="client_name"]').val();
-
-                    set_system_log_one(log_type, details);
-
-                    window.location.reload();
-                }
-                else if(save_method == 'update-loan') 
-                {
-                    log_type = 'Update';
-
-                    details = 'Loan updated to: C' + $('[name="client_id"]').val() + ': ' + $('[name="client_name"]').val();
-
-                    set_system_log_one(log_type, details);
-                }
-                else if(save_method == 'update-loan-date-remarks') 
-                {
-                    log_type = 'Update';
-
-                    details = 'Loan updated to: C' + $('[name="client_id"]').val() + ': ' + $('[name="client_name"]').val();
-
-                    set_system_log_one(log_type, details);
-                }
-                
-
-                else if(save_method == 'add-user') 
-                {
-                    log_type = 'Add';
-
-                    details = 'New user added: ' + $('[name="username"]').val();
-
-                    set_system_log(log_type, details);
-                }
-                else if(save_method == 'update-user') 
-                {
-                    log_type = 'Update';
-
-                    details = 'User record updated U' + $('[name="user_id"]').val() + ': ' 
-                    + $('[name="username"]').val();
-
-                    set_system_log(log_type, details);
-                }
-                else if(save_method == 'update-privileges') 
-                {
-                    log_type = 'Update';
-
-                    details = 'User record updated U' + $('[name="user_id"]').val();
-
-                    set_system_log(log_type, details);
-                }
-            }
-            else
-            {
-                for (var i = 0; i < data.inputerror.length; i++) 
-                {
-                    $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
-                    $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
-                }
-            }
-            $('#btnSave').attr('disabled',false); //set button enable 
-
-            // fixed for not disabling sace button 10-12-19
-            $('.btnSave').attr('disabled',false); //set button enable 
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error adding / update data');
-            $('#btnSave').attr('disabled',false); //set button enable 
-
-            // fixed for not disabling sace button 10-12-19
-            $('.btnSave').attr('disabled',false); //set button enable 
-        }
-    });
+	$.ajax({
+		url,
+		type: "POST",
+		data: $(form).serialize(),
+		dataType: "JSON",
+		success: function (data) {
+			if (data.status) {
+				$(".modal").modal("hide");
+				if ($(form).length) {
+					$(form)[0].reset();
+				}
+				reload_table();
+				handleLogging(saveMethod);
+			} else {
+				data.inputerror.forEach((input, i) => {
+					const element = $('[name="' + input + '"]');
+					element.parent().parent().addClass("has-error");
+					element.next().text(data.error_string[i]);
+				});
+			}
+			isSaving = false;
+			$("#btnSave, .btnSave").prop("disabled", false);
+		},
+		error: function () {
+			alert("Error adding / update data");
+			isSaving = false;
+			$("#btnSave, .btnSave").prop("disabled", false);
+		},
+	});
 }
 
+function handleLogging(method) {
+	let log_type = "";
+	let details = "";
 
+	const getValue = (name) => $('[name="' + name + '"]').val();
 
+	switch (method) {
+		case "add-client":
+			log_type = "Add";
+			details = `New client record added: ${getValue("lname")}, ${getValue(
+				"fname"
+			)}`;
+			break;
+		case "update-client":
+			log_type = "Update";
+			details = `Client updated C${getValue("client_id")}: ${getValue(
+				"lname"
+			)}, ${getValue("fname")}`;
+			break;
+		case "add-company":
+			log_type = "Add";
+			details = `New company added: ${getValue("name")}`;
+			break;
+		case "update-company":
+			log_type = "Update";
+			details = `Company updated J${getValue("comp_id")}: ${getValue(
+				"current_name"
+			)} to ${getValue("name")}`;
+			break;
+		case "add-atm":
+			log_type = "Add";
+			details = `New ATM bank added: ${getValue("name")}`;
+			break;
+		case "update-atm":
+			log_type = "Update";
+			details = `ATM Bank updated A${getValue("atm_id")}: ${getValue(
+				"current_name"
+			)} to ${getValue("name")}`;
+			break;
+		case "add-payment":
+		case "quick-payment":
+		case "add-interest":
+			log_type = "Add";
+			details = `New ${
+				method.includes("interest") ? "interest" : "payment"
+			} added to Loan ID: L${getValue("loan_id")} of Client: ${getValue(
+				"client_name"
+			)}`;
+			method === "quick-payment"
+				? set_system_log_one(log_type, details)
+				: set_system_log_three(log_type, details);
+			location.reload();
+			return;
+		case "adjust-loan":
+			log_type = "Update";
+			details = `New loan adjustment to Loan ID: L${getValue(
+				"loan_id"
+			)} of Client: ${getValue("client_name")}`;
+			set_system_log_three(log_type, details);
+			location.reload();
+			return;
+		case "update-trans-date-remarks":
+			log_type = "Update";
+			details = `Transaction updated T${getValue(
+				"trans_id"
+			)} of Client: ${getValue("client_name")}`;
+			set_system_log_three(log_type, details);
+			return;
+		case "adjust-capital":
+			log_type = "Update";
+			details = "New capital adjustment";
+			set_system_log(log_type, details);
+			location.reload();
+			return;
+		case "update-capital-date-remarks":
+			log_type = "Update";
+			details = `Capital adjustment updated to: P${getValue("capital_id")}`;
+			break;
+		case "add-schedule":
+			log_type = "Add";
+			details = `New schedule added: ${getValue("title")}`;
+			break;
+		case "update-schedule":
+			log_type = "Update";
+			details = `Schedule updated S${getValue("sched_id")}: ${getValue(
+				"title"
+			)}`;
+			break;
+		case "add-loan":
+			log_type = "Add";
+			details = `New loan added to: C${getValue("client_id")}: ${getValue(
+				"client_name"
+			)}`;
+			set_system_log_one(log_type, details);
+			location.reload();
+			return;
+		case "update-loan":
+		case "update-loan-date-remarks":
+			log_type = "Update";
+			details = `Loan updated to: C${getValue("client_id")}: ${getValue(
+				"client_name"
+			)}`;
+			set_system_log_one(log_type, details);
+			return;
+		case "add-user":
+			log_type = "Add";
+			details = `New user added: ${getValue("username")}`;
+			break;
+		case "update-user":
+			log_type = "Update";
+			details = `User record updated U${getValue("user_id")}: ${getValue(
+				"username"
+			)}`;
+			break;
+		case "update-privileges":
+			log_type = "Update";
+			details = `User record updated U${getValue("user_id")}`;
+			break;
+		default:
+			return;
+	}
+	set_system_log(log_type, details);
+}
 
 // ================================================= LOGS SECTION ===========================================================================
 
+const sanitizeDetails = (details) => details.replace(/[|&;$%@"<>()+,]/g, "");
 
+const sendSystemLog = (basePath, log_type, details) => {
+	const cleanString = sanitizeDetails(details);
 
+	$.ajax({
+		url: `${basePath}Logs/Logs_controller/ajax_add/${log_type}/${cleanString}`,
+		type: "POST",
+		dataType: "JSON",
+		success: () => {},
+		error: (jqXHR, textStatus, errorThrown) => {
+			alert("Error get data from ajax");
+		},
+	});
+};
 
-function set_system_log(log_type, details)
-{
-    // sanitize illegal string characters
-    var cleanString = details.replace(/[|&;$%@"<>()+,]/g, "");
-
-    $.ajax({
-        url : "Logs/Logs_controller/ajax_add/" + log_type + '/' + cleanString,
-        type: "POST",
-        dataType: "JSON",
-        success: function(data)
-        {
-
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
+function set_system_log(log_type, details) {
+	sendSystemLog("", log_type, details);
 }
 
-// back url by one (../)
-function set_system_log_one(log_type, details)
-{
-    // sanitize illegal string characters
-    var cleanString = details.replace(/[|&;$%@"<>()+,]/g, "");
-
-    $.ajax({
-        url : "../Logs/Logs_controller/ajax_add/" + log_type + '/' + cleanString,
-        type: "POST",
-        dataType: "JSON",
-        success: function(data)
-        {
-
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
+function set_system_log_one(log_type, details) {
+	sendSystemLog("../", log_type, details);
 }
 
-// back url by two (../../)
-function set_system_log_two(log_type, details)
-{
-    // sanitize illegal string characters
-    var cleanString = details.replace(/[|&;$%@"<>()+,]/g, "");
+function set_system_log_two(log_type, details) {
+	sendSystemLog("../../", log_type, details);
+}
 
-    $.ajax({
-        url : "../../Logs/Logs_controller/ajax_add/" + log_type + '/' + cleanString,
-        type: "POST",
-        dataType: "JSON",
-        success: function(data)
-        {
-
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
-}   
-
-// back url by three (../../../)
-function set_system_log_three(log_type, details)
-{
-    // sanitize illegal string characters
-    var cleanString = details.replace(/[|&;$%@"<>()+,]/g, "");
-
-    $.ajax({
-        url : "../../../Logs/Logs_controller/ajax_add/" + log_type + '/' + cleanString,
-        type: "POST",
-        dataType: "JSON",
-        success: function(data)
-        {
-
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
-} 
-
-
-
-
+function set_system_log_three(log_type, details) {
+	sendSystemLog("../../../", log_type, details);
+}
 
 // ================================================= DELETE SECTION =========================================================================
 
+const confirmAndDelete = ({
+	url,
+	log_type,
+	details,
+	system_log_fn = set_system_log,
+	postDelete = () => {},
+}) => {
+	$.confirm({
+		title: "Confirm Delete",
+		theme: "modern",
+		type: "red",
+		icon: "fa fa-warning",
+		content: "Are you sure to delete this data?",
+		buttons: {
+			confirm: () => {
+				$.ajax({
+					url,
+					type: "POST",
+					dataType: "JSON",
+					success: () => {
+						system_log_fn(log_type, details);
+						$("#modal_form").modal("hide");
+						postDelete();
+						reload_table();
+					},
+					error: () => {
+						alert("Error deleting data");
+					},
+				});
+			},
+			cancel: () => {},
+		},
+	});
+};
 
-
-function delete_client(id, name)
-{
-    $.confirm({
-        title: 'Confirm Delete',
-        theme: 'modern',
-        type: 'red',
-        icon: 'fa fa-warning',
-        content: 'Are you sure to delete this data?',
-        buttons: {
-            confirm: function () {
-                $.ajax({
-                    url : "Clients/Clients_controller/ajax_delete/"+id,
-                    type: "POST",
-                    dataType: "JSON",
-                    success: function(data)
-                    {
-                        var log_type = 'Delete';
-
-                        var details = 'Client deleted C' + id; 
-
-                        set_system_log(log_type, details);
-
-                        //if success reload ajax table
-                        $('#modal_form').modal('hide');
-                        reload_table();
-                    },
-                    error: function (jqXHR, textStatus, errorThrown)
-                    {
-                        alert('Error deleting data');
-                    }
-                });
-            },
-            cancel: function () {
-                // close
-            },
-        }
-    });
-}
-function delete_company(id, name)
-{
-    $.confirm({
-        title: 'Confirm Delete',
-        theme: 'modern',
-        type: 'red',
-        icon: 'fa fa-warning',
-        content: 'Are you sure to delete this data?',
-        buttons: {
-            confirm: function () {
-                // ajax delete data to database
-                $.ajax({
-                    url : "Companies/Companies_controller/ajax_delete/"+id,
-                    type: "POST",
-                    dataType: "JSON",
-                    success: function(data)
-                    {
-                        var log_type = 'Delete';
-
-                        var details = 'Company deleted J' + id 
-                        + ': ' + name; 
-
-                        set_system_log(log_type, details);
-
-                        //if success reload ajax table
-                        $('#modal_form').modal('hide');
-                        reload_table();
-                    },
-                    error: function (jqXHR, textStatus, errorThrown)
-                    {
-                        alert('Error deleting data');
-                    }
-                });
-            },
-            cancel: function () {
-                // close
-            },
-        }
-    });
-}
-function delete_atm(id, name)
-{
-    $.confirm({
-        title: 'Confirm Delete',
-        theme: 'modern',
-        type: 'red',
-        icon: 'fa fa-warning',
-        content: 'Are you sure to delete this data?',
-        buttons: {
-            confirm: function () {
-                // ajax delete data to database
-                $.ajax({
-                    url : "Atm/Atm_controller/ajax_delete/"+id,
-                    type: "POST",
-                    dataType: "JSON",
-                    success: function(data)
-                    {
-                        var log_type = 'Delete';
-
-                        var details = 'ATM Bank deleted A' + id 
-                        + ': ' + name; 
-
-                        set_system_log(log_type, details);
-
-                        //if success reload ajax table
-                        $('#modal_form').modal('hide');
-                        reload_table();
-                    },
-                    error: function (jqXHR, textStatus, errorThrown)
-                    {
-                        alert('Error deleting data');
-                    }
-                });
-            },
-            cancel: function () {
-                // close
-            },
-        }
-    });
-}
-function delete_loan(id)
-{
-    $.confirm({
-        title: 'Confirm Delete',
-        theme: 'modern',
-        type: 'red',
-        icon: 'fa fa-warning',
-        content: 'Are you sure to delete this data?',
-        buttons: {
-            confirm: function () {
-                // ajax delete data to database
-                $.ajax({
-                    url : "../Profiles/Profiles_controller/ajax_delete/"+id,
-                    type: "POST",
-                    dataType: "JSON",
-                    success: function(data)
-                    {
-                        var log_type = 'Delete';
-
-                        var details = 'Loan deleted: L' + id + ' from client: ' + $('[name="client_name"]').val();
-
-                        set_system_log_one(log_type, details);
-
-                        //if success reload ajax table
-                        $('#modal_form').modal('hide');
-                        reload_table();
-                    },
-                    error: function (jqXHR, textStatus, errorThrown)
-                    {
-                        alert('Error deleting data');
-                    } 
-
-                });
-            },
-            cancel: function () {
-                // close
-            },
-        }
-    });
+function delete_client(id) {
+	const log_type = "Delete";
+	const details = `Client deleted C${id}`;
+	const url = `Clients/Clients_controller/ajax_delete/${id}`;
+	confirmAndDelete({ url, log_type, details });
 }
 
-function delete_schedule(id)
-{
-    $.confirm({
-        title: 'Confirm Delete',
-        theme: 'modern',
-        type: 'red',
-        icon: 'fa fa-warning',
-        content: 'Are you sure to delete this data?',
-        buttons: {
-            confirm: function () {
-                // ajax delete data to database
-                $.ajax({
-                    url : "Schedules/Schedules_controller/ajax_delete/"+id,
-                    type: "POST",
-                    dataType: "JSON",
-                    success: function(data)
-                    {
-                        var log_type = 'Delete';
-
-                        var details = 'Appointment schedule deleted';
-
-                        set_system_log(log_type, details);
-
-                        //if success reload ajax table
-                        $('#modal_form').modal('hide');
-                        reload_table();
-                    },
-                    error: function (jqXHR, textStatus, errorThrown)
-                    {
-                        alert('Error deleting data');
-                    }
-                });
-            },
-            cancel: function () {
-                // close
-            },
-        }
-    });
+function delete_company(id, name) {
+	const log_type = "Delete";
+	const details = `Company deleted J${id}: ${name}`;
+	const url = `Companies/Companies_controller/ajax_delete/${id}`;
+	confirmAndDelete({ url, log_type, details });
 }
 
-function delete_user(id)
-{
-    $.confirm({
-        title: 'Confirm Delete',
-        theme: 'modern',
-        type: 'red',
-        icon: 'fa fa-warning',
-        content: 'Are you sure to delete this data?',
-        buttons: {
-            confirm: function () {
-                // ajax delete data to database
-                $.ajax({
-                    url : "Users/Users_controller/ajax_delete/"+id,
-                    type: "POST",
-                    dataType: "JSON",
-                    success: function(data)
-                    {
-                        var log_type = 'Delete';
-
-                        var details = 'User record deleted'; 
-
-                        set_system_log(log_type, details);
-
-                        //if success reload ajax table
-                        $('#modal_form').modal('hide');
-                        $('#modal_form_privileges').modal('hide');
-                        reload_table();
-                    },
-                    error: function (jqXHR, textStatus, errorThrown)
-                    {
-                        alert('Unable to delete one remaining administrator account');
-                    }
-                });
-            },
-            cancel: function () {
-                // close
-            },
-        }
-    });
+function delete_atm(id, name) {
+	const log_type = "Delete";
+	const details = `ATM Bank deleted A${id}: ${name}`;
+	const url = `Atm/Atm_controller/ajax_delete/${id}`;
+	confirmAndDelete({ url, log_type, details });
 }
 
-function delete_interest(id, interest_amt)
-{
-    $.confirm({
-        title: 'Confirm Delete',
-        theme: 'modern',
-        type: 'red',
-        icon: 'fa fa-warning',
-        content: 'Are you sure to delete this data?',
-        buttons: {
-            confirm: function () {
-
-                var loan_id = $('[name="loan_id"]').val();
-                // ajax delete data to database
-                $.ajax({
-                    url : "../../../Transactions/Transactions_controller/ajax_delete/"+id+"/"+interest_amt+"/"+loan_id,
-                    type: "POST",
-                    dataType: "JSON",
-                    success: function(data)
-                    {
-                        var log_type = 'Delete';
-
-                        var details = 'Loan interest deleted from client: ' + $('[name="client_name"]').val();
-
-                        set_system_log_three(log_type, details);
-
-                        //if success reload ajax table
-                        $('#modal_form').modal('hide');
-                        reload_table();
-
-                        // refresh transaction page
-                        window.location.href='../' +  $('[name="client_id"]').val() + '/' + loan_id;
-                    },
-                    error: function (jqXHR, textStatus, errorThrown)
-                    {
-                        alert('Error deleting data');
-                    } 
-
-                });
-            },
-            cancel: function () {
-                // close
-            },
-        }
-    });
+function delete_loan(id) {
+	const log_type = "Delete";
+	const clientName = $('[name="client_name"]').val();
+	const details = `Loan deleted: L${id} from client: ${clientName}`;
+	const url = `../Profiles/Profiles_controller/ajax_delete/${id}`;
+	confirmAndDelete({
+		url,
+		log_type,
+		details,
+		system_log_fn: set_system_log_one,
+		postDelete: () => window.location.reload(),
+	});
 }
 
-function delete_payment(id, amount)
-{
-    $.confirm({
-        title: 'Confirm Delete',
-        theme: 'modern',
-        type: 'red',
-        icon: 'fa fa-warning',
-        content: 'Are you sure to delete this data?',
-        buttons: {
-            confirm: function () {
-
-                var loan_id = $('[name="loan_id"]').val();
-                // ajax delete data to database
-                $.ajax({
-                    url : "../../../Transactions/Transactions_controller/ajax_delete_pay/"+id+"/"+amount+"/"+loan_id,
-                    type: "POST",
-                    dataType: "JSON",
-                    success: function(data)
-                    {
-                        var log_type = 'Delete';
-
-                        var details = 'Loan interest deleted from client: ' + $('[name="client_name"]').val();
-
-                        set_system_log_three(log_type, details);
-
-                        //if success reload ajax table
-                        $('#modal_form').modal('hide');
-                        reload_table();
-
-                        // refresh transaction page
-                        window.location.href='../' +  $('[name="client_id"]').val() + '/' + loan_id;
-                    },
-                    error: function (jqXHR, textStatus, errorThrown)
-                    {
-                        alert('Error deleting data');
-                    } 
-
-                });
-            },
-            cancel: function () {
-                // close
-            },
-        }
-    });
+function delete_schedule(id) {
+	const log_type = "Delete";
+	const details = "Appointment schedule deleted";
+	const url = `Schedules/Schedules_controller/ajax_delete/${id}`;
+	confirmAndDelete({ url, log_type, details });
 }
 
-// added cash input buttons feature 10-12-19
-function add_cash_input(cash_input)
-{
-    var current_cash = 0;
-
-    if ($('[name="amount"]').val() != "")
-    {
-      current_cash = parseFloat($('[name="amount"]').val());
-    }
-    
-    var new_cash = (current_cash + cash_input);
-
-    $('[name="amount"]').val(new_cash);
-    $('[name="percentage"]').val(0).prop('selected', true);
-
-    update_total_value();
+function delete_user(id) {
+	const log_type = "Delete";
+	const details = "User record deleted";
+	const url = `Users/Users_controller/ajax_delete/${id}`;
+	confirmAndDelete({
+		url,
+		log_type,
+		details,
+		postDelete: () => $("#modal_form_privileges").modal("hide"),
+		errorMessage: "Unable to delete one remaining administrator account",
+	});
 }
 
-function clear_cash_input()
-{
-    $('[name="amount"]').val("0");
-    $('[name="interest"]').val("0");
-    $('[name="percentage"]').val(0).prop('selected', true);
-    update_total_value();
+function delete_interest(id, interest_amt) {
+	const log_type = "Delete";
+	const clientName = $('[name="client_name"]').val();
+	const loan_id = $('[name="loan_id"]').val();
+	const details = `Loan interest deleted from client: ${clientName}`;
+	const url = `../../../Transactions/Transactions_controller/ajax_delete/${id}/${interest_amt}/${loan_id}`;
+	confirmAndDelete({
+		url,
+		log_type,
+		details,
+		system_log_fn: set_system_log_three,
+		postDelete: () => window.location.reload(),
+	});
 }
 
-// added cash input buttons feature 10-12-19
-function add_cash_input_interest(cash_input)
-{
-    var current_cash = 0;
-
-    if ($('[name="interest"]').val() != "")
-    {
-      current_cash = parseFloat($('[name="interest"]').val());
-    }
-    
-    var new_cash = (current_cash + cash_input);
-
-    $('[name="interest"]').val(new_cash);
-    $('[name="percentage"]').val(0).prop('selected', true);
-
-    update_total_value_trans();
+function delete_payment(id, amount) {
+	const log_type = "Delete";
+	const clientName = $('[name="client_name"]').val();
+	const loan_id = $('[name="loan_id"]').val();
+	const details = `Loan payment deleted from client: ${clientName}`;
+	const url = `../../../Transactions/Transactions_controller/ajax_delete_pay/${id}/${amount}/${loan_id}`;
+	confirmAndDelete({
+		url,
+		log_type,
+		details,
+		system_log_fn: set_system_log_three,
+		postDelete: () => window.location.reload(),
+	});
 }
 
-function clear_cash_input_interest()
-{
-    $('[name="interest"]').val("0");
-    $('[name="percentage"]').val(0).prop('selected', true);
-    update_total_value_trans();
+// =========================================================
+// =============== Shared Helper Functions =================
+// =========================================================
+
+const getVal = (name) => parseFloat($(`[name="${name}"]`).val()) || 0;
+const setVal = (name, value) => $(`[name="${name}"]`).val(value);
+const setTotal = (total) => {
+	setVal("total", total);
+	setVal("total_display", formatCurrency(total));
+};
+const resetPercentage = () =>
+	$('[name="percentage"]').val(0).prop("selected", true);
+function formatCurrency(num) {
+	return num.toLocaleString(undefined, {
+		minimumFractionDigits: 2,
+		maximumFractionDigits: 2,
+	});
 }
 
-// added cash input buttons feature 10-12-19
-function add_cash_input_payment(cash_input)
-{
-    var current_cash = 0;
+// =========================================================
+// =============== Cash Input Buttons (10-12-19) ===========
+// =========================================================
 
-    if ($('[name="amount"]').val() != "")
-    {
-      current_cash = parseFloat($('[name="amount"]').val());
-    }
-    
-    var new_cash = (current_cash + cash_input);
-
-    $('[name="amount"]').val(new_cash);
-
-    update_total_value_trans_payment();
+function add_cash_input(cash_input) {
+	const new_cash = getVal("amount") + cash_input;
+	setVal("amount", new_cash);
+	resetPercentage();
+	update_total_value();
 }
 
-function clear_cash_input_payment()
-{
-    $('[name="amount"]').val("0");
-    update_total_value_trans_payment();
+function clear_cash_input() {
+	setVal("amount", 0);
+	setVal("interest", 0);
+	resetPercentage();
+	update_total_value();
 }
 
-// added cash input buttons feature 10-12-19
-function full_cash_input_payment()
-{
-    var total_balance = 0;
-
-    if ($('[name="total_balance"]').val() != "")
-    {
-      total_balance = parseFloat($('[name="total_balance"]').val());
-    }
-
-    $('[name="amount"]').val(total_balance);
-
-    update_total_value_trans_payment();
+function add_cash_input_interest(cash_input) {
+	const new_cash = getVal("interest") + cash_input;
+	setVal("interest", new_cash);
+	resetPercentage();
+	update_total_value_trans();
 }
 
-// ========================================================= LOAN FORM KEY LISTENER ===================================================
+function clear_cash_input_interest() {
+	setVal("interest", 0);
+	resetPercentage();
+	update_total_value_trans();
+}
 
-// generate total amount
-$("#amount").change(function()
-{
-   $('[name="percentage"]').val(0).prop('selected', true);
+function add_cash_input_payment(cash_input) {
+	const new_cash = getVal("amount") + cash_input;
+	setVal("amount", new_cash);
+	update_total_value_trans_payment();
+}
 
-   var amount = parseFloat($('[name="amount"]').val());
-   var interest = parseFloat($('[name="interest"]').val());
-    
-   if ($('[name="amount"]').val() == '') 
-   {
-      amount = 0;  
-   }
-   if ($('[name="interest"]').val() == '') 
-   {
-      interest = 0;  
-   }
+function clear_cash_input_payment() {
+	setVal("amount", 0);
+	update_total_value_trans_payment();
+}
 
-   var total = (amount + interest).toFixed(2);
+function full_cash_input_payment() {
+	setVal("amount", getVal("total_balance"));
+	update_total_value_trans_payment();
+}
 
-   $('[name="total"]').val(total); 
+// =========================================================
+// ================== Loan Form Listeners ==================
+// =========================================================
+
+$("#amount").change(() => {
+	resetPercentage();
+	update_total_value();
 });
 
-// generate total amount
-$("#interest").change(function()
-{
-   $('[name="percentage"]').val(0).prop('selected', true);
-
-   update_total_value();
+$("#interest").change(() => {
+	resetPercentage();
+	update_total_value();
 });
 
-// generate interest amount by percentage
-$("#percentage").change(function()
-{
-   var amount = parseFloat($('[name="amount"]').val());
-   var percentage = parseFloat($('[name="percentage"]').val());
-
-   if (percentage != 0)
-   {
-      var interest = (amount * percentage).toFixed(2);
-
-      $('[name="interest"]').val(interest);
-
-      update_total_value();
-   }
+$("#percentage").change(() => {
+	const percentage = getVal("percentage");
+	if (percentage !== 0) {
+		const interest = (getVal("amount") * percentage).toFixed(2);
+		setVal("interest", interest);
+		update_total_value();
+	}
 });
 
-function update_total_value()
-{
-   var amount = parseFloat($('[name="amount"]').val());
-   var interest = parseFloat($('[name="interest"]').val());
-
-   if ($('[name="interest"]').val() == '') 
-   {
-      interest = 0;  
-   }
-
-   var total = (amount + interest).toFixed(2);
-
-   $('[name="total"]').val(total.toLocaleString());
+function update_total_value() {
+	const total = getVal("amount") + getVal("interest");
+	setTotal(total);
 }
 
-// ========================================================= TRANSACTION FORM KEY LISTENER ===================================================
+// =========================================================
+// ============= Transaction Form Listeners ================
+// =========================================================
 
-// generate total amount
-$("#amount_payment").change(function()
-{
-   var amount = parseFloat($('[name="amount"]').val());
-   var total_balance = parseFloat($('[name="total_balance"]').val());
-    
-   if ($('[name="amount"]').val() == '') 
-   {
-      amount = 0;  
-   }
-
-   var total = (total_balance - amount).toFixed(2);
-
-   $('[name="total"]').val(total); 
+$("#amount_payment").change(() => {
+	const total =
+		getVal("total_balance") - parseFloat($("#amount_payment").val()) || 0;
+	setTotal(total);
 });
 
-// generate total amount
-$("#interest_amount").change(function()
-{
-   $('[name="percentage"]').val(0).prop('selected', true);
-
-   update_total_value_trans();
+$("#interest_amount").change(() => {
+	resetPercentage();
+	update_total_value_trans();
 });
 
-// generate interest amount by percentage (transactions page)
-$("#percentage_trans").change(function()
-{
-   var total_balance = parseFloat($('[name="total_balance"]').val());
-   var percentage = parseFloat($('[name="percentage"]').val());
-
-   if (percentage != 0)
-   {
-      var interest = (total_balance * percentage).toFixed(2);
-
-      $('[name="interest"]').val(interest);
-
-      update_total_value_trans();
-   }
+$("#percentage_trans").change(() => {
+	const percentage = getVal("percentage");
+	if (percentage !== 0) {
+		const interest = (getVal("total_balance") * percentage).toFixed(2);
+		setVal("interest", interest);
+		update_total_value_trans();
+	}
 });
 
-// generate total amount
-$("#adjustment_amount").change(function()
-{
-   var adjustment_amount = parseFloat($('[name="adjustment_amount"]').val());
-   var total_balance = parseFloat($('[name="total_balance"]').val());
-    
-   if ($('[name="adjustment_amount"]').val() == '') 
-   {
-      adjustment_amount = 0;  
-   }
-
-   var total = (total_balance + adjustment_amount).toFixed(2);
-
-   $('[name="total"]').val(total); 
+$("#adjustment_amount").change(() => {
+	const total = getVal("total_balance") + getVal("adjustment_amount");
+	setTotal(total);
 });
 
-function update_total_value_trans()
-{
-   var interest = parseFloat($('[name="interest"]').val());
-   var total_balance = parseFloat($('[name="total_balance"]').val());
-    
-   if ($('[name="interest"]').val() == '') 
-   {
-      interest = 0;  
-   }
-
-   var total = (total_balance + interest).toFixed(2);
-   $('[name="total"]').val(total);
+function update_total_value_trans() {
+	const total = getVal("total_balance") + getVal("interest");
+	setTotal(total);
 }
 
-function update_total_value_trans_payment()
-{
-   var amount = parseFloat($('[name="amount"]').val());
-   var total_balance = parseFloat($('[name="total_balance"]').val());
-    
-   if ($('[name="amount"]').val() == '') 
-   {
-      amount = 0;  
-   }
-
-   var total = (total_balance - amount).toFixed(2);
-   $('[name="total"]').val(total);
+function update_total_value_trans_payment() {
+	const total = getVal("total_balance") - getVal("amount");
+	setTotal(total);
 }
 
-// ========================================================= CAPITAL FORM KEY LISTENER ===================================================
+// =========================================================
+// ================= Capital Form Listener =================
+// =========================================================
 
-// generate total amount
-$("#amount_capital").change(function()
-{
-   var amount = parseFloat($('[name="amount"]').val());
-   var total_capital = parseFloat($('[name="total_capital"]').val());
-    
-   if ($('[name="amount"]').val() == '') 
-   {
-      amount = 0;  
-   }
-
-   var total = (total_capital + amount).toFixed(2);
-
-   $('[name="total"]').val(total); 
+$("#amount_capital").change(() => {
+	const total = getVal("amount") + getVal("total_capital");
+	setTotal(total);
 });
 
+// =========================================================
+// ==================== Fix Bal Paid ========================
+// =========================================================
 
-// ========================================================= FIX CALCULATION BUTTON ===================================================
+function fix_bal_paid_calculation() {
+	const loan_id = $('[name="loan_id"]').val();
 
-function fix_bal_paid_calculation()
-{
-   var loan_id = $('[name="loan_id"]').val();
-
-   $.ajax({
-       url : "../../../Profiles/Profiles_controller/ajax_update_bal_paid/" + loan_id,
-       type: "POST",
-       dataType: "JSON",
-       success: function(data)
-       {
-          location.reload();
-       },
-       error: function (jqXHR, textStatus, errorThrown)
-       {
-          alert('Error get data from ajax');
-       }
-   });
+	$.ajax({
+		url: `../../../Profiles/Profiles_controller/ajax_update_bal_paid/${loan_id}`,
+		type: "POST",
+		dataType: "JSON",
+		success: () => location.reload(),
+		error: () => alert("Error get data from ajax"),
+	});
 }
-
 
 // ========================================== STATISTICS CHARTS =====================================================
 
+// Helper: get float values from input names with prefix and optional index suffix
+const getMonthlyValues = (prefix = "", index = "") =>
+	[
+		"jan",
+		"feb",
+		"mar",
+		"apr",
+		"may",
+		"jun",
+		"jul",
+		"aug",
+		"sep",
+		"oct",
+		"nov",
+		"dec",
+	].map((month) => parseFloat($(`[name="${prefix}${month}${index}"]`).val()));
 
+// Helper: build a Highcharts line chart
+const renderInterestChart = (containerId, year, yearTotal, data) => {
+	Highcharts.chart(containerId, {
+		chart: { type: "line" },
+		title: {
+			text: `Net Income ( ${year} ): ₱ ${yearTotal}`,
+		},
+		subtitle: {
+			text: `January to December ${year}`,
+		},
+		xAxis: {
+			categories: [
+				"Jan",
+				"Feb",
+				"Mar",
+				"Apr",
+				"May",
+				"Jun",
+				"Jul",
+				"Aug",
+				"Sep",
+				"Oct",
+				"Nov",
+				"Dec",
+			],
+		},
+		yAxis: {
+			title: { text: "Interest values in PhP amount" },
+		},
+		plotOptions: {
+			line: {
+				dataLabels: {
+					enabled: true,
+					formatter() {
+						return Highcharts.numberFormat(this.y, 2);
+					},
+				},
+				enableMouseTracking: true,
+				tooltip: {
+					pointFormat:
+						'<b style="color:#66cccc;">●</b> {series.name}: <b>₱ {point.y}.00</b>',
+				},
+			},
+		},
+		series: [
+			{
+				name: "Monthly total interest",
+				data,
+			},
+		],
+	});
+};
 
-// check if div exist (execute if in dashboard page only) // chart for registration count
-if (document.getElementById("container-interests")) 
-{
-    // fetch registrations data
-    var current_year = $('[name="current_year"]').val();
+// Main chart (current year)
+if (document.getElementById("container-interests")) {
+	const current_year = $('[name="current_year"]').val();
+	const year_total = $('[name="year_total"]').val();
+	const monthlyData = getMonthlyValues();
 
-    var jan = parseFloat($('[name="jan"]').val());
-    var feb = parseFloat($('[name="feb"]').val());
-    var mar = parseFloat($('[name="mar"]').val());
-    var apr = parseFloat($('[name="apr"]').val());
-
-    var may = parseFloat($('[name="may"]').val());
-    var jun = parseFloat($('[name="jun"]').val());
-    var jul = parseFloat($('[name="jul"]').val());
-    var aug = parseFloat($('[name="aug"]').val());
-
-    var sep = parseFloat($('[name="sep"]').val());
-    var oct = parseFloat($('[name="oct"]').val());
-    var nov = parseFloat($('[name="nov"]').val());
-    var dec = parseFloat($('[name="dec"]').val());
-
-    var year_total = $('[name="year_total"]').val();
-
-        Highcharts.chart('container-interests', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Net Profit for Year ( ' + current_year + ' ): ₱ ' + year_total
-        },
-        subtitle: {
-            text: 'January to December ' + current_year
-        },
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        },
-        yAxis: {
-            title: {
-                text: 'Interest values in PhP amount'
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true,
-                    formatter: function () {
-                            return Highcharts.numberFormat(this.y,2);
-                        }    
-                },
-                enableMouseTracking: true,
-                tooltip: {
-                    pointFormat: '<b style="color:#66cccc;">●</b> {series.name}: <b>₱ {point.y}.00</b>'
-                }
-            }
-        },
-        series: [{
-            name: 'Monthly total interest',
-            data: [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec]
-        }]
-    });
+	renderInterestChart(
+		"container-interests",
+		current_year,
+		year_total,
+		monthlyData
+	);
 }
 
-// check if div exist (execute if in dashboard page only) // chart for registration count
-const years_count = $('[name="years_count"]').val();
-for (i = 0; i < years_count; i++) {
-    if (document.getElementById("container-interests-prev" + i)) {
-        // fetch registrations data
-        const prev_year = $('[name="prev_year' + i + '"]').val();
-    
-        const prev_jan = parseFloat($('[name="prev_jan' + i + '"]').val());
-        const prev_feb = parseFloat($('[name="prev_feb' + i + '"]').val());
-        const prev_mar = parseFloat($('[name="prev_mar' + i + '"]').val());
-        const prev_apr = parseFloat($('[name="prev_apr' + i + '"]').val());
-    
-        const prev_may = parseFloat($('[name="prev_may' + i + '"]').val());
-        const prev_jun = parseFloat($('[name="prev_jun' + i + '"]').val());
-        const prev_jul = parseFloat($('[name="prev_jul' + i + '"]').val());
-        const prev_aug = parseFloat($('[name="prev_aug' + i + '"]').val());
-    
-        const prev_sep = parseFloat($('[name="prev_sep' + i + '"]').val());
-        const prev_oct = parseFloat($('[name="prev_oct' + i + '"]').val());
-        const prev_nov = parseFloat($('[name="prev_nov' + i + '"]').val());
-        const prev_dec = parseFloat($('[name="prev_dec' + i + '"]').val());
-    
-        const prev_year_total = $('[name="prev_year_total' + i + '"]').val();
-    
-            Highcharts.chart('container-interests-prev' + i, {
-            chart: {
-                type: 'line'
-            },
-            title: {
-                text: 'Net Profit for Year ( ' + prev_year + ' ): ₱ ' + prev_year_total
-            },
-            subtitle: {
-                text: 'January to December ' + prev_year
-            },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
-            yAxis: {
-                title: {
-                    text: 'Interest values in PhP amount'
-                }
-            },
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: true,
-                        formatter: function () {
-                                return Highcharts.numberFormat(this.y,2);
-                            }    
-                    },
-                    enableMouseTracking: true,
-                    tooltip: {
-                        pointFormat: '<b style="color:#66cccc;">●</b> {series.name}: <b>₱ {point.y}.00</b>'
-                    }
-                }
-            },
-            series: [{
-                name: 'Monthly total interest',
-                data: [prev_jan, prev_feb, prev_mar, prev_apr, prev_may, prev_jun, 
-                prev_jul, prev_aug, prev_sep, prev_oct, prev_nov, prev_dec]
-            }]
-        });
-    }
+// Previous years chart(s)
+const years_count = parseInt($('[name="years_count"]').val(), 10);
+
+for (let i = 0; i < years_count; i++) {
+	const containerId = `container-interests-prev${i}`;
+	if (document.getElementById(containerId)) {
+		const prev_year = $(`[name="prev_year${i}"]`).val();
+		const prev_year_total = $(`[name="prev_year_total${i}"]`).val();
+		const monthlyData = getMonthlyValues("prev_", i);
+
+		renderInterestChart(containerId, prev_year, prev_year_total, monthlyData);
+	}
 }
+
+$(document).ready(function () {
+	$('[data-toggle="tooltip"]').tooltip();
+});

@@ -1,8 +1,8 @@
 			<!-- FOOTER -->
 			<!--===================================================-->
 			<footer id="footer">
-				<div class="col-md-4 pull-right">
-					<span style="align-content: right;">e-Lending | Lending Manager App v1.2.3 (04-20-20) JikiApps Solutions / Jik Torres © 2018</span>
+				<div class="col-md-12" style="text-align: center;">
+					<span>e-Lending | Lending Manager App v1.2.3 (04-20-20) JikiApps Solutions / Jik Torres © 2018</span>
 				</div>
 
 			</footer>
