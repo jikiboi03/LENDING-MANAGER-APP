@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,9 @@
 	<!--STYLESHEET-->
 	<!--=================================================-->
 	<!-- favicon -->
-    <link rel="icon" type="image/png" href="<?php echo base_url();?>assets/img/favicon.ico">
+	<link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/img/favicon.ico">
 	<!--Open Sans Font [ OPTIONAL ] -->
- 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin" rel="stylesheet">
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin" rel="stylesheet">
 	<!--Bootstrap Stylesheet [ REQUIRED ]-->
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
 	<!--Nifty Stylesheet [ REQUIRED ]-->
@@ -19,19 +20,20 @@
 	<!-- Create your own class to load custum image [ SAMPLE ]-->
 	<link href="assets/css/custom.css" rel="stylesheet">
 	<style>
-		.demo-my-bg{
-			background-image : url("assets/img/bg-img-2.jpg");
+		.demo-my-bg {
+			background-image: url("assets/img/bg-img-2.jpg");
 		}
 	</style>
 	<!--Page Load Progress Bar [ OPTIONAL ]-->
 	<link href="assets/css/pace.min.css" rel="stylesheet">
 	<script src="assets/js/pace.min.js"></script>
 </head>
+
 <body>
-	<div id="container" class="cls-container">	
+	<div id="container" class="cls-container">
 		<!-- BACKGROUND IMAGE -->
 		<!--===================================================-->
-		<div id="bg-overlay" class="bg-img demo-my-bg"></div>	
+		<div id="bg-overlay" class="bg-img demo-my-bg"></div>
 		<!-- HEADER -->
 		<!--===================================================-->
 		<div class="cls-header cls-header-lg">
@@ -48,34 +50,33 @@
 		<div class="cls-content">
 			<div class="cls-content-sm">
 				<div class="panel-body login-panel">
-					<img src="assets/img/jikiapps.png" style="width: 50%;">
-					<hr>
+					<img src="assets/img/logo25.png" style="width: 80%; margin-bottom: 2px;">
 					<p class="pad-btm h3">Client Portal</p>
 					<div class="panel-body login-form-panel">
-						<form id="login" action="<?php echo base_url();?>login_client_controller/login_validation" method="post" >
+						<form id="login" action="<?php echo base_url(); ?>login_client_controller/login_validation" method="post">
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-addon"><i class="fas fa-user-astronaut"></i></div>
 									<input type="text" class="form-control login-input" name="username" id="username" placeholder="Username">
-									<span class="text-danger"><?php echo form_error('username');?></span>
+									<span class="text-danger"><?php echo form_error('username'); ?></span>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-addon"><i class="fas fa-key"></i></div>
 									<input type="password" class="form-control login-input" name="password" id="password" placeholder="Password">
-									<span class="text-danger"><?php echo form_error('password');?></span>
+									<span class="text-danger"><?php echo form_error('password'); ?></span>
 								</div>
 							</div>
 							<hr>
-							<?php echo '<label class="text-danger">'.$this->session->flashdata("error").'</label>';?>
+							<?php echo '<label class="text-danger">' . $this->session->flashdata("error") . '</label>'; ?>
 							<div class="row">
 								<div class="col-xs-8 text-left">
 									<p class="">Enter your lastname and ATM Pin</p>
 								</div>
 								<div class="col-xs-4">
 									<div class="form-group text-right">
-									<input class="btn btn-primary text-uppercase" name="insert" type="submit" value=" Sign In "/>
+										<input class="btn btn-primary text-uppercase" name="insert" type="submit" value=" Sign In " />
 									</div>
 								</div>
 							</div>
@@ -85,15 +86,15 @@
 
 				<div class="col-md-12">
 					<br>
-				    eLending - Lending Manager App v1.2 JikiApps Solutions / Jik Torres © 2018
+					eLending - Lending Manager App v1.2 JikiApps Solutions / Jik Torres © 2018
 				</div>
 			</div>
 
 		</div>
-		<!--===================================================-->		
+		<!--===================================================-->
 	</div>
 	<!--===================================================-->
-	<!-- END OF CONTAINER -->		
+	<!-- END OF CONTAINER -->
 	<!--JAVASCRIPT-->
 	<!--=================================================-->
 	<!--jQuery [ REQUIRED ]-->
@@ -103,4 +104,5 @@
 	<!--Nifty Admin [ RECOMMENDED ]-->
 	<script src="assets/js/nifty.min.js"></script>
 </body>
+
 </html>
