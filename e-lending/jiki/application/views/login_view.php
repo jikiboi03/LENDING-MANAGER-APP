@@ -74,7 +74,7 @@
 
 				<div class="col-md-12" style="color: white;">
 					<br>
-					eLending - Lending Manager App v1.3.1<br>JikiApps Solutions © 2018
+					eLending - Lending Manager App v1.3.0<br>JikiApps Solutions © 2018
 				</div>
 			</div>
 
