@@ -7,7 +7,7 @@ class Clients_model extends CI_Model
     var $table = 'clients';
 
     var $column_order = array('client_id', 'lname', null, 'pin', 'contact', 'atm_id', 'comp_id', null, null, null); //set column field database for datatable orderable
-    var $column_search = array('client_id', 'lname', 'contact', 'atm_id', 'comp_id', 'balance', 'pin', 'encoded'); //set column field database for datatable searchable
+    var $column_search = array('client_id', 'lname', 'fname', 'contact', 'atm_id', 'comp_id', 'pin', 'encoded'); //set column field database for datatable searchable
 
     var $order = array('client_id' => 'desc'); // default order 
 

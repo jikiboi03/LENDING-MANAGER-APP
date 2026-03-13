@@ -50,3 +50,36 @@ Features
 
 Fixes
 1. Fixed non functioning button in loans table
+
+----- 1.3.0 ----- (12-17-25)
+
+Features
+1. Updated from CI 3.1.4 to 3.1.13
+2. Updated PHP 7.4 to 8.1
+3. Updated UI design
+4. Removed atm branch field (create, update, list)
+5. Combined client last name and first name in clients and users WF
+6. Changed login BG and UI
+7. Client details and loans panel placement swapped
+8. Loan info and transactions panel placement swapped
+9. Added tooltips in buttons
+10. Zero values converted to “-“ in list
+11. Default today value in date input for new loan and payment modals
+12. Logo update
+13. Added comma in total due readonly fields for better readability
+14. Last payment in payment details modal
+15. Last interest in interest details modal
+16. Quick payment action in loan list
+
+Fixes
+1. Set schedule time and remarks as none required field
+2. Removed password shown in view/edit user
+3. Password plain text to hash update for safety
+4. update DB (Refer to dev notes 8-10)
+
+Misc
+1. Removed unused files
+2. Removed profile photos
+
+
+
